@@ -1,0 +1,159 @@
+.workTogetherContainer {
+    display: flex;
+    flex-direction: row;
+    height: 80vh;
+    width: 100%;
+    margin-top: 50px;
+    z-index: 1000;
+}
+
+.workTogetherTextContainer {
+    padding-top: 15vh;
+    width: calc(50% - 11vw);
+    height: calc(100%-15vh);
+    padding-left: 11vw;
+    height: 20px;
+
+    display: flex;
+    flex-direction: column;
+    float: left;
+}
+
+.highlight {
+  transition: 0.4s ease-in-out;
+  color: var(--text);
+  display: inline;
+}
+
+.highlight:hover {
+  transition: 0.4s ease-in-out;
+  color: #008b8b;
+  display: inline;
+}
+
+.title {
+    font-family:'Quicksand';
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.workTogetherAnimationContainer {
+    width: calc(50% - 12vw);
+    height: 100%;
+    padding-left: 12vw;
+    padding-top: 20px;
+}
+
+.line {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 40%;
+    border: 2px solid var(--fill);
+}
+
+.paragraph {
+    font-size: 20px;
+    font-weight: 450;
+    padding-bottom: 10px;
+    color: var(--text);
+}
+.paragraphMobile {
+    display: none;
+}
+.dottedBackground {
+    width: 95%;  /* Your desired width */
+    height: 10vh; /* Your desired height */
+    background:
+        radial-gradient(var(--subtext) 1px, transparent 1px),
+        radial-gradient(var(--subtext) 1px, transparent 1px);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+    background-color: #008b8b;
+}
+
+.distanceCreator {
+    height: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    .workTogetherAnimationContainer {
+        display: none;
+        width: calc(50% - 12vw);
+        height: 100%;
+        padding-left: 12vw;
+    }    
+    .workTogetherTextContainer {
+        padding-top: 7vh;
+        width: calc(100% - 18vw);
+        height: calc(100%-9vh);
+        padding-left: 11vw;
+        height: 20px;
+        padding-right: 7vw;
+        display: flex;
+        flex-direction: column;
+    }
+    .distanceCreator {
+        display: none;
+    }
+    .paragraph {
+        display: none;
+    }
+    .paragraphMobile {
+        display: block;
+        font-size: 18px;
+        font-weight: 450;
+        padding-bottom: 10px;
+        color: var(--text);   
+    }
+    .dottedBackground {
+        position: relative;
+        top: 11vh;
+        width: 95%;  /* Your desired width */
+        height: 10vh; /* Your desired height */
+        background:
+            radial-gradient(var(--subtext) 2px, transparent 1px),
+            radial-gradient(var(--subtext) 1px, transparent 2px);
+        background-size: 30px 30px;
+        background-position: 0 0, 15px 15px;
+    }
+    .highlight {
+        transition: 0.4s ease-in-out;
+        color: var(--text);
+        display: inline;
+    }
+    
+    .highlight:hover {
+        transition: 0.4s ease-in-out;
+        color: #008b8b;
+        display: inline;
+    }
+}
+
+@media only screen and (min-width:768px) and (max-width: 990px) {
+    .workTogetherAnimationContainer {
+        width: calc(50% - 12vw);
+        height: calc(100% - 7vh);
+        padding-left: 12vw;
+        padding-top: 7vh;
+    }
+    .dottedBackground {
+        width: 95%;  /* Your desired width */
+        height: 10vh; /* Your desired height */
+        background:
+            radial-gradient(var(--subtext) 1px, transparent 1px),
+            radial-gradient(var(--subtext) 1px, transparent 1px);
+        background-size: 30px 30px;
+        background-position: 0 0, 15px 15px;
+    }
+    .highlight {
+        transition: 0.4s ease-in-out;
+        color: var(--text);
+        display: inline;
+    }
+    .highlight:hover {
+        transition: 0.4s ease-in-out;
+        color: #008b8b;
+        display: inline;
+    }
+}

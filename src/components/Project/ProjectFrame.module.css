@@ -1,0 +1,229 @@
+/* General Styles */
+a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.projectContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 170px;
+    height: fit-content;
+    padding-top: 130px;
+    width: calc(100% - 340px);
+    background-color: var(--bg);
+    font-family: 'quicksand';
+    gap: 30px;
+}
+
+.projectDescription {
+    font-size: 20px;
+    color: var(--text);
+    padding-bottom: 30px;
+}
+
+.projectTitle {
+    font-size: 50px;
+    font-weight: bold;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.firstProjectContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: calc(100%);
+}
+.secondProjectContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    align-items: center;
+    width: calc(100%) 
+}
+.firstProjectContainer,
+.secondProjectContainer {
+    transition: 0.3s ease-in-out;
+}
+
+.firstProjectContainer:hover,
+.secondProjectContainer:hover {
+    transform: scale(1.05);
+    transition: 0.3s ease-in-out;
+}
+
+.imageContainer {
+    padding-top: 40px;
+    background-color: transparent;
+    width: 70%;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.textContainer {
+    background-color: transparent;
+    height: 100%;
+    width: calc(30%);
+    font-family: "quicksand";
+    color: var(--text);
+    font-weight: 500;
+    padding: 0px;
+}
+
+.specificProjectTitle {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.linkContainer {
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: start;
+    float: left;
+    width: calc(100%);
+}
+
+.gitHubLinkContainer,
+.websiteLinkContainer {
+    color: #008b8b;
+    transition: 0.2s ease;
+    font-weight: 600;
+    padding-bottom: 20px;
+}
+
+.disablegitHubLinkContainer {
+    color: gray;
+    text-decoration: line-through;
+    padding-bottom: 20px;
+}
+
+.gitHubLinkContainer:hover,
+.websiteLinkContainer:hover {
+    color: #008b8b;
+    transform: scale(1.1);
+    transition: 0.2s ease;
+}
+
+/* Responsive design for smaller devices */
+@media (max-width: 778px) {
+    .projectContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-top: 50px;
+        width: 100%;
+        background-color: var(--bg);
+        font-family: 'quicksand';
+    }
+    .firstProjectContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        float: left;
+    }
+    .secondProjectContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        float: left;
+        padding-top: 30px;
+        justify-content: reverse;
+    }
+    .projectTitle {
+        padding-left: 5vw;
+    }
+    .projectDescription {
+        padding-left: 5vw;
+        font-size: 20px;
+        color: var(--text);
+        padding-bottom: 30px;
+    }
+    .textContainer {
+        background-color: transparent;
+        height: 100%;
+        width: calc(100% - 80px);
+        font-family: "quicksand";
+        padding-left: 40px;
+        padding-right: 40px;
+        color: var(--text);
+        font-weight: 500;
+    }
+    .specificProjectTitle {
+        font-size: 24px;
+        font-weight: bold;
+        width: 100%;
+        color: var(--text);
+        margin: 0px;
+        padding: 0px;
+        margin-bottom: 10px;
+    }
+
+    .myProject {
+        font-size: 24px;
+    }
+
+    .myProjectIntroText {
+        font-size: 14px;
+    }
+    
+    .gitHubLinkContainer,
+    .websiteLinkContainer {
+        padding: 8px 12px;
+        color: #008b8b;
+    }
+
+    .contentContainer {
+        flex-direction: column;
+    }
+
+    .imageContainer {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .horizontalLine {
+        width: 100%;
+    }
+}
+
+@media (min-width: 778px) and (max-width:1000px) {
+    .projectContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 100px;
+        padding-right: 50px;
+        padding-top: 50px;
+        width: calc(100% - 150px);
+        background-color: var(--bg);
+        font-family: 'quicksand';
+    }
+    .specificProjectTitle {
+        font-size: 20px;
+        font-weight: 500px;
+        color: #008b8b;
+    }
+    .specificProjectDescriptionContainer {
+        font-size: 13px;
+    }
+    .gitHubLinkContainer,
+    .websiteLinkContainer {
+        color: #008b8b;
+    }
+    .gitHubLinkContainer:hover,
+    .websiteLinkContainer:hover {
+        color: #008b8b;
+    }
+
+}

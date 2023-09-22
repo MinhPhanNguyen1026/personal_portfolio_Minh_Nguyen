@@ -1,0 +1,196 @@
+.aboutContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* To space out the two main blocks */
+  align-items: center; /* Aligns items vertically centered */
+  padding-top: 60px; /* Some padding on top and bottom */
+  height: calc(80vh);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  margin: 15px;
+  margin-top: 20px;
+  font-weight: 450;
+}
+  
+.introTextContainer {
+  display: flex;
+  width: 60vw;
+  padding-top: 60px;
+  padding-right: 20px; /* Adds some spacing between the text and the image */
+  flex-direction: column;
+  justify-content: center;
+  float: left;
+  padding-bottom: 120px;
+}
+  
+.bigContainer {
+  padding-top: 5%;
+  margin-left: 10%;
+  padding-left: 5%;
+}
+
+.introTextBlock {
+  font-size: 72px; /* Large text */
+  color: var(--text);
+  font-family:'Quicksand';
+  display: block;
+  float: left;
+  text-align: left;
+  margin-bottom: 20px; /* Space between lines */
+  line-height: 1.2; /* Adjusts the spacing between lines of text */
+}
+
+.introAboutMeBlock {
+  font-size: 20px; /* Smaller readable text */
+  text-align: left;
+  line-height: 1.5; /* Gives a good spacing between lines for readability */
+  max-width: 600px; /* Ensures the block doesn't get too wide */
+  color: var(--text);
+}
+
+.imageContainer {
+  flex: 1; /* This ensures the image container takes up half the space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers the image */
+  align-items: center; /* Centers the image vertically */
+}
+
+.image {
+  width: 90%; /* Uses 90% of the container's width */
+  height: auto; /* Keeps the aspect ratio */
+  background-color: #ddd; /* Placeholder background */
+  display: flex; /* To center the placeholder text */
+  justify-content: center; /* Horizontally centers the placeholder text */
+  align-items: center; /* Vertically centers the placeholder text */
+}
+
+.dottedBackground {
+    width: 40vw;  /* Your desired width */
+    height: 200px; /* Your desired height */
+    background:
+        radial-gradient(var(--subtext) 4px, transparent 3px),
+        radial-gradient(var(--subtext) 1px, transparent 1px);
+    background-size: 30px 30px;
+    transition: 1s ease-in-out;
+    background-position: 0 0, 5px 5px;
+}
+
+.highlight {
+  transition: 0.4s ease-in-out;
+  color: var(--text);
+}
+  
+.highlight:hover {
+  transition: 0.4s ease-in-out;
+  color: #008b8b;
+}
+
+.minh {
+  color: var(--text);
+  transition: 0.3s ease-in-out;
+}
+.nguyen {
+  color: var(--text);
+  transition: 0.3s ease-in-out;
+}
+
+.minh:hover {
+  color: #2965f1;
+  transform: scale(1.05);
+}
+.nguyen:hover {
+  color: #d34c65;
+  transform: scale(1.05);
+}
+  
+@media only screen and (max-width: 600px) {
+  .aboutContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Aligns items vertically centered */
+    padding-top: 20px; /* Some padding on top and bottom */
+    height: fit-content;
+    background-color: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    margin: 10px;
+    padding-top: 80px;
+    margin-top: 20px;
+  }
+  .introAboutMeBlock {
+    font-size: 18px; /* Smaller readable text */
+    text-align: left;
+    line-height: 1.5; /* Gives a good spacing between lines for readability */
+    max-width: 600px; /* Ensures the block doesn't get too wide */
+    color: var(--text);
+  }
+  .imageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(90%);
+    margin: auto;
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    overflow: hidden;
+    justify-content: center; /* Centers the image */
+    align-items: center; /* Centers the image vertically */
+  }
+  .imageContainer {
+    flex: 1; /* This ensures the image container takes up half the space */
+    display: none;
+    flex-direction: column;
+    justify-content: center; /* Centers the image */
+    align-items: center; /* Centers the image vertically */
+  }
+  .introTextBlock {
+    font-size: 38px; /* Large text */
+    color: var(--text);
+    display: block;
+    float: left;
+    text-align: left;
+    margin-bottom: 20px; /* Space between lines */
+    line-height: 1.2; /* Adjusts the spacing between lines of text */
+  }
+
+  .dottedBackground {
+    width: 95%;  /* Your desired width */
+    height: 10vh; /* Your desired height */
+    background:
+        radial-gradient(var(--subtext) 1px, transparent 1px),
+        radial-gradient(var(--subtext) 1px, transparent 1px);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+    display: none;
+  }
+}
+
+@media only screen and (min-width:600px) and (max-width: 990px) {
+  .aboutContainer {
+    padding-top: 20px; /* Some padding on top and bottom */
+    height: fit-content;
+    background-color: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    margin: 10px;
+    padding-top: 80px;
+    margin-top: 20px;
+  }
+  .introTextBlock {
+    font-size: 58px; /* Large text */
+    color: var(--text);
+    display: block;
+    float: left;
+    text-align: left;
+    margin-bottom: 5px; /* Space between lines */
+    line-height: 1.2; /* Adjusts the spacing between lines of text */
+  }
+  .introAboutMeBlock {
+    font-size: 20px; /* Smaller readable text */
+    text-align: left;
+    line-height: 1.5; /* Gives a good spacing between lines for readability */
+    max-width: 600px; /* Ensures the block doesn't get too wide */
+    color: var(--text);
+  }
+}

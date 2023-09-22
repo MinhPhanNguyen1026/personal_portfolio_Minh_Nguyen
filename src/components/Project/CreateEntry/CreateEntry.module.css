@@ -1,0 +1,87 @@
+.wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 40px;
+}
+.headingsContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.containerShadow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Adds a dark overlay */
+    z-index: 1000; /* Keeps the shadow on top */
+}
+
+.container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centers the popup */
+    width: 60vw;
+    max-width: 60vw; /* Max width of the popup */
+    height: 610px;
+    color: var(--text);
+    background-color: var(--fill);
+    z-index: 1001; /* Keeps the popup on top of the shadow */
+}
+
+.aiContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.housingAssignment {
+    width: 90%;
+    height: 90%;
+}
+
+.goBack {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: center;
+    padding: 10px;
+    padding-bottom: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.goBack {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: center;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+@media (max-width: 778px) {
+    .container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Centers the popup */
+        width: 95vw;
+        max-width: 90vw; /* Max width of the popup */
+        height: fit-content;
+        max-height: 70vh;
+        color: var(--text);
+        background-color: var(--fill);
+        z-index: 1001; /* Keeps the popup on top of the shadow */
+    }
+}

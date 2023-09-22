@@ -1,0 +1,96 @@
+.containerOfAllData {
+    width: 95%;
+    border-collapse: collapse;
+    background-color: #29323c;
+    box-shadow: 0px 0px 20px -10px #000;
+    border-radius: 5px;
+  }
+  .scrollableContainer {
+    max-height: 450px; /* Adjust this value according to your needs */
+    overflow-y: auto;
+    margin-top: 20px;
+    padding: 0px;
+    margin-left: 20px;
+  }
+  .headingsContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: 500;    /* overflow: scroll; */
+    cursor: pointer;
+  }
+  .containerOfAllData thead {
+    background: linear-gradient(90deg, #29323c 0%, #3b4249 100%);
+  }
+  
+  .containerOfAllData th {
+    padding: 15px 20px;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+  
+  .containerOfAllData tbody tr {
+    transition: background 0.3s ease;
+  }
+  
+  .containerOfAllData tbody tr:hover {
+    background: #3b4249;
+  }
+  
+  .containerOfAllData td {
+    padding: 12px 20px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .containerOfAllData td:nth-child(3), /* Is Admin */
+  .containerOfAllData td:nth-child(6) /* Is Active */ {
+    text-align: center;
+  }
+  
+  .containerOfAllData td:nth-child(3):before, /* Icons for Is Admin */
+  .containerOfAllData td:nth-child(6):before { /* Icons for Is Active */
+    content: '\2713'; /* Checkmark */
+    color: #aaf0d1;
+    display: block;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .containerOfAllData td:nth-child(3)[data-content='No']:before,
+  .containerOfAllData td:nth-child(6)[data-content='No']:before {
+    content: '\2717'; /* X symbol */
+    color: #ff4d4d; /* Red color */
+  }
+  
+  .containerOfAllData tr:last-child td {
+    border-bottom: none; /* Removes the border from the last row data */
+  }
+  
+  @media (max-width: 778px) {
+    .headingsContainer {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 500;   
+        text-align: center;
+    }
+    .scrollableContainer {
+        max-height: 250px; /* Adjust this value according to your needs */
+        overflow-y: auto;
+    }
+    .scrollableContainer {
+        overflow-y: auto;
+        padding: 0px;
+        margin-left: 20px;
+    }
+}
