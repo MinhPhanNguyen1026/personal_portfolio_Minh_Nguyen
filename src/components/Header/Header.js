@@ -92,6 +92,11 @@ function Header({ translateValues }) {
               href="./Minh_Nguyen_Resume_CS.pdf" 
               download="Minh_Nguyen_Resume.pdf"
             >My Resume</a>
+            <a className={styles.linkTitle} 
+              href={`${process.env.PUBLIC_URL}/Minh_Nguyen_Resume_CS.pdf`}               
+              download="Minh_Nguyen_Resume.pdf">
+              My Resume
+            </a>
         </div>
       </div>
     </div>
