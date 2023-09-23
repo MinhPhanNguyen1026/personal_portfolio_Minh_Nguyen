@@ -88,6 +88,10 @@ function Header({ translateValues }) {
               href={resume} 
               download="Minh_Nguyen_Resume.pdf"
             >My Resume</a>
+            <a className={styles.linkTitle}
+              href="./Minh_Nguyen_Resume_CS.pdf" 
+              download="Minh_Nguyen_Resume.pdf"
+            >My Resume</a>
         </div>
       </div>
     </div>
