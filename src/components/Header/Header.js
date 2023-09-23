@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Header.module.css';
 import { Link } from 'react-scroll';
-import resume from "./Minh_Nguyen_Resume.pdf"
+import resume from "./Minh_Nguyen_Resume_CS.pdf"
 
 function Header({ translateValues }) {
   const [showMenu, setShowMenu] = useState(false);
