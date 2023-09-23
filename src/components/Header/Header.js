@@ -83,10 +83,11 @@ function Header({ translateValues }) {
           >
             <div className={styles.linkTitle}>Contact</div>
           </Link>
-            <a className={styles.linkTitle}
-              href="/Minh_Nguyen_Resume.pdf" 
-              download="Minh_Nguyen_Resume.pdf"
-            >My Resume</a>
+            <a className={styles.linkTitle} 
+              href={`${process.env.PUBLIC_URL}/Minh_Nguyen_Resume.pdf`}               
+              download="Minh_Nguyen_Resume.pdf">
+              My Resume
+            </a>
         </div>
       </div>
     </div>
