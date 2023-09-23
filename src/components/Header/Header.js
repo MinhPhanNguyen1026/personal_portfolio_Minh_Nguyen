@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Header.module.css';
 import { Link } from 'react-scroll';
+import resume from "./Minh_Nguyen_Resume.pdf"
 
 function Header({ translateValues }) {
   const [showMenu, setShowMenu] = useState(false);
@@ -84,7 +85,7 @@ function Header({ translateValues }) {
             <div className={styles.linkTitle}>Contact</div>
           </Link>
             <a className={styles.linkTitle}
-              href="/Minh_Nguyen_Resume.pdf" 
+              href={resume} 
               download="Minh_Nguyen_Resume.pdf"
             >My Resume</a>
         </div>
