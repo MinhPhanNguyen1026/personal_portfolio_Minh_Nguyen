@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/personal_portfolio_Minh_Nguyen/static/css/main.00131770.css",
-    "main.js": "/personal_portfolio_Minh_Nguyen/static/js/main.6925021d.js",
+    "main.js": "/personal_portfolio_Minh_Nguyen/static/js/main.e1744f49.js",
     "static/js/787.41624cae.chunk.js": "/personal_portfolio_Minh_Nguyen/static/js/787.41624cae.chunk.js",
     "static/media/project1.png": "/personal_portfolio_Minh_Nguyen/static/media/project1.8ad6e8835fdeb90b8955.png",
     "static/media/project3.png": "/personal_portfolio_Minh_Nguyen/static/media/project3.7832d6249ee44199e5ab.png",
     "static/media/project2.png": "/personal_portfolio_Minh_Nguyen/static/media/project2.8e74e0f1c44985cad79d.png",
     "static/media/fontawesome-webfont.svg?v=4.7.0": "/personal_portfolio_Minh_Nguyen/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
     "static/media/project4.png": "/personal_portfolio_Minh_Nguyen/static/media/project4.97510cb8de69128b84c8.png",
+    "static/media/Minh_Nguyen_Resume.pdf": "/personal_portfolio_Minh_Nguyen/static/media/Minh_Nguyen_Resume.2c556d2f642f0172782d.pdf",
     "static/media/fontawesome-webfont.eot": "/personal_portfolio_Minh_Nguyen/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
     "static/media/fontawesome-webfont.ttf?v=4.7.0": "/personal_portfolio_Minh_Nguyen/static/media/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf",
     "static/media/fontawesome-webfont.woff?v=4.7.0": "/personal_portfolio_Minh_Nguyen/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
     "static/media/fontawesome-webfont.woff2?v=4.7.0": "/personal_portfolio_Minh_Nguyen/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
     "index.html": "/personal_portfolio_Minh_Nguyen/index.html",
     "main.00131770.css.map": "/personal_portfolio_Minh_Nguyen/static/css/main.00131770.css.map",
-    "main.6925021d.js.map": "/personal_portfolio_Minh_Nguyen/static/js/main.6925021d.js.map",
-    "787.41624cae.chunk.js.map": "/personal_portfolio_Minh_Nguyen/static/js/787.41624cae.chunk.js.map",
-    "Minh_Nguyen_Resume_CS.pdf": "/personal_portfolio_Minh_Nguyen/Minh_Nguyen_Resume_CS.pdf"
+    "main.e1744f49.js.map": "/personal_portfolio_Minh_Nguyen/static/js/main.e1744f49.js.map",
+    "787.41624cae.chunk.js.map": "/personal_portfolio_Minh_Nguyen/static/js/787.41624cae.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.00131770.css",
-    "static/js/main.6925021d.js"
+    "static/js/main.e1744f49.js"
   ]
 }
