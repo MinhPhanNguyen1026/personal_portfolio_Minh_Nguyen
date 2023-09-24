@@ -22,6 +22,7 @@ Welcome to Minh Nguyen's Personal Portfolio! This portfolio website is designed 
 - Node.js and npm installed
 - Git installed
 - Access to the repository (it is public, you are fine)
+- create-react-app is set up.
 
 ### Steps
 1. **Clone the Repository**
@@ -35,9 +36,22 @@ To install the necessary dependencies, you can use the following command:
    ```sh
    npm install
    ```
+1.2 ## Install `gh-pages` package
+   ```sh
+   npm install gh-pages --save-dev
+   ```
+1.3 ## Add script
+   In the package.json file, add the following script: 
+   ```sh
+   "scripts": {
+     "deploy": "gh-pages -d build",
+   }
+   ```
+   In the same file, also add the following script:
+   "homepage": "https://github.com/MinhPhanNguyen1026/personal_portfolio_Minh_Nguyen" or http://<username>.github.io/<repository-name> depending on your choices/needs
 
 2. ## Make Changes
-After installing the dependencies, modify the necessary files or components and test them locally using:
+   After installing the dependencies, modify the necessary files or components and test them locally using:
    ```sh
    npm start
    ```
