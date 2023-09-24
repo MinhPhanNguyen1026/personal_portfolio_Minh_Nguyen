@@ -62,7 +62,7 @@ Once you've made the necessary modifications and tested them, build the project 
    npm run build
    ```
 
-4. ## Commit & Push Changes
+4. ## Commit & Push Changes (Optional) (Skip to step 5 if you don't want to do this; this changes nothing)
 After building the project, commit and push the changes to the main branch using:
    ```sh
    git add .
