@@ -57,7 +57,7 @@ To install the necessary dependencies, you can use the following command:
    ```
 
 3. ## Build the Project
-Once you've made the necessary modifications and tested them, build the project with:
+Once you've made the necessary modifications and tested them, build the project with (Note, this will reset the page title, if you want to change the page title again after Deploy, change directly in the GitHub page index.html and/or manifest.json):
    ```sh
    npm run build
    ```
