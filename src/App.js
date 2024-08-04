@@ -15,22 +15,13 @@ import { Link } from 'react-scroll';
 
 function Loading() {
   return (
-    <div className='loaderContainer'>
-      <div className="loader"></div> 
-    </div> 
+    <div className="welcome-message">
+      <h1>Welcome</h1>
+    </div>
   );
 }
 
 function App() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000); 
-    return () => clearTimeout(timer);
-  }, []);
-
   const [translateValues, setTranslateValues] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e) => {
@@ -55,34 +46,33 @@ function App() {
 
   
   return (
-    <>
-      {loading ? <Loading/> : 
-        <ParallaxProvider>
-          <div className="App" onMouseMove={handleMouseMove}>
-            <Header translateValues={translateValues}></Header>
-            <div id="aboutMe">
-              <AboutMe></AboutMe>
-            </div>
-            <div id="transitionComponent">
-              <Parallax speed={-8}> 
-                <TransitionComponent></TransitionComponent>
-              </Parallax>
-            </div>
-            <div id="introduction">
-              <Introduction></Introduction>
-            </div>
-            <div id="workTogether">
-              <WorkTogether></WorkTogether>
-            </div>
-            <div id="projectFrame">
-              <ProjectFrame></ProjectFrame>
-            </div>
-            <div id="socialLinks">
-              <SocialLinks></SocialLinks>
-            </div>
+    <> 
+      <ParallaxProvider>
+        <Loading />
+        <div className="App" onMouseMove={handleMouseMove}>
+          <Header translateValues={translateValues}></Header>
+          <div id="aboutMe">
+            <AboutMe></AboutMe>
           </div>
-        </ParallaxProvider>     
-      }
+          <div id="transitionComponent">
+            <Parallax speed={-8}> 
+              <TransitionComponent></TransitionComponent>
+            </Parallax>
+          </div>
+          <div id="introduction">
+            <Introduction></Introduction>
+          </div>
+          <div id="workTogether">
+            <WorkTogether></WorkTogether>
+          </div>
+          <div id="projectFrame">
+            <ProjectFrame></ProjectFrame>
+          </div>
+          <div id="socialLinks">
+            <SocialLinks></SocialLinks>
+          </div>
+        </div>
+      </ParallaxProvider>     
     </>
   );
 }
