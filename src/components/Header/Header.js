@@ -18,10 +18,6 @@ function Header({ translateValues }) {
     setShowMenu(!showMenu)
   }
 
-  const handleClickResume = () => {
-    console.log("Ji")
-  }
-
   return (
     <div className={styles.header}>
       <div className={!showMenu ? styles.logoFront : styles.logoFrontTwo}>M</div>
