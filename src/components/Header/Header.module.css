@@ -114,11 +114,16 @@
   font-size: 30px;
   transform: scale(1);
   transition: 0.3s ease-in-out;
+  font-weight: 700;
 }
 .linkTitle:hover {
   transform: scale(1.1);
   transition: 0.3s ease-in-out;
-  color: var(--bg);
+  color: rgba(255, 0, 0, 0.864);
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 1000;
 }
 
 .menu ul {
@@ -259,11 +264,15 @@
   .linkTitle {
     font-size: 22px;
     transform: scale(1);
+    font-weight: 600;
   }
   .linkTitle:hover {
     transform: scale(1.1);
     transition: 0.3s ease-in-out;
-    color: var(--bg);
-
+    color: rgba(255, 0, 0, 0.864);
+    background-color: rgba(255, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: 800;
   }
 }

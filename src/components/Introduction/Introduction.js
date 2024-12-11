@@ -57,6 +57,7 @@ function Introduction() {
                 <p>In my toolbox, you'll find technologies like:</p>
                 <ul className={style.toolbox}>
                     <li className={style.javascript}>JavaScript</li>
+                    <li className={style.typescript}>TypeScript</li>
                     <li className={style.react}>React</li>
                     <li className={style.redux}>Redux</li>
                     <li className={style.html}>HTML</li>
@@ -64,9 +65,12 @@ function Introduction() {
                     <li className={style.less}>LESS</li>
                     <li className={style.python}>Python</li>
                     <li className={style.java}>Java</li>
+                    <li className={style.assembly}>Assembly</li>
+                    <li >Swift</li>
                     <li className={style.firebase}>Firebase</li>
                     <li className={style.mongoDB}>MongoDB</li>
                     <li className={style.sql}>SQL</li>
+                    <li className={style.sql}>PopSQL</li>
                 </ul>
             </div>
         </div>

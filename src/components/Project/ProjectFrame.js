@@ -30,7 +30,7 @@ function ProjectFrame() {
             </Parallax>
             <div className={style.firstProjectContainer}>
                 <div className={style.imageContainer}>
-                    <img src={project1Image} width="100%" height="100%" alt="A sample image in the images folder"></img>
+                    <img src={project1Image} width="77%" height="77%" alt="A sample image in the images folder"></img>
                 </div>
                 <div className={style.textContainer}>
                     <div className={style.specificProjectTitle}>
@@ -42,10 +42,10 @@ function ProjectFrame() {
                         </p>
                     </div>
                     <div className={style.linkContainer}>
-                        <a className={style.gitHubLinkContainer} href="https://github.com/Sonicfires2/AIF.github.io">
+                        <a className={style.gitHubLinkContainer} href="https://github.com/Sonicfires2/landing-page-aif">
                             GitHub Code
                         </a>
-                        <a className={style.websiteLinkContainer} href="https://sonicfires2.github.io/AIF.github.io/main.html">
+                        <a className={style.websiteLinkContainer} href="https://sonicfires2.github.io/landing-page-aif/">
                             Website Link
                         </a>
                         <SkillSet listOfSkill={["JavaScript", "CSS", "HTML"]}></SkillSet>
@@ -73,7 +73,7 @@ function ProjectFrame() {
                         <a className={style.websiteLinkContainer} href="https://test-react-to-make-data-analysis-dashboard-two.atlassian.net/l/cp/JjJFkWo1">
                             Mockup/Study Case in Confluence 
                         </a>
-                        <SkillSet listOfSkill={["Python", "MongoDB", "GCP", "Trello API", "Valohai API", "SharePoint"]}></SkillSet>
+                        <SkillSet listOfSkill={["Python", "JavaScript", "MongoDB", "Google Cloud Platform", "Trello API", "Valohai API", "SharePoint"]}></SkillSet>
                     </div>
                 </div>
             </div>
@@ -97,10 +97,10 @@ function ProjectFrame() {
                         <a disable className={style.disablegitHubLinkContainer} href="#">
                             Confidental Code
                         </a>
-                        <a disable className={style.disablegitHubLinkContainer} href="#">
-                            Under Development 
+                        <a className={style.websiteLinkContainer} href="https://advait.org/files/zhou_2024_k12_ML.pdf">
+                            Published Paper 
                         </a>
-                        <SkillSet listOfSkill={["React","JavaScript", "HTML","CSS", "Redux", "LESS"]}></SkillSet>
+                        <SkillSet listOfSkill={["React","JavaScript","TypeScript", "HTML","CSS", "Redux", "LESS"]}></SkillSet>
                     </div>
                 </div>
             </div>
@@ -111,24 +111,23 @@ function ProjectFrame() {
                 </div>
                 <div className={style.textContainer}>
                     <div className={style.specificProjectTitle}>
-                        Housing Assignment AI 
+                        Melcourse CDCS System 
                     </div>
                     <div className={style.specificProjectDescriptionContainer}>
                         <p>
-                            Special Interest Housing Organizations of University of Rochester 
-                            have their own independent housing assignment processes 
-                            which can take up to weeks.
-                            Once implemented, it is estimated that the AI will shorten the process by 70%.
+                            With the old course description course system - also known as CDCS - being outdated, 
+                            there was a need for a new CDCS for the students to utilize. This website is a solution to this issue. 
+                            The website was official acquired and endorsed by the University. Current, over 1200 students actively use it.
                         </p>
                     </div>
                     <div className={style.linkContainer}>
-                        <a className={style.websiteLinkContainer} onClick={() => {setShowAIForm(!showAIForm)}}>
-                            Try with demo dataset. 
+                        <a disable className={style.disablegitHubLinkContainer}>
+                            Confidental Code 
                         </a>
-                        <a className={style.websiteLinkContainer} onClick={() => {setShowRawData(!showRawData)}}>
-                            See the raw data that is currently used by the AI.
+                        <a className={style.websiteLinkContainer} href="https://melcourses.com">
+                            Website Link
                         </a>
-                        <SkillSet listOfSkill={["Python", "React", "HTML", "CSS", "JavaScript", "SQL"]}></SkillSet>
+                        <SkillSet listOfSkill={["JavaScript", "TypeScript", "React", "HTML", "CSS", "SQL"]}></SkillSet>
                     </div>
                 </div>
             </div>

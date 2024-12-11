@@ -158,17 +158,19 @@
 }
 
 .javascript { color: var(--text); }   /* JS Yellow */
-.react { color: #61dafb; }         /* React Blue */
+.typescript { color: rgb(54, 124, 124);}
+.react { color: #3ebadc; }         /* React Blue */
 .redux {color: #00a7e5;}
 .html { color: #e34f26; }          /* HTML5 Orange */
 .css { color: #2965f1; }           /* CSS Blue */
 .less { color: darkblue}            /* LESS Dark Blue */
 .python { color: #306998; }        /* Python Blue */
-.java { color: #f89820; }          /* Java Orange */
-.firebase { color: #FFCA28; }      /* Firebase Yellow */
+.java { color: #f82020; }          /* Java Orange */
+.swift { color: deepskyblue;}
+.firebase { color: #ffa228; }      /* Firebase Yellow */
 .mongoDB { color: #13aa52; }       /* MongoDB Green */
 .sql { color: #00758F; }           /* SQL Blue-ish (can change if you have a preference) */
-
+.assembly {color: #e34f26;}
 
 @media only screen and (max-width: 600px) {
     .introductionContainer {
