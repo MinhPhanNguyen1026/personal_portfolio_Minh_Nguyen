@@ -1,5 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import style from "./Introduction.module.css";
+
+function AnimatedSquare({ letter }) {
+    return (
+        <div className={style.animatedSquare}>
+            {letter}
+        </div>
+    );
+}
 
 function Square({ letter }) {
     const ref = useRef(null);
@@ -24,7 +32,6 @@ function Square({ letter }) {
 }
 
 function Introduction() {
-
     return (    
         <div className={style.introductionContainer}>
             <div className={style.aboutMeHeaderContainer}>
@@ -38,7 +45,7 @@ function Introduction() {
                     </li>
                     <li className={style.line}>
                         <Square letter="M" />
-                        <Square letter="E" />
+                        <AnimatedSquare letter="E" />
                     </li>
                 </div>
             </div>

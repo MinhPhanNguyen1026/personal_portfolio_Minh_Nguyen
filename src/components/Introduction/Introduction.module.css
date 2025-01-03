@@ -29,6 +29,21 @@
     animation: rubberBandStrong 1s ease-in-out;
     color:#08FDD8;
 }
+.animatedSquare {
+    font-size: 100px;
+    font-weight: 900;
+    -webkit-animation-duration: 2.5s;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite; /* Infinite loop */
+    animation-name: rubberBandStrong; /* Automatically trigger animation */
+    animation-timing-function: ease-in-out;
+    cursor: default;
+    color: #2965f1;
+    transition: 0.2s ease-in-out;
+}
+.animatedSquare:hover {
+    color: #08FDD8;
+}
 
 .aboutMeHeaderContainer {
     background-color: var(--bg);    

@@ -1,6 +1,8 @@
 import React from 'react';
 import style from "./AboutMe.module.css"
-import { Parallax, useParallax } from 'react-scroll-parallax';
+import { useParallax } from 'react-scroll-parallax';
+import PathDrawing from './PathDrawing';
+
 const AboutMe = () => {
   const parallax = useParallax({
     speed: -17,
@@ -21,7 +23,8 @@ const AboutMe = () => {
       </div>   
     </div>
     <div className={style.imageContainer}>
-      <div className={style.dottedBackground}></div>
+      <PathDrawing></PathDrawing>
+      {/* <div className={style.dottedBackground}></div> */}
     </div>
     </div>
   )

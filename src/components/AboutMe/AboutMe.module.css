@@ -49,6 +49,7 @@
 }
 
 .imageContainer {
+  overflow: hidden;
   flex: 1; /* This ensures the image container takes up half the space */
   display: flex;
   flex-direction: column;
@@ -87,21 +88,21 @@
 }
 
 .minh {
-  color: var(--text);
+  color: #0d63f8;
   transition: 0.3s ease-in-out;
 }
 .nguyen {
-  color: var(--text);
+  color: #ff0088;
   transition: 0.3s ease-in-out;
 }
 
 .minh:hover {
   color: #2965f1;
-  transform: scale(1.05);
+  transform: scale(1.25);
 }
 .nguyen:hover {
   color: #d34c65;
-  transform: scale(1.05);
+  transform: scale(1.25);
 }
   
 @media only screen and (max-width: 600px) {
@@ -192,5 +193,8 @@
     line-height: 1.5; /* Gives a good spacing between lines for readability */
     max-width: 600px; /* Ensures the block doesn't get too wide */
     color: var(--text);
+  }
+  .imageContainer {
+    width: 200;
   }
 }

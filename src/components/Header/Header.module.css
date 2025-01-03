@@ -27,12 +27,12 @@
 }
 
 .logoFront {
-  color: rgba(0, 255, 255, 0.5); /* Cyan with transparency */
+  color: #2965f1; /* Cyan with transparency */
   z-index: 2; /* Stacks above .logoBack */
-  text-shadow: 1px 0 rgba(0, 255, 255, 0.6), 
-    -1px 0 rgba(0, 255, 255, 0.6), 
-    0 1px rgba(0, 255, 255, 0.6), 
-    0 -1px rgba(0, 255, 255, 0.6); 
+  text-shadow: 1px 0 #2965f1, 
+    -1px 0 #2965f1, 
+    0 1px #2965f1, 
+    0 -1px #2965f1; 
   transition: 0.6s ease-in-out;
 }
 
