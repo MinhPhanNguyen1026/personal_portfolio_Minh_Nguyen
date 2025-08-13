@@ -7,7 +7,6 @@ import project3Image from './project3.png';
 import project4Image from './project4.png';
 
 import { Parallax, useParallax } from 'react-scroll-parallax';
-import RoomAssigner from "../AI/RoomAssigner";
 import StudentTable from "../AI/StudentTable";
 import SkillSet from "../Skill/SkillSet";
 
@@ -20,7 +19,7 @@ function ProjectFrame() {
         <div className={style.projectContainer}>
             <Parallax speed={-7}>
                 <div className={style.projectTitle}>
-                    MY PROJECT
+                    MY PERSONAL PROJECTS
                 </div>
                 <div className={style.projectDescription}>
                     Some of the things I have built/am currently working on.
@@ -127,7 +126,7 @@ function ProjectFrame() {
                         <a className={style.websiteLinkContainer} href="https://melcourses.com">
                             Website Link
                         </a>
-                        <SkillSet listOfSkill={["JavaScript", "TypeScript", "React", "HTML", "CSS", "SQL"]}></SkillSet>
+                        <SkillSet listOfSkill={["JavaScript", "TypeScript", "NextJS","React", "HTML", "CSS", "SQL"]}></SkillSet>
                     </div>
                 </div>
             </div>

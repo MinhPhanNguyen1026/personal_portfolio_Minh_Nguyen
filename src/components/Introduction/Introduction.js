@@ -51,21 +51,24 @@ function Introduction() {
             </div>
             <div className={style.aboutMeTextContainer}>
                 <p>
-                    I am a computer science student at the
-                    University of Rochester with a passion for 
-                    web development and software development. 
+          I’m a software engineer with a passion for building fast, and amazing user experiences with responsive and accessible frontend
+          and dependable, scalable backend.
                 </p>
                 <p>
-                    I have had the honor of working for 
-                    a startup, a corporation, and a research lab,
-                    where I worked with forward thinking people to 
-                    design accessible products. 
+          I’ve worked across startups, big tech, and research labs—turning ideas into production
+          features and partnering with forward-thinking teams to design inclusive, polished products.
                 </p>
                 <p>In my toolbox, you'll find technologies like:</p>
                 <ul className={style.toolbox}>
                     <li className={style.javascript}>JavaScript</li>
                     <li className={style.typescript}>TypeScript</li>
+                    <li className={style.go}>Go</li>
+                    <li className={style.rust}>Rust</li>
                     <li className={style.react}>React</li>
+                    <li className={style.reactNative}>React Native</li>
+                    <li className={style.flask}>Flask</li>
+                    <li className={style.llm}>RAG System</li>
+                    <li className={style.rag}>Flask</li>
                     <li className={style.redux}>Redux</li>
                     <li className={style.html}>HTML</li>
                     <li className={style.css}>CSS</li>
@@ -73,10 +76,10 @@ function Introduction() {
                     <li className={style.python}>Python</li>
                     <li className={style.java}>Java</li>
                     <li className={style.assembly}>Assembly</li>
-                    <li >Swift</li>
                     <li className={style.firebase}>Firebase</li>
                     <li className={style.mongoDB}>MongoDB</li>
                     <li className={style.sql}>SQL</li>
+                    <li className={style.webpack}>Webpack</li>
                     <li className={style.sql}>PopSQL</li>
                 </ul>
             </div>

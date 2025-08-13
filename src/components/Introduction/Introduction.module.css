@@ -187,6 +187,16 @@
 .sql { color: #00758F; }           /* SQL Blue-ish (can change if you have a preference) */
 .assembly {color: #e34f26;}
 
+/* Missing styles added */
+.go { color: #00ADD8; }              /* Go Blue */
+.rust { color: #DEA584; }            /* Rust */
+.reactNative { color: #61DAFB; }     /* React Native (same family as React) */
+.flask { color: #333333; }           /* Flask Charcoal */
+.llm { color: #6f42c1; }             /* LLM Purple */
+.rag { color: #9b59b6; }             /* RAG Purple */
+.webpack { color: #8DD6F9; }         /* Webpack Light Blue */
+.popsql { color: #00A7B3; }          /* PopSQL Teal */
+
 @media only screen and (max-width: 600px) {
     .introductionContainer {
         margin-top: 30px;
