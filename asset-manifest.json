@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/personal_portfolio_Minh_Nguyen/static/css/main.ead03652.css",
-    "main.js": "/personal_portfolio_Minh_Nguyen/static/js/main.0c7032af.js",
+    "main.css": "/personal_portfolio_Minh_Nguyen/static/css/main.2d731045.css",
+    "main.js": "/personal_portfolio_Minh_Nguyen/static/js/main.e6e09e01.js",
     "static/js/787.41624cae.chunk.js": "/personal_portfolio_Minh_Nguyen/static/js/787.41624cae.chunk.js",
     "static/media/project3.png": "/personal_portfolio_Minh_Nguyen/static/media/project3.7832d6249ee44199e5ab.png",
     "static/media/project2.png": "/personal_portfolio_Minh_Nguyen/static/media/project2.8e74e0f1c44985cad79d.png",
@@ -13,12 +13,12 @@
     "static/media/fontawesome-webfont.woff?v=4.7.0": "/personal_portfolio_Minh_Nguyen/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
     "static/media/fontawesome-webfont.woff2?v=4.7.0": "/personal_portfolio_Minh_Nguyen/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
     "index.html": "/personal_portfolio_Minh_Nguyen/index.html",
-    "main.ead03652.css.map": "/personal_portfolio_Minh_Nguyen/static/css/main.ead03652.css.map",
-    "main.0c7032af.js.map": "/personal_portfolio_Minh_Nguyen/static/js/main.0c7032af.js.map",
+    "main.2d731045.css.map": "/personal_portfolio_Minh_Nguyen/static/css/main.2d731045.css.map",
+    "main.e6e09e01.js.map": "/personal_portfolio_Minh_Nguyen/static/js/main.e6e09e01.js.map",
     "787.41624cae.chunk.js.map": "/personal_portfolio_Minh_Nguyen/static/js/787.41624cae.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ead03652.css",
-    "static/js/main.0c7032af.js"
+    "static/css/main.2d731045.css",
+    "static/js/main.e6e09e01.js"
   ]
 }
