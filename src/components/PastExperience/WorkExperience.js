@@ -58,6 +58,16 @@ const PREVIOUS_EXPERIENCE = [
       height: 160,
     },
   },
+    {
+    company: "University of Rochester",
+    role: "Teaching Assistant",
+    href: "https://www.rochester.edu/",
+    logo: {
+      src: "https://upload.wikimedia.org/wikipedia/en/7/76/University_of_Rochester_logo.svg",
+      width: 690,
+      height: 190,
+    },
+  },
   {
     company: "ROC-HCI Lab",
     role: "Research Assistant",
