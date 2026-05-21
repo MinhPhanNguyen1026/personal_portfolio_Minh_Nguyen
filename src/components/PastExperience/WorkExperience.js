@@ -100,11 +100,11 @@ export default function WorkAffiliations() {
                   height={e.logo.height}
                 />
               </div>
-              <figcaption className={styles.caption}>
+              {/* <figcaption className={styles.caption}> */}
                 {/* <span className={styles.company}>{e.company}</span>
                 <span className={styles.separator} aria-hidden>•</span> */}
                 {/* <span className={styles.role}>{e.role}</span> */}
-              </figcaption>
+              {/* </figcaption> */}
             </a>
           </li>
         ))}

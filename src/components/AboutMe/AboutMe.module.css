@@ -1,200 +1,202 @@
-.aboutContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between; /* To space out the two main blocks */
-  align-items: center; /* Aligns items vertically centered */
-  padding-top: 60px; /* Some padding on top and bottom */
-  height: calc(80vh);
-  background-color: var(--bg);
-  -webkit-font-smoothing: antialiased;
-  margin: 15px;
-  margin-top: 20px;
-  font-weight: 450;
-}
-  
-.introTextContainer {
-  display: flex;
-  width: 60vw;
-  padding-top: 60px;
-  padding-right: 20px; /* Adds some spacing between the text and the image */
-  flex-direction: column;
-  justify-content: center;
-  float: left;
-  padding-bottom: 120px;
-}
-  
-.bigContainer {
-  padding-top: 5%;
-  margin-left: 10%;
-  padding-left: 5%;
-}
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700,800,900&subset=latin-ext');
 
-.introTextBlock {
-  font-size: 72px; /* Large text */
-  color: var(--text);
-  font-family:'Quicksand';
-  display: block;
-  float: left;
-  text-align: left;
-  margin-bottom: 20px; /* Space between lines */
-  line-height: 1.2; /* Adjusts the spacing between lines of text */
-}
+/* -----------------------------------------------------------
+   Hero section. Pairs with the deeper "About me" section in
+   Introduction: this one is just a name reveal + short tagline
+   + decorative art, no bio paragraph. Same type system, same
+   palette, same spacing rhythm as Introduction.
+   ----------------------------------------------------------- */
+.heroSection {
+    position: relative;
 
-.introAboutMeBlock {
-  font-size: 20px; /* Smaller readable text */
-  text-align: left;
-  line-height: 1.5; /* Gives a good spacing between lines for readability */
-  max-width: 600px; /* Ensures the block doesn't get too wide */
-  color: var(--text);
-}
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 
-.imageContainer {
-  overflow: hidden;
-  flex: 1; /* This ensures the image container takes up half the space */
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Centers the image */
-  align-items: center; /* Centers the image vertically */
-}
-
-.image {
-  width: 90%; /* Uses 90% of the container's width */
-  height: auto; /* Keeps the aspect ratio */
-  background-color: #ddd; /* Placeholder background */
-  display: flex; /* To center the placeholder text */
-  justify-content: center; /* Horizontally centers the placeholder text */
-  align-items: center; /* Vertically centers the placeholder text */
-}
-
-.dottedBackground {
-    width: 40vw;  /* Your desired width */
-    height: 200px; /* Your desired height */
-    background:
-        radial-gradient(var(--subtext) 4px, transparent 3px),
-        radial-gradient(var(--subtext) 1px, transparent 1px);
-    background-size: 30px 30px;
-    transition: 1s ease-in-out;
-    background-position: 0 0, 5px 5px;
-}
-
-.highlight {
-  transition: 0.4s ease-in-out;
-  color: var(--text);
-}
-  
-.highlight:hover {
-  transition: 0.4s ease-in-out;
-  color: #008b8b;
-}
-
-.minh {
-  color: #0d63f8;
-  transition: 0.3s ease-in-out;
-}
-.nguyen {
-  color: #ff0088;
-  transition: 0.3s ease-in-out;
-}
-
-.minh:hover {
-  color: #2965f1;
-  transform: scale(1.25);
-}
-.nguyen:hover {
-  color: #d34c65;
-  transform: scale(1.25);
-}
-  
-@media only screen and (max-width: 600px) {
-  .aboutContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Aligns items vertically centered */
-    padding-top: 20px; /* Some padding on top and bottom */
-    height: fit-content;
-    background-color: var(--bg);
-    -webkit-font-smoothing: antialiased;
-    margin: 10px;
-    padding-top: 80px;
-    margin-top: 20px;
-  }
-  .introAboutMeBlock {
-    font-size: 18px; /* Smaller readable text */
-    text-align: left;
-    line-height: 1.5; /* Gives a good spacing between lines for readability */
-    max-width: 600px; /* Ensures the block doesn't get too wide */
+    min-height: 90vh;
+    background: var(--bg);
     color: var(--text);
-  }
-  .imageContainer {
+
+    padding: clamp(48px, 7vh, 96px) clamp(24px, 6vw, 80px);
+
+    display: grid;
+    place-items: center;
+
+    font-family: 'Quicksand', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+    overflow-x: hidden;
+    overflow-y: clip;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+.heroInner {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: clamp(24px, 5vw, 72px);
+    align-items: center;
+}
+
+.heroText {
     display: flex;
     flex-direction: column;
+    gap: clamp(18px, 2.4vw, 28px);
+    min-width: 0;
+}
+
+/* Eyebrow + heading + tagline mirror the type system used in
+   Introduction so the two sections read as one design language. */
+.eyebrow {
+    display: inline-block;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 0.6;
+}
+
+.bigName {
+    font-size: clamp(48px, 9vw, 96px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+    margin: 0;
+    color: var(--text);
+}
+
+.nameMinh,
+.nameNguyen {
+    display: inline-block;
+    cursor: default;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.nameMinh  { color: #0d63f8; }
+.nameNguyen { color: #ff0088; }
+
+.nameMinh:hover  { color: #2965f1; transform: scale(1.06); }
+.nameNguyen:hover { color: #d34c65; transform: scale(1.06); }
+
+.tagline {
+    font-size: clamp(17px, 1.6vw, 21px);
+    line-height: 1.55;
+    margin: 0;
+    max-width: 520px;
+    color: var(--text);
+    opacity: 0.85;
+}
+
+/* -----------------------------------------------------------
+   Scroll cue — the actionable bridge between this hero and the
+   deeper About-me section below. Same pill recipe as the header
+   MENU button and the Introduction badges (neutral fill, magenta
+   status dot, cyan hover) so the call-to-action is recognizable
+   as part of the site's button vocabulary. The arrow nudges
+   downward on a slow loop so it reads as "scroll for more".
+   ----------------------------------------------------------- */
+.scrollCue {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px 9px 12px;
+    border-radius: 999px;
+    background: rgba(15, 27, 97, 0.04);
+    border: 0px solid rgba(15, 27, 97, 0.10);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text);
+    font-family: 'Quicksand', sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: clamp(8px, 1.6vh, 18px);
+    align-self: flex-start;
+    transition:
+        transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1),
+        background-color 200ms ease,
+        border-color 200ms ease,
+        box-shadow 200ms ease;
+}
+
+.scrollCue:hover {
+    transform: translateY(-2px);
+    background: rgba(8, 253, 216, 0.14);
+    border-color: rgba(8, 253, 216, 0.55);
+    box-shadow: 0 8px 18px rgba(8, 253, 216, 0.20);
+}
+
+.scrollDot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ff0088;
+    box-shadow: 0 0 0 3px rgba(255, 0, 136, 0.18);
+    flex-shrink: 0;
+}
+
+.scrollArrow {
+    animation: scrollNudge 1.6s ease-in-out infinite;
+    display: block;
+}
+
+@keyframes scrollNudge {
+    0%, 100% { transform: translateY(0); }
+    50%     { transform: translateY(4px); }
+}
+
+.heroArt {
+    display: flex;
     justify-content: center;
     align-items: center;
-    width: calc(90%);
-    margin: auto;
-    margin-top: 20px;
-    padding-top: 10px;
-    padding-bottom: 20px;
-    overflow: hidden;
-    justify-content: center; /* Centers the image */
-    align-items: center; /* Centers the image vertically */
-  }
-  .imageContainer {
-    flex: 1; /* This ensures the image container takes up half the space */
-    display: none;
-    flex-direction: column;
-    justify-content: center; /* Centers the image */
-    align-items: center; /* Centers the image vertically */
-  }
-  .introTextBlock {
-    font-size: 38px; /* Large text */
-    color: var(--text);
-    display: block;
-    float: left;
-    text-align: left;
-    margin-bottom: 20px; /* Space between lines */
-    line-height: 1.2; /* Adjusts the spacing between lines of text */
-  }
-
-  .dottedBackground {
-    width: 95%;  /* Your desired width */
-    height: 10vh; /* Your desired height */
-    background:
-        radial-gradient(var(--subtext) 1px, transparent 1px),
-        radial-gradient(var(--subtext) 1px, transparent 1px);
-    background-size: 30px 30px;
-    background-position: 0 0, 15px 15px;
-    display: none;
-  }
+    min-width: 0;
 }
 
-@media only screen and (min-width:600px) and (max-width: 990px) {
-  .aboutContainer {
-    padding-top: 20px; /* Some padding on top and bottom */
-    height: fit-content;
-    background-color: var(--bg);
-    -webkit-font-smoothing: antialiased;
-    margin: 10px;
-    padding-top: 80px;
-    margin-top: 20px;
-  }
-  .introTextBlock {
-    font-size: 58px; /* Large text */
-    color: var(--text);
-    display: block;
-    float: left;
-    text-align: left;
-    margin-bottom: 5px; /* Space between lines */
-    line-height: 1.2; /* Adjusts the spacing between lines of text */
-  }
-  .introAboutMeBlock {
-    font-size: 20px; /* Smaller readable text */
-    text-align: left;
-    line-height: 1.5; /* Gives a good spacing between lines for readability */
-    max-width: 600px; /* Ensures the block doesn't get too wide */
-    color: var(--text);
-  }
-  .imageContainer {
-    width: 200;
-  }
+.heroArt svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* -----------------------------------------------------------
+   Responsive: stack art under text on narrow screens, hide the
+   art entirely on very small phones to keep the hero tight.
+   ----------------------------------------------------------- */
+@media (max-width: 820px) {
+    .heroSection {
+        min-height: auto;
+        padding: clamp(48px, 8vh, 80px) clamp(20px, 6vw, 40px);
+    }
+    .heroInner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+    .heroArt {
+        max-height: 280px;
+    }
+    .bigName {
+        font-size: clamp(40px, 11vw, 60px);
+    }
+    .tagline {
+        font-size: clamp(16px, 4.2vw, 19px);
+    }
+}
+
+@media (max-width: 540px) {
+    .heroArt {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nameMinh,
+    .nameNguyen { transition: none; }
+    .nameMinh:hover,
+    .nameNguyen:hover { transform: none; }
+    .scrollArrow { animation: none; }
+    .scrollCue { transition: none; }
+    .scrollCue:hover { transform: none; box-shadow: none; }
 }

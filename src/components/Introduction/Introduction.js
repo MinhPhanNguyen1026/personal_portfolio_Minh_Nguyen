@@ -1,92 +1,77 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from "react";
+import { useParallax } from "react-scroll-parallax";
 import style from "./Introduction.module.css";
 
-function AnimatedSquare({ letter }) {
-    return (
-        <div className={style.animatedSquare}>
-            {letter}
-        </div>
-    );
-}
-
-function Square({ letter }) {
-    const ref = useRef(null);
-
-    useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-
-        const handleMouseEnter = () => {
-            el.classList.add("rubberBand");
-        };
-
-        const handleAnimationEnd = () => {
-            el.classList.remove("rubberBand");
-        };
-
-        el.addEventListener('mouseenter', handleMouseEnter);
-        el.addEventListener('animationend', handleAnimationEnd);
-    }, []);
-
-    return <div className={style.square} ref={ref}>{letter}</div>;
-}
+const SKILLS = [
+    "JavaScript", "TypeScript", "Python", "Java", "Go", "Rust", "Assembly",
+    "React", "React Native", "Redux", "HTML", "CSS", "LESS", "Webpack",
+    "Flask", "RAG System", "Firebase", "MongoDB", "SQL", "PopSQL",
+    "Charm", "Docker", "Kubernetes",
+];
 
 function Introduction() {
-    return (    
-        <div className={style.introductionContainer}>
-            <div className={style.aboutMeHeaderContainer}>
-                <div className={style.menu} id="menu">
-                    <li className={style.line}>
-                        <Square letter="A" />
-                        <Square letter="B" />
-                        <Square letter="O" />
-                        <Square letter="U" />
-                        <Square letter="T" />
-                    </li>
-                    <li className={style.line}>
-                        <Square letter="M" />
-                        <AnimatedSquare letter="E" />
-                    </li>
+    // Explicit translateY (vs. `speed`) gives the library two known endpoints
+    // and a continuous interpolation between them, which avoids the small
+    // "teleport" jump that can happen when `speed` first activates as the
+    // section enters the viewport.
+    const watermark = useParallax({ translateY: ["-120px", "120px"] });
+
+    return (
+        <section
+            className={style.introductionContainer}
+            aria-labelledby="about-heading"
+        >
+            <div className={style.inner}>
+                <span
+                    ref={watermark.ref}
+                    className={style.watermark}
+                    aria-hidden="true"
+                >
+                    About
+                </span>
+
+                <div className={style.content}>
+                    <span className={style.eyebrow}>
+                        <span className={style.dot} aria-hidden="true" />
+                        About me
+                    </span>
+
+                    <h2 id="about-heading" className={style.heading}>
+                        Crafting software,{" "}
+                        <span className={style.headingAccent}>end to end</span>.
+                    </h2>
+
+                    <p className={style.lead}>
+                        I&rsquo;m a software engineer focused on building fast,
+                        accessible frontend experiences and dependable backend
+                        systems.
+                    </p>
+                    <p className={style.lead}>
+                        I&rsquo;ve worked across startups, big tech, and research
+                        labs, turning ideas into production features and
+                        collaborating with teams to build inclusive, polished
+                        products.
+                    </p>
+
+                    <div className={style.toolboxSection}>
+                        <h3 className={style.toolboxTitle}>
+                            <span className={style.dot} aria-hidden="true" />
+                            In my toolbox
+                        </h3>
+                        <ul
+                            className={style.toolbox}
+                            aria-label="Technologies I work with"
+                        >
+                            {SKILLS.map((skill) => (
+                                <li key={skill} className={style.badge}>
+                                    {skill}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div className={style.aboutMeTextContainer}>
-                <p>
-          I’m a software engineer with a passion for building fast, and amazing user experiences with responsive and accessible frontend
-          and dependable, scalable backend.
-                </p>
-                <p>
-          I’ve worked across startups, big tech, and research labs—turning ideas into production
-          features and partnering with forward-thinking teams to design inclusive, polished products.
-                </p>
-                <p>In my toolbox, you'll find technologies like:</p>
-                <ul className={style.toolbox}>
-                    <li className={style.javascript}>JavaScript</li>
-                    <li className={style.typescript}>TypeScript</li>
-                    <li className={style.go}>Go</li>
-                    <li className={style.rust}>Rust</li>
-                    <li className={style.react}>React</li>
-                    <li className={style.reactNative}>React Native</li>
-                    <li className={style.flask}>Flask</li>
-                    <li className={style.llm}>RAG System</li>
-                    <li className={style.rag}>Flask</li>
-                    <li className={style.redux}>Redux</li>
-                    <li className={style.html}>HTML</li>
-                    <li className={style.css}>CSS</li>
-                    <li className={style.less}>LESS</li>
-                    <li className={style.python}>Python</li>
-                    <li className={style.java}>Java</li>
-                    <li className={style.assembly}>Assembly</li>
-                    <li className={style.firebase}>Firebase</li>
-                    <li className={style.mongoDB}>MongoDB</li>
-                    <li className={style.sql}>SQL</li>
-                    <li className={style.webpack}>Webpack</li>
-                    <li className={style.sql}>PopSQL</li>
-                    <li className={style.charm}>Charm</li>
-                    <li className={style.kubernetes}>Kubernetes</li>
-                    <li className={style.docker}>Docker</li>
-                </ul>
-            </div>
-        </div>
+        </section>
     );
 }
 
