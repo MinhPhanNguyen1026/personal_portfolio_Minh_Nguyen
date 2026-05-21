@@ -68,11 +68,11 @@ function App() {
               <WorkExperience />
             </Parallax>
           </div>
-          <div id="workTogether">
-            <WorkTogether></WorkTogether>
-          </div>
           <div id="projectFrame">
             <ProjectFrame></ProjectFrame>
+          </div>
+          <div id="workTogether">
+            <WorkTogether></WorkTogether>
           </div>
           <div id="socialLinks">
             <SocialLinks></SocialLinks>

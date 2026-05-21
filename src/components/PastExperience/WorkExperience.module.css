@@ -1,5 +1,5 @@
 :root {
-  --accent: #08FDD8;
+  --accent: #4ff0b7;
 }
 
 /* -----------------------------------------------------------
@@ -26,6 +26,7 @@
   margin: 0 auto;
 
   overflow-x: hidden;
+  margin-bottom: 100px;
 }
 
 .titleRow {

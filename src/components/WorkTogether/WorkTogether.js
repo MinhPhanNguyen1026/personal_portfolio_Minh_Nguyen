@@ -11,14 +11,14 @@ function WorkTogether() {
                 </div>
                 <div className={style.line}></div>
                 <div className={style.paragraph}>
-                    From interactive websites to <b className={style.highlight}>maintainable</b> software,  
-                    from single page web app to an application that deals with data pipeline, 
-                    I would love to contribute to your <b className={style.highlight}>ambitious</b> yet <b className={style.highlight}>user-friendly</b> projects.
+                    From interactive websites to <b className={style.highlight}>maintainable</b> software,
+                    from single-page apps to data-driven platforms,
+                    I'd love to help build <b className={style.highlight}>ambitious</b>, <b className={style.highlight}>user-friendly</b> products.
                 </div>
                 <div className={style.paragraphMobile}>
-                    From interactive websites to <b className={style.highlight}>maintainable</b> software, single page 
-                    web app to an application that deals with data pipeline, 
-                    I would love to contribute to your <b className={style.highlight}>ambitious</b> yet <b className={style.highlight}>user-friendly</b> projects.
+                    From interactive websites to <b className={style.highlight}>maintainable</b> software,
+                    from single-page apps to data-driven platforms,
+                    I'd love to help build <b className={style.highlight}>ambitious</b>, <b className={style.highlight}>user-friendly</b> products.
                     <Parallax speed={-9}>
                         <div className={style.dottedBackground}></div>
                     </Parallax>
