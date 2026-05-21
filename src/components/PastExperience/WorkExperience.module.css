@@ -3,7 +3,7 @@
 }
 
 .wrap {
-  width: calc("100%" - "20px");
+  width: calc(100% - 20px);
   background: var(--bg);
   color: var(--text);
   padding: clamp(40px, 6vw, 96px) 24px;
@@ -31,7 +31,11 @@
   gap: clamp(16px, 3vw, 32px);
 }
 
-.item { display: block; }
+.item {
+  display: block;
+  min-width: 0;
+}
+
 .tile {
   display: grid;
   grid-template-rows: auto auto;
@@ -40,42 +44,88 @@
   padding: clamp(14px, 2vw, 18px) clamp(12px, 2vw, 16px);
   border-radius: 16px;
   border: 1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.02);
+  background: #ffffff;
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
   text-decoration: none;
-  transition: transform 220ms ease, border-color 220ms ease, background-color 220ms ease, box-shadow 220ms ease;
+
+  overflow: hidden;
+  min-width: 0;
+
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease;
 }
-.tile:hover, .tile:focus-visible {
+
+.tile:hover,
+.tile:focus-visible {
   transform: translateY(-2px);
   border-color: rgba(255,255,255,0.16);
-  background: rgba(255,255,255,0.04);
+  background: #ffffff;
   box-shadow: 0 12px 36px rgba(0,0,0,0.18);
 }
 
 .logoBox {
   width: 100%;
-  height: clamp(64px, 8vw, 96px); /* small bump helps tall logos like Salesforce */
-  display: grid;
-  place-items: center;
-  padding: 8px;
+  height: clamp(80px, 10vw, 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   overflow: hidden;
-  min-width: 0; /* grid/flex shrink fixes */
+  min-width: 0;
   min-height: 0;
+  box-sizing: border-box;
+  padding: 10px;
 }
 
-/* Always scale to fit, preserve aspect ratio, never overflow.
-   Explicit 100%/100% + object-fit: contain is the most predictable fit:
-   the <img> box fills the logoBox content area, and the image content
-   scales to fit inside while preserving aspect ratio (letterboxed if needed). */
 .logo {
+  display: block;
+
   width: 100%;
   height: 100%;
+
   object-fit: contain;
   object-position: center;
-  display: block;
-  /* optional cosmetics */
+
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  max-height: 100%;
+
+  box-sizing: border-box;
+
   filter: grayscale(0.2) contrast(1.05) opacity(.95);
-  transition: filter 180ms ease, opacity 180ms ease, transform 180ms ease;
+
+  transition:
+    filter 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.tile:hover .logo,
+.tile:focus-visible .logo {
+  filter: none;
+  opacity: 1;
+  transform: scale(1.035);
+}
+
+.logoCanvas {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 0;
+}
+
+/* Companion to .logoCanvas: when the logo sits on a pure-white canvas,
+   give the surrounding tile the same pure-white background so the two
+   visually merge into one card (instead of the logo appearing as a
+   brighter rectangle inside a near-page-color tile). Background-only —
+   no layout/sizing properties touched. */
+.tileCanvas,
+.tileCanvas:hover,
+.tileCanvas:focus-visible {
+  background: #ffffff;
 }
 
 /* Invert white wordmarks on light backgrounds (e.g., Onc.AI) */

@@ -23,7 +23,7 @@ const EMPLOYERS = [
       width: 874,
       height: 874,
       needsInvertOnLight: false,
-      needsBlend: true,
+      needsCanvas: true,
     },
   },
   {
@@ -40,7 +40,7 @@ const EMPLOYERS = [
   },
   {
     company: "University of Rochester",
-    role: "Technical Assistant II — Psychology",
+    role: "Technical Assistant II",
     href: "https://www.rochester.edu/",
     // Official wordmark+shield as SVG (Wikipedia-hosted file)
     logo: {
@@ -53,7 +53,7 @@ const EMPLOYERS = [
   // Uncomment to show a past role as well
   {
     company: "Salesforce",
-    role: "Software Engineer Intern (2024)",
+    role: "Software Engineer Intern",
     href: "https://www.salesforce.com/",
     logo: {
       src: "https://a.sfdcstatic.com/shared/images/c360-nav/salesforce-with-type-logo.svg",
@@ -64,7 +64,7 @@ const EMPLOYERS = [
   },
 {
     company: "ROC-HCI Lab",
-    role: "Researcher — HCI & AI",
+    role: "Research Assistant",
     href: "https://roc-hci.com/",
     logo: {
       src: "https://roc-hci.com/wp-content/uploads/vertical_logo-1-e1528565825525.png",
@@ -88,17 +88,16 @@ export default function WorkAffiliations() {
       <ul className={styles.grid} role="list">
         {EMPLOYERS.map((e) => (
           <li key={e.company} className={styles.item}>
-            <a className={`${styles.tile} ${e.logo.needsBlend ? styles.tileBlend : ""}`} href={e.href} target="_blank" rel="noreferrer noopener" aria-label={`${e.company} — ${e.role}`}>
+            <a className={`${styles.tile} ${e.logo.needsBlend ? styles.tileBlend : ""} ${e.logo.needsCanvas ? styles.tileCanvas : ""}`} href={e.href} target="_blank" rel="noreferrer noopener" aria-label={`${e.company} — ${e.role}`}>
               <div className={styles.logoBox}>
                 <img
-                  className={`${styles.logo} ${e.logo.needsInvertOnLight ? styles.needsInvert : ""} ${e.logo.needsBlend ? styles.needsBlend : ""}`}
+                  className={`${styles.logo} ${e.logo.needsInvertOnLight ? styles.needsInvert : ""} ${e.logo.needsBlend ? styles.needsBlend : ""} ${e.logo.needsCanvas ? styles.logoCanvas : ""}`}
                   src={e.logo.src}
                   alt={`${e.company} logo`}
                   loading="lazy"
                   decoding="async"
                   width={e.logo.width}
                   height={e.logo.height}
-                  style={{ aspectRatio: `${e.logo.width} / ${e.logo.height}` }}
                 />
               </div>
               <figcaption className={styles.caption}>
