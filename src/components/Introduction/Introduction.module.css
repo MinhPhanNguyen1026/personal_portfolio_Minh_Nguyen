@@ -196,6 +196,9 @@
 .rag { color: #9b59b6; }             /* RAG Purple */
 .webpack { color: #8DD6F9; }         /* Webpack Light Blue */
 .popsql { color: #00A7B3; }          /* PopSQL Teal */
+.charm { color: #FF61B6; }           /* Charm Pink */
+.kubernetes { color: #326CE5; }      /* Kubernetes Blue */
+.docker { color: #2496ED; }          /* Docker Blue */
 
 @media only screen and (max-width: 600px) {
     .introductionContainer {

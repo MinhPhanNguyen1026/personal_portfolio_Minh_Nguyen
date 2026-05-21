@@ -81,6 +81,9 @@ function Introduction() {
                     <li className={style.sql}>SQL</li>
                     <li className={style.webpack}>Webpack</li>
                     <li className={style.sql}>PopSQL</li>
+                    <li className={style.charm}>Charm</li>
+                    <li className={style.kubernetes}>Kubernetes</li>
+                    <li className={style.docker}>Docker</li>
                 </ul>
             </div>
         </div>

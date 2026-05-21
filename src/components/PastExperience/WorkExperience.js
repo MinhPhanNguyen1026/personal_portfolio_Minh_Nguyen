@@ -4,6 +4,29 @@ import styles from "./WorkExperience.module.css";
 // If you want to include past roles too, just add to this array.
 const EMPLOYERS = [
   {
+    company: "Canonical",
+    role: "Software Engineer",
+    href: "https://canonical.com/",
+    logo: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/9/93/Canonical_logo_2023.svg",
+      width: 1329,
+      height: 400,
+      needsInvertOnLight: false,
+    },
+  },
+  {
+    company: "Inter.play Lab",
+    role: "Research Assistant",
+    href: "https://interplaylab.com/",
+    logo: {
+      src: "https://interplaylab.com/wp-content/uploads/2025/09/Logo_v1.0-1.png",
+      width: 874,
+      height: 874,
+      needsInvertOnLight: false,
+      needsBlend: true,
+    },
+  },
+  {
     company: "Onc.AI",
     role: "Software Engineer (Contract)",
     href: "https://onc.ai/",
@@ -65,10 +88,10 @@ export default function WorkAffiliations() {
       <ul className={styles.grid} role="list">
         {EMPLOYERS.map((e) => (
           <li key={e.company} className={styles.item}>
-            <a className={styles.tile} href={e.href} target="_blank" rel="noreferrer noopener" aria-label={`${e.company} — ${e.role}`}>
+            <a className={`${styles.tile} ${e.logo.needsBlend ? styles.tileBlend : ""}`} href={e.href} target="_blank" rel="noreferrer noopener" aria-label={`${e.company} — ${e.role}`}>
               <div className={styles.logoBox}>
                 <img
-                  className={`${styles.logo} ${e.logo.needsInvertOnLight ? styles.needsInvert : ""}`}
+                  className={`${styles.logo} ${e.logo.needsInvertOnLight ? styles.needsInvert : ""} ${e.logo.needsBlend ? styles.needsBlend : ""}`}
                   src={e.logo.src}
                   alt={`${e.company} logo`}
                   loading="lazy"
