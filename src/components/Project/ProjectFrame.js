@@ -6,7 +6,7 @@ import project2Image from './project2.png';
 import project3Image from './project3.png';
 import project4Image from './project4.png';
 
-import { Parallax, useParallax } from 'react-scroll-parallax';
+import { Parallax } from 'react-scroll-parallax';
 import StudentTable from "../AI/StudentTable";
 import SkillSet from "../Skill/SkillSet";
 
@@ -18,43 +18,53 @@ function ProjectFrame() {
     return (
         <div className={style.projectContainer}>
             <Parallax speed={-7}>
-                <div className={style.projectTitle}>
-                    MY PERSONAL PROJECTS
-                </div>
-                <div className={style.projectDescription}>
-                    Some of the things I have built/am currently working on.
-                    <br></br>
-                    Including both website and software projects.
+                <div className={style.projectIntro}>
+                    <span className={style.projectEyebrow}>
+                        <span className={style.projectDot} aria-hidden="true" />
+                        Selected work
+                    </span>
+                    <div className={style.projectTitle}>
+                        MY PERSONAL PROJECTS
+                    </div>
+                    <div className={style.projectDescription}>
+                        A few shipped and in-progress projects across web products,
+                        internal dashboards, research tools, and campus software.
+                    </div>
                 </div>
             </Parallax>
             <div className={style.firstProjectContainer}>
                 <div className={style.imageContainer}>
-                    <img src={project1Image} width="77%" height="77%" alt="A sample image in the images folder"></img>
+                    <img className={style.projectImage} src={project1Image} alt="Anime Interest Floor landing page preview"></img>
                 </div>
                 <div className={style.textContainer}>
                     <div className={style.specificProjectTitle}>
-                        Anime Interest Floor landing page
+                        Anime Interest Floor Landing Page
                     </div>
                     <div className={style.specificProjectDescriptionContainer}>
                         <p>
-                            A landing page for the most active Special Interest Housing Organization of University of Rochester. A landing page for the Anime Interest Floor which has over 300 members. 
+                            Designed and built a responsive landing page for the
+                            University of Rochester's Anime Interest Floor, giving
+                            a 300+ member community a clearer home for events,
+                            identity, and organization details.
                         </p>
                     </div>
                     <div className={style.linkContainer}>
-                        <a className={style.gitHubLinkContainer} href="https://github.com/Sonicfires2/landing-page-aif">
-                            GitHub Code
-                        </a>
-                        <a className={style.websiteLinkContainer} href="https://sonicfires2.github.io/landing-page-aif/">
-                            Website Link
-                        </a>
-                        <SkillSet listOfSkill={["JavaScript", "CSS", "HTML"]}></SkillSet>
+                        <div className={style.projectLinks}>
+                            <a className={style.gitHubLinkContainer} href="https://github.com/Sonicfires2/landing-page-aif" target="_blank" rel="noreferrer noopener">
+                                GitHub Code
+                            </a>
+                            <a className={style.websiteLinkContainer} href="https://sonicfires2.github.io/landing-page-aif/" target="_blank" rel="noreferrer noopener">
+                                Live Site
+                            </a>
+                        </div>
+                        <SkillSet listOfSkill={["JavaScript", "CSS", "HTML", "Responsive UI"]}></SkillSet>
                     </div>
                 </div>
             </div>
 
             <div className={style.secondProjectContainer}>
                 <div className={style.imageContainer}>
-                    <img src={project2Image} width="100%" height="100%" alt="A sample image in the images folder"></img>
+                    <img className={style.projectImage} src={project2Image} alt="KPI Dashboard preview"></img>
                 </div>
                 <div className={style.textContainer}>
                     <div className={style.specificProjectTitle}>
@@ -62,16 +72,20 @@ function ProjectFrame() {
                     </div>
                     <div className={style.specificProjectDescriptionContainer}>
                         <p>
-                            Designed, coded, and embedded an automated dashboard containing different KPI for the data pipeline of Onc.ai onto their Confluence page. 
+                            Built an embedded operations dashboard for Onc.AI to
+                            surface pipeline health, task progress, and
+                            team-facing KPIs directly inside Confluence.
                         </p>
                     </div>
                     <div className={style.linkContainer}>
-                        <a disable className={style.disablegitHubLinkContainer} href="#">
-                            Confidental Code
-                        </a>
-                        <a className={style.websiteLinkContainer} href="https://test-react-to-make-data-analysis-dashboard-two.atlassian.net/l/cp/JjJFkWo1">
-                            Mockup/Study Case in Confluence 
-                        </a>
+                        <div className={style.projectLinks}>
+                            <span className={style.disablegitHubLinkContainer}>
+                                Confidential Code
+                            </span>
+                            <a className={style.websiteLinkContainer} href="https://test-react-to-make-data-analysis-dashboard-two.atlassian.net/l/cp/JjJFkWo1" target="_blank" rel="noreferrer noopener">
+                                Confluence Case Study
+                            </a>
+                        </div>
                         <SkillSet listOfSkill={["Python", "JavaScript", "MongoDB", "Google Cloud Platform", "Trello API", "Valohai API", "SharePoint"]}></SkillSet>
                     </div>
                 </div>
@@ -79,7 +93,7 @@ function ProjectFrame() {
 
             <div className={style.firstProjectContainer}>
                 <div className={style.imageContainer}>
-                    <img src={project3Image} width="100%" height="100%" alt="A sample image in the images folder"></img>
+                    <img className={style.projectImage} src={project3Image} alt="Teacher Authoring Tool preview"></img>
                 </div>
                 <div className={style.textContainer}>
                     <div className={style.specificProjectTitle}>
@@ -87,46 +101,51 @@ function ProjectFrame() {
                     </div>
                     <div className={style.specificProjectDescriptionContainer}>
                         <p>
-                            Teacher Authoring Tool is a web application specifically built to help promote
-                            AI literacy among K-12 students by allowing teachers to create interactive AI-related assignments for students. 
-                            This project is currently under development.
+                            Contributed to a research-backed authoring platform
+                            that helps K-12 teachers create interactive
+                            AI-literacy assignments and classroom activities.
                         </p>
                     </div>
                     <div className={style.linkContainer}>
-                        <a disable className={style.disablegitHubLinkContainer} href="#">
-                            Confidental Code
-                        </a>
-                        <a className={style.websiteLinkContainer} href="https://advait.org/files/zhou_2024_k12_ML.pdf">
-                            Published Paper 
-                        </a>
-                        <SkillSet listOfSkill={["React","JavaScript","TypeScript", "HTML","CSS", "Redux", "LESS"]}></SkillSet>
+                        <div className={style.projectLinks}>
+                            <span className={style.disablegitHubLinkContainer}>
+                                Confidential Code
+                            </span>
+                            <a className={style.websiteLinkContainer} href="https://advait.org/files/zhou_2024_k12_ML.pdf" target="_blank" rel="noreferrer noopener">
+                                Published Paper
+                            </a>
+                        </div>
+                        <SkillSet listOfSkill={["React", "TypeScript", "JavaScript", "Redux", "LESS", "AI Literacy", "Education"]}></SkillSet>
                     </div>
                 </div>
             </div>
 
             <div className={style.secondProjectContainer}>
                 <div className={style.imageContainer}>
-                    <img src={project4Image} width="100%" height="100%" alt="A sample image in the images folder"></img>
+                    <img className={style.projectImage} src={project4Image} alt="Melcourses CDCS System preview"></img>
                 </div>
                 <div className={style.textContainer}>
                     <div className={style.specificProjectTitle}>
-                        Melcourse CDCS System 
+                        Melcourses CDCS System
                     </div>
                     <div className={style.specificProjectDescriptionContainer}>
                         <p>
-                            With the old course description course system - also known as CDCS - being outdated, 
-                            there was a need for a new CDCS for the students to utilize. This website is a solution to this issue. 
-                            The website was official acquired and endorsed by the University. Current, over 1200 students actively use it.
+                            Helped build a modern course description and discovery
+                            system for University of Rochester students, replacing
+                            an outdated CDCS workflow and supporting active course
+                            planning at scale.
                         </p>
                     </div>
                     <div className={style.linkContainer}>
-                        <a disable className={style.disablegitHubLinkContainer}>
-                            Confidental Code 
-                        </a>
-                        <a className={style.websiteLinkContainer} href="https://melcourses.com">
-                            Website Link
-                        </a>
-                        <SkillSet listOfSkill={["JavaScript", "TypeScript", "NextJS","React", "HTML", "CSS", "SQL"]}></SkillSet>
+                        <div className={style.projectLinks}>
+                            <span className={style.disablegitHubLinkContainer}>
+                                Confidential Code
+                            </span>
+                            <a className={style.websiteLinkContainer} href="https://melcourses.com" target="_blank" rel="noreferrer noopener">
+                                Live Site
+                            </a>
+                        </div>
+                        <SkillSet listOfSkill={["Next.js", "React", "TypeScript", "JavaScript", "SQL", "CSS"]}></SkillSet>
                     </div>
                 </div>
             </div>

@@ -73,6 +73,18 @@ const EMPLOYERS = [
       needsInvertOnLight: false,
     },
   },
+  {
+// https://sb-web-assets.s3.amazonaws.com/production/2877/PwC_fl_c.png
+    company: "PwC",
+    role: "Digital Transformation Consultant",
+    href: "https://www.pwc.com/vn/en",
+    logo: {
+      src: "https://sb-web-assets.s3.amazonaws.com/production/2877/PwC_fl_c.png",
+      width: 690,
+      height: 190,
+      needsInvertOnLight: false,
+    },
+  },
 ];
 
 export default function WorkAffiliations() {
