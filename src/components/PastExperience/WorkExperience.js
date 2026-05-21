@@ -30,7 +30,7 @@ const CURRENT_ROLES = [
 const PREVIOUS_EXPERIENCE = [
   {
     company: "Onc.AI",
-    role: "Software Engineer · Contract",
+    role: "Software Engineer",
     href: "https://onc.ai/",
     logo: {
       src: "https://onc.ai/wp-content/uploads/2021/11/oncai_logo_updated-color-2.png",
@@ -60,7 +60,7 @@ const PREVIOUS_EXPERIENCE = [
   },
     {
     company: "University of Rochester",
-    role: "Teaching Assistant",
+    role: "CS Teaching Assistant",
     href: "https://www.rochester.edu/",
     logo: {
       src: "https://upload.wikimedia.org/wikipedia/en/7/76/University_of_Rochester_logo.svg",
@@ -74,6 +74,16 @@ const PREVIOUS_EXPERIENCE = [
     href: "https://roc-hci.com/",
     logo: {
       src: "https://roc-hci.com/wp-content/uploads/vertical_logo-1-e1528565825525.png",
+      width: 690,
+      height: 190,
+    },
+  },
+  {
+    company: "Anime Interest Floor (UR)",
+    role: "Web Master",
+    href: "https://sonicfires2.github.io/landing-page-aif/",
+    logo: {
+      src: "https://sonicfires2.github.io/landing-page-aif/static/media/AIFlogo2025.d801c86c6569d6c3764e.png",
       width: 690,
       height: 190,
     },

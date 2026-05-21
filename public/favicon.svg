@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>Minh Nguyen monogram</title>
+  <rect width="64" height="64" rx="14" fill="#0f1b61"/>
+  <path d="M11 49V16l12.5 17L36 16v33" fill="none" stroke="#08fdd8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 49V16l23 33V16" fill="none" stroke="#ff0088" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="51" cy="13" r="5" fill="#4ff0b7"/>
+  <path d="M8 55h48" fill="none" stroke="#f4f9fc" stroke-width="3" stroke-linecap="round" opacity="0.82"/>
+</svg>
