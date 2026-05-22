@@ -8,9 +8,10 @@
 .header {
   position: fixed;
   top: 0;
-  left: 30px;
+  left: var(--page-gutter, 10px);
+  right: var(--page-gutter, 10px);
 
-  width: calc(100% - 100px);
+  width: auto;
   min-height: 49px;
   box-sizing: border-box;
 
@@ -297,8 +298,8 @@
    ----------------------------------------------------------- */
 @media only screen and (max-width: 768px) {
   .header {
-    left: 10px;
-    right: 10px;
+    left: var(--page-gutter, 10px);
+    right: var(--page-gutter, 10px);
     width: auto;
     margin-left: 0;
     padding: 8px 18px;

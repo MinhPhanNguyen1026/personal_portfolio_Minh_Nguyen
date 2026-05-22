@@ -30,7 +30,7 @@ const CURRENT_ROLES = [
 const PREVIOUS_EXPERIENCE = [
   {
     company: "Onc.AI",
-    role: "Software Engineer",
+    role: "Software Engineer · Contract",
     href: "https://onc.ai/",
     logo: {
       src: "https://onc.ai/wp-content/uploads/2021/11/oncai_logo_updated-color-2.png",
@@ -44,6 +44,16 @@ const PREVIOUS_EXPERIENCE = [
     href: "https://www.rochester.edu/",
     logo: {
       src: "https://upload.wikimedia.org/wikipedia/en/7/76/University_of_Rochester_logo.svg",
+      width: 690,
+      height: 190,
+    },
+  },
+  {
+    company: "RocLab",
+    role: "Frontend Lead",
+    href: "https://linktr.ee/roclab",
+    logo: {
+      src: "https://ugc.production.linktr.ee/MW252fOzR3exjRUEiWn7_O7hkrL2IuY5eoVVJ?io=true&size=avatar-v3_0",
       width: 690,
       height: 190,
     },
@@ -68,6 +78,16 @@ const PREVIOUS_EXPERIENCE = [
       height: 190,
     },
   },
+    {
+    company: "Onc.AI",
+    role: "Software Engineer Intern",
+    href: "https://onc.ai/",
+    logo: {
+      src: "https://onc.ai/wp-content/uploads/2021/11/oncai_logo_updated-color-2.png",
+      width: 304,
+      height: 90,
+    },
+  },
   {
     company: "ROC-HCI Lab",
     role: "Research Assistant",
@@ -90,7 +110,7 @@ const PREVIOUS_EXPERIENCE = [
   },
   {
     company: "PwC",
-    role: "Digital Transformation Consultant",
+    role: "Digital Transformation Consultant · Seasonal",
     href: "https://www.pwc.com/vn/en",
     logo: {
       src: "https://sb-web-assets.s3.amazonaws.com/production/2877/PwC_fl_c.png",
