@@ -248,7 +248,7 @@ export default function WorkAffiliations() {
           <div className={styles.groupHeader}>
             <h3 className={styles.groupTitle}>Volunteer</h3>
             <p className={styles.groupDescription}>
-              Community work and student organization contributions outside formal employment.
+              Volunteer and community work.
             </p>
           </div>
           <ul className={styles.volunteerGrid}>
