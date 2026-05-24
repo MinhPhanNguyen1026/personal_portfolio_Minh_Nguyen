@@ -118,7 +118,8 @@
 }
 
 .currentGrid,
-.previousGrid {
+.previousGrid,
+.volunteerGrid {
   width: 100%;
   max-width: 100%;
   min-width: 0;
@@ -135,6 +136,11 @@
 
 .previousGrid {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+  gap: clamp(14px, 2.4vw, 22px);
+}
+
+.volunteerGrid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 320px));
   gap: clamp(14px, 2.4vw, 22px);
 }
 
@@ -275,9 +281,9 @@
 
 .captionTop {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
   gap: 8px;
   max-width: 100%;
 }
@@ -343,7 +349,8 @@
     grid-template-columns: 1fr;
   }
 
-  .previousGrid {
+  .previousGrid,
+  .volunteerGrid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
   }
 }
@@ -358,7 +365,8 @@
     font-size: clamp(30px, 9vw, 38px);
   }
 
-  .previousGrid {
+  .previousGrid,
+  .volunteerGrid {
     grid-template-columns: 1fr;
   }
 

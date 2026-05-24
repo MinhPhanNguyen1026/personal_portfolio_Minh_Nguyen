@@ -24,11 +24,15 @@ function ProjectFrame() {
                         Selected work
                     </span>
                     <div className={style.projectTitle}>
-                        MY PERSONAL PROJECTS
+                        MY PROJECTS
                     </div>
                     <div className={style.projectDescription}>
-                        A few shipped and in-progress projects across web products,
+                        A few shipped projects across web products,
                         internal dashboards, research tools, and campus software.
+                    </div>
+                    <div className={style.projectNote}>
+                        <span className={style.noteDot} aria-hidden="true" />
+                        A curated selection of publicly shareable projects.
                     </div>
                 </div>
             </Parallax>
@@ -115,7 +119,7 @@ function ProjectFrame() {
                                 Published Paper
                             </a>
                         </div>
-                        <SkillSet listOfSkill={["React", "TypeScript", "JavaScript", "Redux", "LESS", "AI Literacy", "Education"]}></SkillSet>
+                        <SkillSet listOfSkill={["React", "TypeScript", "JavaScript", "Redux", "CSS", "LESS", "AI Literacy", "Education"]}></SkillSet>
                     </div>
                 </div>
             </div>
@@ -145,7 +149,7 @@ function ProjectFrame() {
                                 Live Site
                             </a>
                         </div>
-                        <SkillSet listOfSkill={["Next.js", "React", "TypeScript", "JavaScript", "SQL", "CSS"]}></SkillSet>
+                        <SkillSet listOfSkill={["Next.js", "React", "TypeScript", "JavaScript", "SQL", "Chakra UI", "CSS"]}></SkillSet>
                     </div>
                 </div>
             </div>

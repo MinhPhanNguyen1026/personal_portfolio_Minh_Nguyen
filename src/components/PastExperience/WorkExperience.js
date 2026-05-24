@@ -98,7 +98,7 @@ const PREVIOUS_EXPERIENCE = [
       height: 190,
     },
   },
-  {
+    {
     company: "Anime Interest Floor (UR)",
     role: "Web Master",
     href: "https://sonicfires2.github.io/landing-page-aif/",
@@ -114,6 +114,31 @@ const PREVIOUS_EXPERIENCE = [
     href: "https://www.pwc.com/vn/en",
     logo: {
       src: "https://sb-web-assets.s3.amazonaws.com/production/2877/PwC_fl_c.png",
+      width: 690,
+      height: 190,
+    },
+  },
+];
+
+const VOLUNTEER_EXPERIENCE = [
+  {
+    company: "University of Rochester",
+    role: "Hackathon Organizer",
+    status: "Volunteer",
+    href: "https://dandyhacks.net",
+    logo: {
+      src: "https://scontent-sjc3-1.cdninstagram.com/v/t39.30808-6/468531939_18209114839288662_4731406689385949607_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ig_cache_key=MzQ2MTY4NTE4NTUyMTI0NDgwNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Yp3yC-55VtIQ7kNvwFbAM1r&_nc_oc=AdqIa04Crcj39FVR3APpmDrraeVR5vvQKnxOLvltBrid-vZXi1vZUU9P7ZaLjgYpJCA&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_gid=faX1N7cCxqZqlQWL3upORQ&_nc_ss=7a22e&oh=00_Af5zYFxkr0dw8h1x725EYN3ksUpbj6OW3YFFXkUYts-c3w&oe=6A187859",
+      width: 690,
+      height: 190,
+    },
+  },
+  {
+    company: "Rochester Institution of Technology",
+    role: "Staff Guest Handler",
+    status: "Volunteer",
+    href: "https://toracon.org/home",
+    logo: {
+      src: "https://images.squarespace-cdn.com/content/v1/648a0ccd5f3a811d210f1d54/86546892-e74d-4973-b607-c4f338b24b67/Tora-Con+2026+Logo+%28w_+anime%29.png?format=1500w",
       width: 690,
       height: 190,
     },
@@ -157,7 +182,7 @@ function ExperienceCard({ experience, featured = false }) {
         </div>
         <div className={styles.caption}>
           <div className={styles.captionTop}>
-            <span className={styles.company}>{experience.company}</span>
+            <div className={styles.company}>{experience.company}</div>
             {experience.status ? (
               <span className={styles.statusPill}>{experience.status}</span>
             ) : null}
@@ -211,6 +236,23 @@ export default function WorkAffiliations() {
           </div>
           <ul className={styles.previousGrid}>
             {PREVIOUS_EXPERIENCE.map((experience) => (
+              <ExperienceCard
+                key={experience.company}
+                experience={experience}
+              />
+            ))}
+          </ul>
+        </div>
+
+        <div className={styles.group}>
+          <div className={styles.groupHeader}>
+            <h3 className={styles.groupTitle}>Volunteer</h3>
+            <p className={styles.groupDescription}>
+              Community work and student organization contributions outside formal employment.
+            </p>
+          </div>
+          <ul className={styles.volunteerGrid}>
+            {VOLUNTEER_EXPERIENCE.map((experience) => (
               <ExperienceCard
                 key={experience.company}
                 experience={experience}
