@@ -57,7 +57,7 @@ function ProjectFrame() {
                                 Live Site
                             </a>
                         </div>
-                        <SkillSet listOfSkill={["React", "Node", "JavaScript", "CSS", "HTML", "Responsive UI"]}></SkillSet>
+                        <SkillSet listOfSkill={["React", "Node", "JavaScript", "CSS", "HTML", "Responsive UI", "Accessibility", "Codex", "Claude Code"]}></SkillSet>
                     </div>
                 </div>
             </div>
