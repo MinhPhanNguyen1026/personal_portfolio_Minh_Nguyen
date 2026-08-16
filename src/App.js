@@ -10,6 +10,7 @@ import WorkTogether from './components/WorkTogether/WorkTogether';
 import ProjectFrame from './components/Project/ProjectFrame';
 import RoomAssigner from './components/AI/RoomAssigner';
 import SocialLinks from './components/Contact/SocialLinks';
+import WorkExperience from './components/PastExperience/WorkExperience';
 
 import { Link } from 'react-scroll';
 
@@ -62,11 +63,16 @@ function App() {
           <div id="introduction">
             <Introduction></Introduction>
           </div>
-          <div id="workTogether">
-            <WorkTogether></WorkTogether>
+          <div id="workExperience">
+            <Parallax speed={-4}>
+              <WorkExperience />
+            </Parallax>
           </div>
           <div id="projectFrame">
             <ProjectFrame></ProjectFrame>
+          </div>
+          <div id="workTogether">
+            <WorkTogether></WorkTogether>
           </div>
           <div id="socialLinks">
             <SocialLinks></SocialLinks>

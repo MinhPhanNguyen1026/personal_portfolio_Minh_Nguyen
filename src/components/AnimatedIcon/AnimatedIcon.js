@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './AnimatedIcon.module.css'; // Assume you saved the CSS above to a file named YourStylesheet.css
+import styles from './AnimatedIcon.module.css';
 
 const AnimatedIcons = () => {
     return (

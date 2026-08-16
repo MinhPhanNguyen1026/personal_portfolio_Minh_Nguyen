@@ -19,21 +19,31 @@ function Header({ translateValues }) {
   }
 
   return (
-    <div className={styles.header}>
-      <div className={!showMenu ? styles.logoFront : styles.logoFrontTwo}>M</div>
-      <div className={styles.logoBack}>N</div>
-      <div className={styles.verticalSlash} />
-      <a className={styles.wrap} onClick={() => handleClickMenu()}>
-        <span className={styles.button}>
-          <b>MENU</b>
-        </span>
-        <svg className={styles.svgHeader} width="13px" height="10px" viewBox="0 0 13 10">
-          <path d="M1,5 L11,5"></path>
-          <polyline points="8 1 12 5 8 9"></polyline>
-        </svg>
-      </a>
+    <>
+      <div className={styles.header}>
+        <div className={!showMenu ? styles.logoFront : styles.logoFrontTwo}>M</div>
+        <div className={styles.logoBack}>N</div>
+        <div className={styles.verticalSlash} />
+        <a
+          className={`${styles.wrap} ${showMenu ? styles.wrapActive : ""}`}
+          onClick={() => handleClickMenu()}
+          role="button"
+          aria-expanded={showMenu}
+        >
+          <span className={styles.menuDot} aria-hidden="true" />
+          <span className={styles.button}>{showMenu ? "CLOSE" : "MENU"}</span>
+          <svg className={styles.svgHeader} width="14px" height="10px" viewBox="0 0 14 10" aria-hidden="true">
+            <path d="M1,5 L12,5"></path>
+            <polyline points="8 1 12 5 8 9"></polyline>
+          </svg>
+        </a>
+      </div>
       <div className={showMenu ? `${styles.menu} ${styles.activeMenu}` : styles.menu}>
         <div className={styles.flexContainer}>
+          <span className={styles.menuLabel}>
+            <span className={styles.menuLabelDot} aria-hidden="true" />
+            Navigate
+          </span>
           <div className={styles.horizontalSlash} />
           <Link
             activeClass="active"
@@ -86,7 +96,7 @@ function Header({ translateValues }) {
             </a>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

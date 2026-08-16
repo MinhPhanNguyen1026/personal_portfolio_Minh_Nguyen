@@ -76,6 +76,16 @@ After pushing your changes, deploy the project using:
    npm run deploy
    ```
 
+5. ## Update cmd
+Run this command for step 3,4,5 in one command:
+   ```
+   npm run update --msg="Git msg"
+   ```
+   Example:
+   ```
+   npm run update --msg="Added new work experience section"
+   ```
+
 6. ## Verify
    Once deployed, open your live website link and verify the deployed changes.
 

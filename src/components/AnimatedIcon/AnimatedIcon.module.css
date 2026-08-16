@@ -38,7 +38,7 @@ body {
   }
 }
 .shape-container--1 {
-  animation: shape-1 140s linear infinite;
+  animation: shape-1 100s linear infinite;
 }
 
 .shape-container--1 .random-shape:after {
@@ -57,7 +57,7 @@ body {
   }
 }
 .shape-container--2 {
-  animation: shape-2 150s linear infinite;
+  animation: shape-2 110s linear infinite;
 }
 .shape-container--2 .random-shape:after {
   margin: 18rem;
@@ -75,7 +75,7 @@ body {
   }
 }
 .shape-container--3 {
-  animation: shape-3 140s linear infinite;
+  animation: shape-3 100s linear infinite;
 }
 .shape-container--3 .random-shape:after {
   margin: 16rem;
@@ -93,7 +93,7 @@ body {
   }
 }
 .shape-container--4 {
-  animation: shape-4 130s linear infinite;
+  animation: shape-4 30s linear infinite;
 }
 .shape-container--4 .random-shape:after {
   margin: 20rem;
@@ -129,7 +129,7 @@ body {
   }
 }
 .shape-container--6 {
-  animation: shape-6 130s linear infinite;
+  animation: shape-6 90s linear infinite;
 }
 .shape-container--6 .random-shape:after {
   margin: 16rem;
@@ -147,7 +147,7 @@ body {
   }
 }
 .shape-container--7 {
-  animation: shape-7 120s linear infinite;
+  animation: shape-7 80s linear infinite;
 }
 .shape-container--7 .random-shape:after {
   margin: 18rem;
@@ -165,7 +165,7 @@ body {
   }
 }
 .shape-container--8 {
-  animation: shape-8 120s linear infinite;
+  animation: shape-8 80s linear infinite;
 }
 .shape-container--8 .random-shape:after {
   margin: 17em;
@@ -184,7 +184,7 @@ body {
   }
 }
 .shape-container--9 {
-  animation: shape-9 140s linear infinite;
+  animation: shape-9 70s linear infinite;
 }
 .shape-container--9 .random-shape:after {
   margin: 17rem;
@@ -202,7 +202,7 @@ body {
   }
 }
 .shape-container--10 {
-  animation: shape-10 110s linear infinite;
+  animation: shape-10 30s linear infinite;
 }
 .shape-container--10 .random-shape:after {
   margin: 19rem;
@@ -220,7 +220,7 @@ body {
     }
   }
   .shape-container--11 {
-    animation: shape-11 100s linear infinite;
+    animation: shape-11 40s linear infinite;
   }
   .shape-container--11 .random-shape:after {
     margin: 19rem;
