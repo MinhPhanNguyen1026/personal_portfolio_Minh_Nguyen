@@ -29,17 +29,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Test
+        run: npm test
+
       - name: Build
-        # react-scripts treats lint warnings as errors when CI=true, which is
-        # the default on Actions. Keep warnings non-fatal so a deploy is never
-        # blocked by one.
-        env:
-          CI: false
         run: npm run build
 
       - name: Publish to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./dist
           publish_branch: gh-pages
