@@ -127,9 +127,9 @@ const VOLUNTEER_EXPERIENCE = [
     status: "Volunteer",
     href: "https://dandyhacks.net",
     logo: {
-      src: `${process.env.PUBLIC_URL}/HackathonLogo.png`,
-      width: 640,
-      height: 640,
+      src: "https://upload.wikimedia.org/wikipedia/en/7/76/University_of_Rochester_logo.svg",
+      width: 690,
+      height: 190,
     },
   },
   {
