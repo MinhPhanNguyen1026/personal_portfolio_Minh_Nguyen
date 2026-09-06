@@ -44,11 +44,14 @@ browser automatically. Edits hot-reload. `Ctrl+C` stops it.
 
 Things to try once it's open:
 
-- Click **Log in as minh** — the credentials type themselves.
-- Click a section name in the top bar; the command it ran appears in the
-  terminal drawer at the bottom.
-- Type into the drawer: `help`, `juju status`, `theme light`, `juju logout`.
-- Press `/` anywhere to jump to the terminal.
+- Click **Log in as minh** — the credentials type themselves, then
+  `$ juju login` types and the MOTD prints.
+- Scroll: each section's command types itself as it comes into view, and
+  the section "prints". Click **run ▸** on any of them to replay.
+- Type at the prompt at the bottom: `help`, `juju status`, `theme light`,
+  `juju logout`. Output lands in the Transcript section at the end of the
+  page; section commands scroll to their section.
+- Press `/` anywhere to jump to the prompt.
 - Make the window narrow (or use device emulation) to see the mobile layout.
 
 ## 3. Run the theme board (design reference)

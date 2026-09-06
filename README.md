@@ -4,12 +4,13 @@ Minh Nguyen's portfolio, built as a control plane you can navigate.
 
 > **Live:** https://minhphannguyen1026.github.io/personal_portfolio_Minh_Nguyen/
 
-You "log in" (one click — the credentials type themselves), get a MOTD, and
-then move around the way an operator moves around infrastructure: `juju
-switch` between sections, read `juju status` for experience, inspect a
-`terraform plan` for projects, watch a CI pipeline for skills. Every
-navigation click is a real command that gets echoed into the terminal
-drawer, and anything you could click you can also type.
+The whole page is one terminal transcript. You "log in" (one click — the
+credentials type themselves), `$ juju login` types and the MOTD prints,
+and as you scroll each section's command types itself and its output —
+the section — prints: `juju status` for experience, a `terraform plan`
+for projects, a CI pipeline for skills. A live prompt sits at the bottom
+of the viewport; anything you type there runs through the same engine as
+every button, with output landing in a Transcript section at the end.
 
 The design brief and rationale live in [docs/REDESIGN_PLAN.md](docs/REDESIGN_PLAN.md).
 
@@ -54,9 +55,11 @@ in `public/`.
 
 ## Terminal commands
 
-Type `help` in the drawer (or press `/` to focus it). The engine lives in
-`src/engine/commands.js`; the nav buttons run the same `execute()` the
-input does.
+Type `help` at the prompt at the bottom of the page (press `/` to focus
+it). The engine lives in `src/engine/commands.js`; the nav buttons and
+the copy/run boxes above each section run the same `execute()` the prompt
+does. Section commands scroll to their section; everything else prints
+into the Transcript section at the end of the page.
 
 ```
 juju switch <controller>   go to a section (experience, projects, skills, contact)
@@ -79,8 +82,10 @@ pair meets WCAG AA and was checked with axe across the app's states.
 
 - Lighthouse accessibility 100 (desktop and mobile); axe: 0 violations
   across locked, open, expanded, light, and mobile states.
-- The terminal transcript is an `aria-live` log. Nav controls are real
-  buttons named by their visible text.
+- The Transcript section is an `aria-live` log. Nav controls are real
+  buttons named by their visible text. The typed-on-scroll commands are
+  presentational; the full command is always in the accessible name, and
+  `prefers-reduced-motion` disables the typing entirely.
 - The login card is dismissible with Skip or `Esc`; `prefers-reduced-motion`
   skips the typing animation; the MOTD is `inert` while the card is up so
   nothing focusable hides behind it.
@@ -104,7 +109,7 @@ src/
   engine/         command parser, registry, and the useShell hook (tested)
   hooks/          theme, active section + URL sync, deploy status
   components/
-    Shell/        status bar (nav), terminal drawer
+    Shell/        status bar (nav), prompt line, transcript
     Login/        login card → MOTD hero
     Experience/   juju status table
     Projects/     terraform plan cards

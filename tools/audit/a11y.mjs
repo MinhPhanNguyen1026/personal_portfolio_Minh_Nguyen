@@ -54,8 +54,11 @@ async function skipLogin(page) {
 {
   const { ctx, page } = await open({ ...devices["iPhone 14"], colorScheme: "dark" });
   await skipLogin(page);
-  await page.getByRole("button", { name: /expand terminal/i }).click();
-  await axe(page, "open + drawer / dark / mobile");
+  const prompt = page.getByRole("textbox", { name: /command input/i });
+  await prompt.fill("help");
+  await prompt.press("Enter");
+  await page.waitForTimeout(600);
+  await axe(page, "open + transcript output / dark / mobile");
   await ctx.close();
 }
 {

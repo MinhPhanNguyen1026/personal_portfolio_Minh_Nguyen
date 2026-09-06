@@ -9,7 +9,8 @@ import { useShell } from "./engine/useShell";
 import { DEFAULT_SECTION, findSection } from "./engine/sections";
 
 import StatusBar from "./components/Shell/StatusBar";
-import TerminalDrawer from "./components/Shell/TerminalDrawer";
+import PromptLine, { PROMPT_INPUT_ID } from "./components/Shell/PromptLine";
+import Transcript from "./components/Shell/Transcript";
 import Login, { SESSION_KEY } from "./components/Login/Login";
 import Section from "./components/primitives/Section";
 import Experience from "./components/Experience/Experience";
@@ -18,14 +19,6 @@ import Skills from "./components/Skills/Skills";
 import Contact from "./components/Contact/Contact";
 
 import styles from "./App.module.css";
-
-function drawerDefault() {
-  try {
-    return window.matchMedia("(min-width: 769px)").matches;
-  } catch {
-    return false;
-  }
-}
 
 function prefersReducedMotion() {
   try {
@@ -53,9 +46,11 @@ export default function App() {
   const { theme, setTheme, cycle } = useTheme();
   const { current, switchTo } = useSection();
   const deploy = useDeployStatus();
-  const [drawerOpen, setDrawerOpen] = useState(drawerDefault);
   const [loginPhase, setLoginPhase] = useState(initialLoginPhase);
   const loggedIn = loginPhase === "open";
+  // Bumped whenever a non-navigating command produced output; the effect
+  // below then brings the end of the transcript into view.
+  const [outputTick, setOutputTick] = useState(0);
 
   // `juju login` replays the login; `juju logout` locks the hero again.
   const onLogin = useCallback(() => setLoginPhase(prefersReducedMotion() ? "open" : "typing"), []);
@@ -67,16 +62,27 @@ export default function App() {
     }
     setLoginPhase("locked");
   }, []);
+  const onOutput = useCallback(() => setOutputTick((n) => n + 1), []);
 
-  const shell = useShell({ current, theme, loggedIn, switchTo, setTheme, onLogin, onLogout });
+  const shell = useShell({ current, theme, loggedIn, switchTo, setTheme, onLogin, onLogout, onOutput });
 
-  // Keyboard: "/" focuses the terminal like a search box would.
+  // Output landed in the transcript at the end of the page: go there.
+  // Runs after the new entry has committed, so the scroll reaches it.
+  useEffect(() => {
+    if (!outputTick) return;
+    switchTo("transcript", { focus: false });
+    const id = requestAnimationFrame(() => {
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior: prefersReducedMotion() ? "auto" : "smooth" });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [outputTick, switchTo]);
+
+  // Keyboard: "/" focuses the prompt like a search box would.
   useEffect(() => {
     function onKey(e) {
       if (e.key === "/" && !/input|textarea/i.test(e.target.tagName)) {
         e.preventDefault();
-        setDrawerOpen(true);
-        requestAnimationFrame(() => document.querySelector("#terminal-drawer input")?.focus());
+        document.getElementById(PROMPT_INPUT_ID)?.focus();
       }
     }
     window.addEventListener("keydown", onKey);
@@ -84,20 +90,12 @@ export default function App() {
   }, []);
 
   return (
-    <div className={styles.app} data-drawer={drawerOpen ? "open" : "closed"}>
+    <div className={styles.app}>
       <a className="skip-link" href="#main">
         Skip to content
       </a>
 
-      <StatusBar
-        current={current}
-        run={shell.run}
-        theme={theme}
-        cycleTheme={cycle}
-        deploy={deploy}
-        drawerOpen={drawerOpen}
-        toggleDrawer={() => setDrawerOpen((o) => !o)}
-      />
+      <StatusBar current={current} run={shell.run} theme={theme} cycleTheme={cycle} deploy={deploy} />
 
       <main id="main" className={styles.main}>
         <Login phase={loginPhase} setPhase={setLoginPhase} run={shell.run} />
@@ -136,6 +134,8 @@ export default function App() {
           <Contact />
         </Section>
 
+        <Transcript history={shell.history} />
+
         <footer className={styles.footer}>
           <p>
             Designed and developed by {PROFILE.name}. Build <code>{__BUILD_SHA__}</code>.
@@ -143,14 +143,7 @@ export default function App() {
         </footer>
       </main>
 
-      <TerminalDrawer
-        history={shell.history}
-        run={shell.run}
-        recall={shell.recall}
-        current={current}
-        open={drawerOpen}
-        setOpen={setDrawerOpen}
-      />
+      <PromptLine run={shell.run} recall={shell.recall} current={current} />
     </div>
   );
 }

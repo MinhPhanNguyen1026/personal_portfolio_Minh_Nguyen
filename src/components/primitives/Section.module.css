@@ -46,6 +46,29 @@
   gap: var(--s-6);
 }
 
+/* "Output prints": a one-shot settle after the command finishes typing.
+   Content is fully visible at rest; this only plays on top of it. */
+.print {
+  animation: print 220ms var(--ease) both;
+}
+
+@keyframes print {
+  from {
+    opacity: 0.45;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .print {
+    animation: none;
+  }
+}
+
 @media (max-width: 768px) {
   .section {
     padding: var(--s-8) 0;

@@ -103,10 +103,10 @@ for (const s of scenarios) {
     const { c, page } = await ctx();
     await login(page);
     const input = page.getByRole("textbox", { name: /command input/i });
-    for (const cmd of ["terraform plan -target=module.projects", "juju status --model experience", "juju switch experience"]) {
+    for (const cmd of ["terraform plan -target=module.projects", "juju whoami", "help"]) {
       await input.fill(cmd);
       await input.press("Enter");
-      await page.waitForTimeout(500);
+      await page.waitForTimeout(700);
     }
     await shot(page, "transcript");
     await c.close();

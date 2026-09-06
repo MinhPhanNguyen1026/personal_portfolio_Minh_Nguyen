@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { PROFILE } from "../../data/profile";
 import { CURRENT_ROLES } from "../../data/experience";
 import { switchCommand } from "../../engine/commands";
+import CommandBox from "../primitives/CommandBox";
 import styles from "./Login.module.css";
 
 // The hero. Three phases, owned by App so the shell can drive them:
@@ -118,8 +119,13 @@ function Motd({ open, run, lastLogin }) {
   // crawlers, but out of the tab order so nothing focusable hides behind
   // the lock screen. (String value: React 18 doesn't know `inert`.)
   const inert = open ? {} : { inert: "" };
+  // The first transcript entry: `$ juju login` types once the card is
+  // gone, and the MOTD "prints" after it.
+  const [printed, setPrinted] = useState(0);
   return (
     <div className={styles.motd} data-open={open ? "true" : "false"} {...inert}>
+      <CommandBox command="juju login" active={open} onRun={(c) => run(c)} onTyped={() => setPrinted((n) => n + 1)} />
+      <div key={printed} className={`${styles.output} ${printed ? styles.print : ""}`}>
       <pre className={styles.banner} aria-hidden="true">
         {BANNER}
         {"\n"}Last login: {lastLogin} from your browser
@@ -182,6 +188,7 @@ function Motd({ open, run, lastLogin }) {
         <span className={styles.cmd}>{switchCommand("experience")}</span>
         <span className={styles.caret} aria-hidden="true" />
       </button>
+      </div>
     </div>
   );
 }

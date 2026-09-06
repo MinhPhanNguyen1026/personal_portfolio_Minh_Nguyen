@@ -60,7 +60,6 @@ test("a returning visitor in the same session is not asked again", () => {
 test("`juju logout` locks the hero again", async () => {
   sessionStorage.setItem(SESSION_KEY, "1");
   render(<App />);
-  await userEvent.click(screen.getByRole("button", { name: /expand terminal/i }));
   await userEvent.type(screen.getByRole("textbox", { name: /command input/i }), "juju logout{enter}");
   expect(screen.getByRole("dialog", { name: /log in/i })).toBeInTheDocument();
   expect(sessionStorage.getItem(SESSION_KEY)).toBeNull();

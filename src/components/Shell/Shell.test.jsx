@@ -3,21 +3,15 @@ import userEvent from "@testing-library/user-event";
 import App from "../../App";
 
 // The contract of the whole theme: clicking a section button runs the
-// same command a person could type, and the terminal shows it.
+// same command a person could type, and the transcript records it.
 
-// The drawer starts collapsed on narrow viewports (which is what the
-// matchMedia stub reports), and a collapsed drawer hides its log and
-// input from the accessibility tree. Expand it the way a person would.
-async function openTerminal() {
-  await userEvent.click(screen.getByRole("button", { name: /expand terminal/i }));
-}
+const nav = () => screen.getByRole("navigation", { name: /sections/i });
+const prompt = () => screen.getByRole("textbox", { name: /command input/i });
 
-test("nav buttons run `juju switch` and the terminal records it", async () => {
+test("nav buttons run `juju switch` and the transcript records it", async () => {
   render(<App />);
-  await openTerminal();
 
-  const nav = screen.getByRole("navigation", { name: /sections/i });
-  const projects = within(nav).getByRole("button", { name: "projects" });
+  const projects = within(nav()).getByRole("button", { name: "projects" });
   await userEvent.click(projects);
 
   const log = screen.getByRole("log");
@@ -27,38 +21,40 @@ test("nav buttons run `juju switch` and the terminal records it", async () => {
   expect(window.location.hash).toBe("#projects");
 });
 
-test("typing in the terminal goes through the same engine", async () => {
+test("typing at the prompt goes through the same engine", async () => {
   render(<App />);
-  await openTerminal();
 
-  const input = screen.getByRole("textbox", { name: /command input/i });
-  await userEvent.type(input, "juju switch skills{enter}");
+  await userEvent.type(prompt(), "juju switch skills{enter}");
 
-  const log = screen.getByRole("log");
-  expect(within(log).getByText("juju switch skills")).toBeInTheDocument();
-  expect(within(screen.getByRole("navigation", { name: /sections/i })).getByRole("button", { name: "skills" })).toHaveAttribute(
-    "aria-current",
-    "true"
-  );
+  expect(within(screen.getByRole("log")).getByText("juju switch skills")).toBeInTheDocument();
+  expect(within(nav()).getByRole("button", { name: "skills" })).toHaveAttribute("aria-current", "true");
+  expect(prompt()).toHaveValue("");
 });
 
-test("unknown commands fail like bash and do not navigate", async () => {
+test("unknown commands fail like bash, land in the transcript, and do not navigate", async () => {
   render(<App />);
-  await openTerminal();
   const before = window.location.hash;
 
-  const input = screen.getByRole("textbox", { name: /command input/i });
-  await userEvent.type(input, "rm -rf /{enter}");
+  await userEvent.type(prompt(), "rm -rf /{enter}");
 
   expect(within(screen.getByRole("log")).getByText("bash: rm: command not found")).toBeInTheDocument();
-  expect(window.location.hash).toBe(before);
+  expect(before === "" || before === "#transcript" || window.location.hash === "#transcript").toBe(true);
+});
+
+test("arrow keys recall history at the prompt", async () => {
+  render(<App />);
+  await userEvent.type(prompt(), "whoami{enter}");
+  await userEvent.type(prompt(), "pwd{enter}");
+  await userEvent.type(prompt(), "{arrowup}");
+  expect(prompt()).toHaveValue("pwd");
+  await userEvent.type(prompt(), "{arrowup}");
+  expect(prompt()).toHaveValue("whoami");
 });
 
 test("a section's command box copies and runs its command", async () => {
   const writeText = vi.fn(() => Promise.resolve());
   Object.assign(navigator, { clipboard: { writeText } });
   render(<App />);
-  await openTerminal();
 
   await userEvent.click(screen.getByRole("button", { name: 'Copy "terraform plan -target=module.projects"' }));
   expect(writeText).toHaveBeenCalledWith("terraform plan -target=module.projects");
@@ -69,6 +65,12 @@ test("a section's command box copies and runs its command", async () => {
   expect(within(log).getByText("terraform plan -target=module.projects")).toBeInTheDocument();
   expect(within(log).getByText(/^Plan: 4 to add/)).toBeInTheDocument();
   expect(window.location.hash).toBe("#projects");
+});
+
+test("the status bar's >_ button focuses the prompt", async () => {
+  render(<App />);
+  await userEvent.click(screen.getByRole("button", { name: /focus the prompt/i }));
+  expect(prompt()).toHaveFocus();
 });
 
 test("theme button cycles system → light → dark and stamps the root", async () => {

@@ -334,7 +334,23 @@ previewable (`npm run dev`) at the end of every phase.
 | 6 | **SEO / a11y / perf** | Meta + JSON-LD + OG image; real deploy status from the GitHub API with build-time SHA fallback; Lighthouse + axe + keyboard passes. | done — Lighthouse 100/100/100/100 desktop, 98/100/100/100 mobile; axe 0 violations across 5 states; NVDA pass still to do by hand |
 | 7 | **Ship** | README rewrite; PR; merge → Actions deploys. | in progress |
 
-## 10. Open items
+## 10. Revision: the page is the transcript (2026-09-06)
+
+The docked terminal drawer duplicated what the page already was: a
+prompt line above each section followed by its output. It was removed.
+
+- Each section's command box types itself the first time it scrolls into
+  view (~0.7s max, once per load), then the section "prints" — a 220ms
+  settle on top of content that is fully visible at rest. `run ▸` replays.
+  `prefers-reduced-motion` disables all of it; the full command is always
+  in the accessible name.
+- The MOTD is the first entry: `$ juju login` types once the card resolves.
+- The live prompt is one fixed line at the bottom of the viewport. Section
+  commands scroll to their section; everything else appends to a
+  **Transcript** section at the end of the page, which is an `aria-live`
+  log, and the page scrolls there. `/` focuses the prompt.
+
+## 11. Open items
 
 - **Canonical role content.** The resume PDF predates the Canonical role and
   the site's own copy is a single line. The MOTD and the `canonical` status

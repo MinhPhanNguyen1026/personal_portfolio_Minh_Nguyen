@@ -37,7 +37,8 @@ describe("juju switch", () => {
 });
 
 describe("every section's own command is implemented and navigates there", () => {
-  for (const s of SECTIONS) {
+  // The transcript has no command of its own — the live prompt is it.
+  for (const s of SECTIONS.filter((x) => x.command)) {
     test(`${s.id}: ${s.command}`, () => {
       const r = execute(s.command, { ...ctx, current: "login" });
       expect(r.lines.some((l) => l.kind === "err")).toBe(false);

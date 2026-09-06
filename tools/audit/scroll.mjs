@@ -66,7 +66,17 @@ check("`juju switch experience` while already in experience → scrolls to its t
 
 await scrollTo(1e9);
 s = await state();
-check("bottom → readout contact, hash #contact", s.current === "contact" && s.hash === "#contact", `${s.current} ${s.hash}`);
+check("bottom → readout transcript, hash #transcript", s.current === "transcript" && s.hash === "#transcript", `${s.current} ${s.hash}`);
+
+// A non-navigating command brings the end of the transcript into view.
+await scrollTo(0);
+const prompt = page.getByRole("textbox", { name: /command input/i });
+await prompt.fill("help");
+await prompt.press("Enter");
+await page.waitForTimeout(600);
+s = await state();
+const atBottom = await page.evaluate(() => Math.ceil(window.scrollY + window.innerHeight) >= document.documentElement.scrollHeight - 4);
+check("`help` from the top → scrolls to the end of the transcript", atBottom && s.current === "transcript", `y=${s.y} current=${s.current}`);
 
 await scrollTo(0);
 s = await state();

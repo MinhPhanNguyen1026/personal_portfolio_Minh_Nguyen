@@ -14,6 +14,9 @@ export const SECTIONS = [
   { id: "projects", title: "Projects", blurb: "shipped work as a terraform plan", command: "terraform plan -target=module.projects" },
   { id: "skills", title: "Skills", blurb: "the pipeline that builds the rest", command: "gh run view build-minh" },
   { id: "contact", title: "Contact", blurb: "get in touch", command: "juju expose contact" },
+  // The tail of the transcript: output of anything typed at the prompt
+  // lands here. It has no command of its own — the live prompt is it.
+  { id: "transcript", title: "Transcript", blurb: "what you've run", command: null },
 ];
 
 export const DEFAULT_SECTION = SECTIONS[0].id;

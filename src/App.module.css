@@ -1,12 +1,8 @@
 .app {
   min-height: 100vh;
   padding-top: var(--statusbar-h);
-  /* Room for the docked terminal so the last section is never hidden. */
-  padding-bottom: 36px;
-}
-
-.app[data-drawer="open"] {
-  padding-bottom: calc(36px + var(--drawer-h));
+  /* Room for the fixed prompt so the end of the transcript is reachable. */
+  padding-bottom: var(--prompt-h);
 }
 
 .main {
@@ -26,10 +22,4 @@
 
 .footer code {
   color: var(--fg-1);
-}
-
-@media (max-width: 768px) {
-  .app[data-drawer="open"] {
-    padding-bottom: calc(36px + min(var(--drawer-h), 45vh));
-  }
 }
