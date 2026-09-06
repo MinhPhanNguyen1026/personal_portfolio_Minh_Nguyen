@@ -146,7 +146,7 @@ the exact brand hex. It's a wink for Canonical people, not a costume.
 | `--line-strong`  | `#303849`  | Focused/active borders                |
 | `--fg-0`         | `#e8ebf0`  | Primary text                          |
 | `--fg-1`         | `#a9b1c0`  | Secondary text                        |
-| `--fg-2`         | `#6b7486`  | Muted, comments, timestamps           |
+| `--fg-2`         | `#7f8a9d`  | Muted, comments, timestamps (4.6:1 on bg-1) |
 | `--accent`       | `#ff7a45`  | Ember. Prompt, links, focus ring, `+` |
 | `--accent-soft`  | `rgba(255,122,69,.14)` | Accent fills          |
 | `--ok`           | `#5cc98a`  | active, ✓                             |
@@ -169,13 +169,17 @@ site's softness.
 | `--line-strong`  | `#c9c5bb`  |
 | `--fg-0`         | `#1a1d24`  |
 | `--fg-1`         | `#4b5160`  |
-| `--fg-2`         | `#7c8394`  |
-| `--accent`       | `#d9531e`  |
-| `--ok` / `--warn` / `--err` / `--info` / `--meta` | `#1f8a4c` / `#9a6b00` / `#c43d3d` / `#1f6fd0` / `#7a4fd6` |
+| `--fg-2`         | `#626a79`  |
+| `--accent`       | `#bf3f10`  |
+| `--ok` / `--warn` / `--err` / `--info` / `--meta` | `#167a41` / `#8a5f00` / `#c43d3d` / `#1a64bd` / `#7a4fd6` |
 
-All text pairs meet WCAG AA (≥ 4.5:1); accent on `--bg-0` is ~8.5:1 dark
-and ~5:1 light. Theme follows `prefers-color-scheme`, with a toggle in the
-status bar that persists to `localStorage`.
+Every text/surface pair — including status colours on every surface they
+appear on — was verified ≥ 4.5:1 with axe across the app's states (locked,
+open, rows and jobs expanded, light, mobile). The muted and status values
+above are the post-audit ones; the first draft's `--fg-2` and light-mode
+accent/ok/warn/info were each a shade too light on the raised surfaces.
+Theme follows `prefers-color-scheme`, with a toggle in the status bar that
+persists to `localStorage`.
 
 ### Type
 
@@ -319,16 +323,16 @@ just stays ugly.
 Each phase is one or more commits on this branch. The branch builds and is
 previewable (`npm run dev`) at the end of every phase.
 
-| # | Phase | Deliverable |
-| - | ----- | ----------- |
-| 0 | **Foundation** | Vite migration (§7); dead deps + dead code removed; `data/` extracted from the current components; `tokens.css` with both palettes; fonts; base layout. Same content, new skeleton, workflow updated. |
-| 1 | **Shell** | Status bar, terminal drawer, command engine with tests, hash URL sync, theme toggle. Nav works via click → command. |
-| 2 | **Login** | JAAS-styled card, scripted auto-type, MOTD hero, skip/Esc, reduced-motion path. |
-| 3 | **Experience** | `juju status` table/cards from `experience.js`, expandable rows, cloud chips. |
-| 4 | **Projects** | Terraform plan section, HCL blocks, project cards, WebP screenshots. Topology SVG if time allows. |
-| 5 | **Skills + Contact** | Pipeline; `juju expose contact`; footer. |
-| 6 | **SEO / a11y / perf** | Meta + JSON-LD + OG image; real deploy status from the GitHub API with build-time SHA fallback; Lighthouse + axe + keyboard + NVDA passes. |
-| 7 | **Ship** | README rewrite; PR with before/after screenshots; merge → Actions deploys. |
+| # | Phase | Deliverable | Status |
+| - | ----- | ----------- | ------ |
+| 0 | **Foundation** | Vite migration (§7); dead deps + dead code removed; `data/` extracted from the current components; `tokens.css` with both palettes; fonts; base layout. Same content, new skeleton, workflow updated. | done — `npm audit`: 0 |
+| 1 | **Shell** | Status bar, terminal drawer, command engine with tests, hash URL sync, theme toggle. Nav works via click → command. | done |
+| 2 | **Login** | JAAS-styled card, scripted auto-type, MOTD hero, skip/Esc, reduced-motion path. | done — MOTD is `inert` while locked |
+| 3 | **Experience** | `juju status` table/cards from `experience.js`, expandable rows, cloud chips. | done |
+| 4 | **Projects** | Terraform plan section, HCL blocks, project cards, WebP screenshots. Topology SVG if time allows. | done (no topology SVG) |
+| 5 | **Skills + Contact** | Pipeline; `juju expose contact`; footer. | done |
+| 6 | **SEO / a11y / perf** | Meta + JSON-LD + OG image; real deploy status from the GitHub API with build-time SHA fallback; Lighthouse + axe + keyboard passes. | done — Lighthouse 100/100/100/100 desktop, 98/100/100/100 mobile; axe 0 violations across 5 states; NVDA pass still to do by hand |
+| 7 | **Ship** | README rewrite; PR; merge → Actions deploys. | in progress |
 
 ## 10. Open items
 

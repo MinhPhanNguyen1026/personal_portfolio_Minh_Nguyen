@@ -26,16 +26,17 @@ export default function StatusBar({ current, run, theme, cycleTheme, deploy, dra
             const active = s.id === current;
             return (
               <li key={s.id}>
+                {/* The index and the active "*" are CSS generated content
+                    (with empty alt text), so the button's visible text and
+                    its accessible name are the same word. */}
                 <button
                   type="button"
                   className={`${styles.window} ${active ? styles.windowActive : ""}`}
                   aria-current={active ? "true" : undefined}
-                  aria-label={`Switch to ${s.title}`}
+                  data-index={i}
                   onClick={() => run(s.id === "login" ? "juju login" : switchCommand(s.id))}
                 >
-                  <span className={styles.windowIndex} aria-hidden="true">{i}</span>
-                  <span className={styles.windowName}>{s.id}</span>
-                  {active ? <span className={styles.windowMark} aria-hidden="true">*</span> : null}
+                  {s.id}
                 </button>
               </li>
             );

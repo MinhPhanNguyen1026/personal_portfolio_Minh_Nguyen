@@ -63,7 +63,7 @@ export default function TerminalDrawer({ history, run, recall, current, open, se
       </div>
 
       <div id="terminal-body" className={styles.body} hidden={!open}>
-        <div ref={logRef} className={styles.log} role="log" aria-live="polite" aria-relevant="additions">
+        <div ref={logRef} className={styles.log} role="log" aria-live="polite" aria-relevant="additions" tabIndex={0} aria-label="Terminal output">
           {history.length === 0 ? (
             <p className={styles.hint}>
               Click any section above, or type <code>help</code>.

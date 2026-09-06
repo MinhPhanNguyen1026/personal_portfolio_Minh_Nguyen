@@ -17,7 +17,7 @@ test("nav buttons run `juju switch` and the terminal records it", async () => {
   await openTerminal();
 
   const nav = screen.getByRole("navigation", { name: /sections/i });
-  const projects = within(nav).getByRole("button", { name: /switch to projects/i });
+  const projects = within(nav).getByRole("button", { name: "projects" });
   await userEvent.click(projects);
 
   const log = screen.getByRole("log");
@@ -36,7 +36,7 @@ test("typing in the terminal goes through the same engine", async () => {
 
   const log = screen.getByRole("log");
   expect(within(log).getByText("juju switch skills")).toBeInTheDocument();
-  expect(within(screen.getByRole("navigation", { name: /sections/i })).getByRole("button", { name: /switch to skills/i })).toHaveAttribute(
+  expect(within(screen.getByRole("navigation", { name: /sections/i })).getByRole("button", { name: "skills" })).toHaveAttribute(
     "aria-current",
     "true"
   );

@@ -1,101 +1,112 @@
-# 🌐 Personal Portfolio Website
+# minh@portfolio
 
-Welcome to Minh Nguyen's Personal Portfolio! This portfolio website is designed to showcase a variety of projects, reflecting extensive skills, experiences, and insights in the field of software development. It's built with React and hosted on GitHub Pages.
+Minh Nguyen's portfolio, built as a control plane you can navigate.
 
-> 🔗 [Live Website](https://minhphannguyen1026.github.io/personal_portfolio_Minh_Nguyen/)
+> **Live:** https://minhphannguyen1026.github.io/personal_portfolio_Minh_Nguyen/
 
-## 📌 Table of Contents
-- [Features](#-features)
-- [Updating the Deployed Version](#-updating-the-deployed-version)
-- [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
-- [License](#-license)
+You "log in" (one click — the credentials type themselves), get a MOTD, and
+then move around the way an operator moves around infrastructure: `juju
+switch` between sections, read `juju status` for experience, inspect a
+`terraform plan` for projects, watch a CI pipeline for skills. Every
+navigation click is a real command that gets echoed into the terminal
+drawer, and anything you could click you can also type.
 
-## ✨ Features
-- Responsive and Interactive UI
-- Detailed Information on Projects
-- Seamless Navigation
-- Parallax Scrolling
+The design brief and rationale live in [docs/REDESIGN_PLAN.md](docs/REDESIGN_PLAN.md).
 
-## 🛠 Updating the Deployed Version
-### Prerequisites
-- Node.js and npm installed
-- Git installed
-- Access to the repository (it is public, you are fine)
-- create-react-app is set up.
+## Stack
 
-### Steps
-1. **Clone the Repository**
-   ```sh
-   git clone https://github.com/MinhPhanNguyen1026/personal_portfolio_Minh_Nguyen.git
-   cd personal_portfolio_Minh_Nguyen
-   ```
+- **React 18 + Vite 8**, tested with **Vitest 4** and Testing Library.
+- No router, no state library, no terminal library, no icon library.
+  Self-hosted Inter + JetBrains Mono via `@fontsource-variable`.
+- `npm audit` reports 0 vulnerabilities. Every dependency is pinned exact.
+- Deployed by GitHub Actions to the `gh-pages` branch on every push to `main`.
 
-1.1 ## Install Dependencies
-To install the necessary dependencies, you can use the following command:
-   ```sh
-   npm install
-   ```
-1.2 ## Install `gh-pages` package
-   ```sh
-   npm install gh-pages --save-dev
-   ```
-1.3 ## Add script
-   In the package.json file, add the following script: 
-   ```sh
-   "scripts": {
-     "deploy": "gh-pages -d build",
-   }
-   ```
-   In the same file, also add the following script:
-   "homepage": "https://github.com/MinhPhanNguyen1026/personal_portfolio_Minh_Nguyen" or http://<username>.github.io/<repository-name> depending on your choices/needs
+## Develop
 
-2. ## Make Changes
-   After installing the dependencies, modify the necessary files or components and test them locally using:
-   ```sh
-   npm start
-   ```
+```sh
+npm ci          # install exactly what's in the lockfile
+npm run dev     # http://localhost:5173/personal_portfolio_Minh_Nguyen/
+npm test        # vitest, once
+npm run build   # production build → dist/
+npm run preview # serve dist/ locally
+```
 
-3. ## Build the Project
-Once you've made the necessary modifications and tested them, build the project with (Note, this will reset the page title, if you want to change the page title again after Deploy, change directly in the GitHub page index.html and/or manifest.json):
-   ```sh
-   npm run build
-   ```
+Node 20+ (CI uses 20; developed on 24).
 
-4. ## Commit & Push Changes (Optional) (Skip to step 5 if you don't want to do this; this changes nothing)
-After building the project, commit and push the changes to the main branch using:
-   ```sh
-   git add .
-   git commit -m "A descriptive commit message"
-   git push origin main
-   ```
+## Edit content
 
-5. ## Deploy
-After pushing your changes, deploy the project using:
-   ```sh
-   npm run deploy
-   ```
+All copy lives in `src/data/` — components only render it.
 
-5. ## Update cmd
-Run this command for step 3,4,5 in one command:
-   ```
-   npm run update --msg="Git msg"
-   ```
-   Example:
-   ```
-   npm run update --msg="Added new work experience section"
-   ```
+| File                     | What it holds                                         |
+| ------------------------ | ----------------------------------------------------- |
+| `src/data/profile.js`    | Name, title, employer, tagline, links, education. Also feeds the SEO tags and JSON-LD at build time. |
+| `src/data/experience.js` | Roles, modelled like `juju status` applications (`app`, `status`, `charm`, `period`, `details`). |
+| `src/data/projects.js`   | Projects, modelled as Terraform resources (`type`, `id`, `attrs`, `links`). |
+| `src/data/skills.js`     | Skills as pipeline stages and jobs; `usedAt` links a job to roles/projects. |
 
-6. ## Verify
-   Once deployed, open your live website link and verify the deployed changes.
+Search for `TODO(minh)` for the placeholders still waiting on real copy.
 
-7. ## Troubleshooting
-   - If updates are not immediately visible, clear the browser cache or wait a bit.
-   - Check the repository settings to ensure GitHub Pages is set up correctly.
-   - Refer to the [GitHub Pages documentation](https://docs.github.com/en/pages) or [Create React App deployment guide](https://create-react-app.dev/docs/deployment/#github-pages) for additional help.
+Project screenshots are WebP in `src/assets/projects/`. The resume PDF is
+in `public/`.
 
-8. ## Contributing
-   Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+## Terminal commands
 
+Type `help` in the drawer (or press `/` to focus it). The engine lives in
+`src/engine/commands.js`; the nav buttons run the same `execute()` the
+input does.
 
+```
+juju switch <controller>   go to a section (experience, projects, skills, contact)
+juju controllers           list sections
+juju status                what's running in the current section
+juju whoami                controller, model, and user
+juju login | logout        replay the login / lock the hero again
+theme [dark|light|system]  colour scheme
+ls, pwd, cat, whoami, clear
+```
 
+## Theme
+
+Design tokens are in `src/styles/tokens.css`: **Ink** (dark, default) and
+**Paper** (light). The theme follows the OS unless the toggle in the status
+bar overrides it; the choice persists in `localStorage`. Every text/surface
+pair meets WCAG AA and was checked with axe across the app's states.
+
+## Accessibility
+
+- Lighthouse accessibility 100 (desktop and mobile); axe: 0 violations
+  across locked, open, expanded, light, and mobile states.
+- The terminal transcript is an `aria-live` log. Nav controls are real
+  buttons named by their visible text.
+- The login card is dismissible with Skip or `Esc`; `prefers-reduced-motion`
+  skips the typing animation; the MOTD is `inert` while the card is up so
+  nothing focusable hides behind it.
+- The status table keeps explicit ARIA row/cell roles so it still reads as
+  a table when CSS turns rows into cards on narrow screens.
+
+## Deploy
+
+`.github/workflows/deploy.yml` runs tests, builds, and publishes `dist/` to
+the `gh-pages` branch on every push to `main`. `main` is protected — open a
+PR. There is nothing to run by hand; don't push to `gh-pages` directly.
+
+The status bar's deploy pill shows the last successful Actions run (from
+the GitHub API), falling back to the commit SHA baked in at build time.
+
+## Layout
+
+```
+src/
+  data/           content — the only place "update portfolio" edits go
+  engine/         command parser, registry, and the useShell hook (tested)
+  hooks/          theme, active section + URL sync, deploy status
+  components/
+    Shell/        status bar (nav), terminal drawer
+    Login/        login card → MOTD hero
+    Experience/   juju status table
+    Projects/     terraform plan cards
+    Skills/       CI pipeline
+    Contact/      juju expose contact
+    primitives/   Section
+  styles/         tokens (both themes), base
+```

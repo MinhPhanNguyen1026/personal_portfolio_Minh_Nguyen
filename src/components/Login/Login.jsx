@@ -114,8 +114,12 @@ function LoginCard({ phase, onLogin, onSkip, onDone }) {
 }
 
 function Motd({ open, run, lastLogin }) {
+  // While the card covers it, the MOTD is inert: still in the DOM for
+  // crawlers, but out of the tab order so nothing focusable hides behind
+  // the lock screen. (String value: React 18 doesn't know `inert`.)
+  const inert = open ? {} : { inert: "" };
   return (
-    <div className={styles.motd} data-open={open ? "true" : "false"}>
+    <div className={styles.motd} data-open={open ? "true" : "false"} {...inert}>
       <pre className={styles.banner} aria-hidden="true">
         {BANNER}
         {"\n"}Last login: {lastLogin} from your browser
@@ -166,16 +170,15 @@ function Motd({ open, run, lastLogin }) {
         })}
       </ul>
 
-      <button type="button" className={styles.promptLine} onClick={() => run(switchCommand("experience"))} aria-label="Run juju switch experience">
-        <span className={styles.prompt} aria-hidden="true">
+      {/* Named by its visible text so the label matches what's on screen. */}
+      <button type="button" className={styles.promptLine} onClick={() => run(switchCommand("experience"))}>
+        <span className={styles.prompt}>
           <span className={styles.promptHost}>
             {PROFILE.handle}@{PROFILE.host}:~
           </span>
           $
         </span>
-        <span className={styles.cmd} aria-hidden="true">
-          {switchCommand("experience")}
-        </span>
+        <span className={styles.cmd}>{switchCommand("experience")}</span>
         <span className={styles.caret} aria-hidden="true" />
       </button>
     </div>

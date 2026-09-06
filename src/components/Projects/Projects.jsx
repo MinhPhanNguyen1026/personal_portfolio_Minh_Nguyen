@@ -40,7 +40,9 @@ function Value({ value }) {
 function HclBlock({ project }) {
   const width = Math.max(...project.attrs.map(([k]) => k.length));
   return (
-    <pre className={styles.hcl} aria-label={`Terraform resource for ${project.title}`}>
+    // tabIndex: the block can scroll sideways on narrow screens, so it must
+    // be reachable from the keyboard.
+    <pre className={styles.hcl} tabIndex={0} aria-label={`Terraform resource for ${project.title}`}>
       <span className={styles.comment}>
         # module.projects.{project.type}.{project.id} will be created
       </span>

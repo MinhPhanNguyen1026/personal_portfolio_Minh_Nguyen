@@ -70,6 +70,17 @@ a:hover {
   text-decoration: underline;
 }
 
+/* A link inside running text must be distinguishable without colour. */
+p a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+p a:hover {
+  text-decoration-color: var(--accent);
+}
+
 button {
   font: inherit;
   color: inherit;
