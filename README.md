@@ -1,6 +1,8 @@
 # minh@portfolio
 
 Minh Nguyen's portfolio, built as a control plane you can navigate.
+Designed and developed by Minh Nguyen, with [Claude](https://claude.com/claude-code)
+as co-developer.
 
 > **Live:** https://minhphannguyen1026.github.io/personal_portfolio_Minh_Nguyen/
 

@@ -1,6 +1,8 @@
 // Experience, modelled the way `juju status` models applications.
 //
-//   app      short slug shown in the App column (lowercase, hyphenated)
+//   app      unique id (DOM ids, keys, skills' usedAt)
+//   label    what the App column shows, if different from `app` — two
+//            roles at one company are two units of the same application
 //   status   "active" for current roles, "terminated" for past ones
 //   charm    the role, slugged like a charm name
 //   channel  "stable" for current, null for past (renders as —)
@@ -64,7 +66,7 @@ export const CURRENT_ROLES = [
 
 export const PREVIOUS_EXPERIENCE = [
   {
-    app: "ur-psych-lab",
+    app: "rochester-psych",
     company: "University of Rochester",
     role: "Technical Assistant II",
     type: "Psychology Lab · Part-time",
@@ -112,7 +114,7 @@ export const PREVIOUS_EXPERIENCE = [
     ],
   },
   {
-    app: "ur-cs-ta",
+    app: "rochester-cs",
     company: "University of Rochester",
     role: "Teaching Assistant, CSC 280",
     type: "Computer Science · Part-time",
@@ -251,6 +253,7 @@ export const PREVIOUS_EXPERIENCE = [
   },
   {
     app: "onc-ai-intern",
+    label: "onc-ai",
     company: "Onc.AI",
     role: "Software Engineer Intern",
     type: "Data Team · Internship",

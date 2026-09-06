@@ -10,7 +10,7 @@ export const PIPELINE = [
     stage: "languages",
     jobs: [
       { name: "TypeScript", usedAt: ["onc-ai", "upstart", "roclab", "roc-hci", "melcourses", "teacher_authoring"] },
-      { name: "JavaScript", usedAt: ["roclab", "aif", "ur-psych-lab"] },
+      { name: "JavaScript", usedAt: ["roclab", "aif", "rochester-psych"] },
       { name: "Python", usedAt: ["canonical", "onc-ai", "salesforce"] },
       { name: "Go", usedAt: ["canonical"] },
       { name: "Rust", usedAt: [] },
@@ -21,22 +21,22 @@ export const PIPELINE = [
   {
     stage: "frontend",
     jobs: [
-      { name: "React", usedAt: ["onc-ai", "upstart", "roclab", "roc-hci", "aif", "ur-psych-lab"] },
+      { name: "React", usedAt: ["onc-ai", "upstart", "roclab", "roc-hci", "aif", "rochester-psych"] },
       { name: "Next.js", usedAt: ["melcourses"] },
       { name: "Redux", usedAt: ["roc-hci", "teacher_authoring"] },
       { name: "React Native", usedAt: [] },
-      { name: "Accessibility", usedAt: ["ur-psych-lab", "aif"] },
-      { name: "Phaser.js", usedAt: ["ur-psych-lab"] },
+      { name: "Accessibility", usedAt: ["rochester-psych", "aif"] },
+      { name: "Phaser.js", usedAt: ["rochester-psych"] },
     ],
   },
   {
     stage: "backend & data",
     jobs: [
-      { name: "Node.js", usedAt: ["roclab", "roc-hci", "ur-psych-lab"] },
+      { name: "Node.js", usedAt: ["roclab", "roc-hci", "rochester-psych"] },
       { name: "FastAPI", usedAt: ["onc-ai"] },
       { name: "PostgreSQL", usedAt: ["onc-ai"] },
       { name: "MongoDB", usedAt: ["onc-ai"] },
-      { name: "Firebase", usedAt: ["ur-psych-lab"] },
+      { name: "Firebase", usedAt: ["rochester-psych"] },
       { name: "RAG / LLM services", usedAt: ["canonical", "onc-ai"] },
     ],
   },
@@ -57,7 +57,7 @@ export const PIPELINE = [
   {
     stage: "testing & tooling",
     jobs: [
-      { name: "Pytest", usedAt: ["canonical", "ur-psych-lab"] },
+      { name: "Pytest", usedAt: ["canonical", "rochester-psych"] },
       { name: "Jest / RTL", usedAt: ["onc-ai", "salesforce"] },
       { name: "Cypress", usedAt: ["onc-ai"] },
       { name: "Selenium", usedAt: ["salesforce"] },

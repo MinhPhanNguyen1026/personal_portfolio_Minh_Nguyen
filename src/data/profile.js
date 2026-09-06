@@ -39,6 +39,8 @@ export const PROFILE = {
     { key: "email", label: "Email", href: "mailto:mnguyen31@u.rochester.edu", external: false },
     { key: "resume", label: "Resume", href: "Minh_Nguyen_Resume.pdf", download: "Minh_Nguyen_Resume.pdf", external: false },
   ],
+  // Credited in the footer.
+  coDeveloper: { name: "Claude", href: "https://claude.com/claude-code" },
   // The public URL of the deployed site, for canonical/OG tags.
   siteUrl: "https://minhphannguyen1026.github.io/personal_portfolio_Minh_Nguyen/",
   repo: { owner: "MinhPhanNguyen1026", name: "personal_portfolio_Minh_Nguyen" },

@@ -54,7 +54,7 @@ function Row({ role, open, onToggle }) {
             <span className={styles.chevron} aria-hidden="true">
               {open ? "▾" : "▸"}
             </span>
-            <span className={styles.app}>{role.app}</span>
+            <span className={styles.app}>{role.label ?? role.app}</span>
           </button>
         </td>
         <td role="cell" className={`${styles.cell} tnum`} data-label="Version">
@@ -160,7 +160,7 @@ export default function Experience() {
         </div>
       </div>
 
-      <div className={styles.tableScroll} role="region" aria-label="Status table" tabIndex={0}>
+      <div>
         <table role="table" className={styles.table}>
           <caption className="sr-only">
             Work experience, {counts.active ?? 0} current, {counts.terminated ?? 0} previous, {counts.volunteer ?? 0} volunteer.

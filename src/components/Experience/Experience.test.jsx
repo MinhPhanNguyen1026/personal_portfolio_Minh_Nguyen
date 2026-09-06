@@ -10,8 +10,14 @@ test("renders every role as a row with the juju status columns", () => {
     expect(within(table).getByRole("columnheader", { name: col })).toBeInTheDocument();
   }
   for (const role of ALL_EXPERIENCE) {
-    expect(within(table).getByRole("button", { name: role.app })).toBeInTheDocument();
+    expect(within(table).getAllByRole("button", { name: role.label ?? role.app }).length).toBeGreaterThan(0);
   }
+});
+
+test("two roles at one company show the same app name, like two units", () => {
+  render(<Experience />);
+  expect(screen.getAllByRole("button", { name: "onc-ai" })).toHaveLength(2);
+  expect(screen.queryByRole("button", { name: "onc-ai-intern" })).not.toBeInTheDocument();
 });
 
 test("current roles are active; past roles are terminated", () => {
@@ -23,7 +29,7 @@ test("current roles are active; past roles are terminated", () => {
 
 test("a row expands to show details and collapses again", async () => {
   render(<Experience />);
-  const btn = screen.getByRole("button", { name: "onc-ai" });
+  const btn = screen.getAllByRole("button", { name: "onc-ai" })[0];
   expect(btn).toHaveAttribute("aria-expanded", "false");
 
   await userEvent.click(btn);
@@ -40,8 +46,8 @@ test("a row expands to show details and collapses again", async () => {
 
 test("only one row is open at a time", async () => {
   render(<Experience />);
-  await userEvent.click(screen.getByRole("button", { name: "onc-ai" }));
+  await userEvent.click(screen.getAllByRole("button", { name: "onc-ai" })[0]);
   await userEvent.click(screen.getByRole("button", { name: "salesforce" }));
-  expect(screen.getByRole("button", { name: "onc-ai" })).toHaveAttribute("aria-expanded", "false");
+  expect(screen.getAllByRole("button", { name: "onc-ai" })[0]).toHaveAttribute("aria-expanded", "false");
   expect(screen.getByRole("button", { name: "salesforce" })).toHaveAttribute("aria-expanded", "true");
 });

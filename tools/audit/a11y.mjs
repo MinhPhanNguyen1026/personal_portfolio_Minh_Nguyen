@@ -40,7 +40,7 @@ async function skipLogin(page) {
 {
   const { ctx, page } = await open();
   await skipLogin(page);
-  await page.getByRole("button", { name: "onc-ai", exact: true }).click();
+  await page.getByRole("button", { name: "onc-ai", exact: true }).first().click();
   await page.getByRole("button", { name: /^React/ }).first().click();
   await axe(page, "open + row + job expanded / dark / desktop");
   await ctx.close();

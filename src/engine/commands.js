@@ -91,8 +91,8 @@ function statusHeader(model) {
 
 function experienceView() {
   const rows = [["App", "Version", "Status", "Scale", "Charm"]];
-  for (const r of CURRENT_ROLES) rows.push([r.app, "current", "active", "1", r.charm]);
-  for (const r of PREVIOUS_EXPERIENCE) rows.push([r.app, r.period.end?.slice(0, 4) ?? "—", "terminated", "1", r.charm]);
+  for (const r of CURRENT_ROLES) rows.push([r.label ?? r.app, "current", "active", "1", r.charm]);
+  for (const r of PREVIOUS_EXPERIENCE) rows.push([r.label ?? r.app, r.period.end?.slice(0, 4) ?? "—", "terminated", "1", r.charm]);
   return table(rows).map((t, i) => (i === 0 ? muted(t) : t.includes("  active  ") ? ok(t) : out(t)));
 }
 

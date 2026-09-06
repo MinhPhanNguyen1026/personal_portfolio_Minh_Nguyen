@@ -91,7 +91,7 @@ for (const s of scenarios) {
     await page.getByRole("button", { name: "canonical", exact: true }).click();
     await page.waitForTimeout(400);
     await shot(page, "expanded-canonical");
-    const onc = page.getByRole("button", { name: "onc-ai", exact: true });
+    const onc = page.getByRole("button", { name: "onc-ai", exact: true }).first();
     await onc.click();
     await page.waitForTimeout(400);
     await onc.scrollIntoViewIfNeeded();
@@ -115,6 +115,27 @@ for (const s of scenarios) {
     await page.waitForTimeout(1600);
     await shot(page, "print-3-fast-scroll");
     await c.close();
+  } else if (s === "overflow") {
+    // No horizontal scrollbars anywhere: at three widths, list every
+    // element that scrolls sideways, and check the document itself.
+    for (const width of [1440, 1024, 390]) {
+      const { c, page } = await ctx({ viewport: { width, height: 900 }, reducedMotion: "reduce" });
+      await page.keyboard.press("Escape");
+      await page.waitForTimeout(400);
+      const found = await page.evaluate(() => {
+        const out = [];
+        for (const el of document.querySelectorAll("body *")) {
+          const cs = getComputedStyle(el);
+          const scrolls = /(auto|scroll)/.test(cs.overflowX) && el.scrollWidth > el.clientWidth + 1;
+          if (scrolls && !el.closest('nav[aria-label="Sections"]')) out.push(`${el.tagName.toLowerCase()}.${[...el.classList].join(".")} ${el.scrollWidth}>${el.clientWidth}`);
+        }
+        const doc = document.documentElement.scrollWidth > window.innerWidth + 1 ? `document ${document.documentElement.scrollWidth}>${window.innerWidth}` : null;
+        return { out, doc };
+      });
+      console.log(`overflow @${width}px: ${found.out.length ? found.out.join("; ") : "none"}${found.doc ? "; " + found.doc : ""}`);
+      if (found.out.length || found.doc) errors.push(`[overflow @${width}] ${[...found.out, found.doc].filter(Boolean).join("; ")}`);
+      await c.close();
+    }
   } else if (s === "sysinfo") {
     // MOTD printed but the system-information block not yet started,
     // then the block mid-print, then done.

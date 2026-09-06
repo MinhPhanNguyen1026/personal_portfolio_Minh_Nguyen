@@ -38,12 +38,15 @@
   min-width: 0;
 }
 
+/* Wraps rather than scrolls: a long url line breaks, nothing scrolls
+   sideways. */
 .hcl {
   font-family: var(--mono);
   font-size: var(--fs-mono);
   line-height: var(--lh-mono);
   color: var(--fg-1);
-  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   tab-size: 4;
 }
 

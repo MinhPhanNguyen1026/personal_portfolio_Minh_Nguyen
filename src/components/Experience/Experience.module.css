@@ -14,7 +14,6 @@
   flex-direction: column;
   gap: 2px;
   color: var(--fg-0);
-  overflow-x: auto;
 }
 
 .modelRow {
@@ -30,16 +29,11 @@
 
 /* ------------------------------ table ------------------------------ */
 
-/* No rule above the header: it isn't a print unit, so it would sit
-   alone on screen before the rows print — and juju's own output has
-   none either. */
-.tableScroll {
-  overflow-x: auto;
-}
-
+/* Nothing scrolls sideways: the table fits its container and the
+   Message column wraps. No rule above the header — it isn't a print
+   unit, and juju's own output has none either. */
 .table {
   width: 100%;
-  min-width: 860px;
   border-collapse: collapse;
 }
 
@@ -84,6 +78,7 @@
 
 .cellMessage {
   width: 100%;
+  white-space: normal !important;
 }
 
 .message {
@@ -315,13 +310,6 @@
   .modelRow:last-child span:nth-child(4)::before { content: "version "; }
   .modelRow:last-child span:nth-child(5)::before { content: "at "; }
 
-  .tableScroll {
-    overflow: visible;
-    border-top: 0;
-  }
-  .table {
-    min-width: 0;
-  }
   .table thead {
     position: absolute;
     width: 1px;

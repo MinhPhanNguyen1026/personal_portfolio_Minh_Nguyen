@@ -162,7 +162,11 @@ export default function App() {
 
         <footer className={styles.footer}>
           <p>
-            Designed and developed by {PROFILE.name}. Build <code>{__BUILD_SHA__}</code>.
+            Designed and developed by {PROFILE.name}, with{" "}
+            <a href={PROFILE.coDeveloper.href} target="_blank" rel="noreferrer noopener">
+              {PROFILE.coDeveloper.name}
+            </a>{" "}
+            as co-developer. Build <code>{__BUILD_SHA__}</code>.
           </p>
         </footer>
       </main>

@@ -1,5 +1,6 @@
+/* Bridges are connective tissue: present, never competing with sections. */
 .bridge {
-  padding: var(--s-2) 0;
+  padding: var(--s-1) 0;
 }
 
 .inner {
@@ -8,13 +9,13 @@
   padding: 0 var(--gutter);
   display: flex;
   flex-direction: column;
-  gap: var(--s-3);
+  gap: var(--s-2);
 }
 
 .step {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0;
 }
 
 .out {
@@ -24,17 +25,11 @@
 
 .line {
   font-family: var(--mono);
-  font-size: 12.5px;
-  line-height: 1.55;
+  font-size: 11.5px;
+  line-height: 1.5;
   color: var(--fg-2);
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
   padding-left: 2ch;
   min-height: 1lh;
-}
-
-@media (max-width: 768px) {
-  .line {
-    white-space: pre;
-    overflow-x: auto;
-  }
 }
