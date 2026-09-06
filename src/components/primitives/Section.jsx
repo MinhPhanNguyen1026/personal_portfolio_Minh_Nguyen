@@ -1,31 +1,50 @@
-import { useState } from "react";
-import CommandBox from "./CommandBox";
+import { useEffect, useRef, useState } from "react";
+import CommandBox, { canAnimate } from "./CommandBox";
 import styles from "./Section.module.css";
 
-// Every content section is one transcript entry: the command that
-// produces it (typed on scroll, with copy and run), then its output —
-// the section body, which "prints" when the command finishes typing.
-// The h2 receives focus after `juju switch`.
+// One transcript entry: the prompt line that produces this section, a
+// `# comment` heading, then the output. Output units (anything with
+// data-print) stay unwritten until the command has finished typing —
+// data-ready flips to "true" — and then print as they scroll into view.
+// If the output reaches the viewport before the prompt was seen (fast
+// scroll), the section starts the typing itself so nothing waits.
 
 export default function Section({ id, title, command, onRun, lead, children, className = "" }) {
   const headingId = `${id}-title`;
-  // Incremented each time the command finishes typing; the key restarts
-  // the print animation on a replay.
-  const [printed, setPrinted] = useState(0);
+  const box = useRef(null);
+  const body = useRef(null);
+  const [ready, setReady] = useState(() => !command || !canAnimate());
+
+  useEffect(() => {
+    if (ready || !body.current || typeof IntersectionObserver === "undefined") return undefined;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        box.current?.start();
+      },
+      { threshold: 0 }
+    );
+    io.observe(body.current);
+    return () => io.disconnect();
+  }, [ready]);
 
   return (
-    <section id={id} className={`${styles.section} ${className}`} aria-labelledby={headingId}>
+    <section id={id} className={`${styles.section} ${className}`} aria-labelledby={headingId} data-ready={ready ? "true" : "false"}>
       <div className={styles.inner}>
         <header className={styles.head}>
-          {command ? <CommandBox command={command} onRun={onRun} onTyped={() => setPrinted((n) => n + 1)} /> : null}
-          <div key={printed} className={printed ? styles.print : undefined}>
+          {command ? <CommandBox ref={box} command={command} onRun={onRun} onTyped={() => setReady(true)} /> : null}
+          <div className={styles.comment} data-print>
             <h2 id={headingId} className={styles.title} tabIndex={-1} data-section-heading>
+              <span className={styles.hash} aria-hidden="true">
+                #
+              </span>
               {title}
             </h2>
             {lead ? <p className={styles.lead}>{lead}</p> : null}
           </div>
         </header>
-        <div key={`body-${printed}`} className={`${styles.body} ${printed ? styles.print : ""}`}>
+        <div ref={body} className={styles.body}>
           {children}
         </div>
       </div>

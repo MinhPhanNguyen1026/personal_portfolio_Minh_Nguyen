@@ -8,6 +8,11 @@ import "./styles/base.css";
 
 import App from "./App";
 
+// Enables the print-on-scroll styling only where it can complete.
+if (typeof IntersectionObserver !== "undefined") {
+  document.documentElement.classList.add("js");
+}
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <App />

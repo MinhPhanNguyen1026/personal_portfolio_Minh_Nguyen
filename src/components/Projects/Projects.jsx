@@ -90,13 +90,13 @@ function ProjectLink({ link }) {
 export default function Projects() {
   return (
     <div className={styles.wrap}>
-      <p className={styles.preamble}>
+      <p className={styles.preamble} data-print>
         Terraform will perform the following actions:
       </p>
 
       <ul className={styles.list}>
         {PROJECTS.map((p) => (
-          <li key={p.id} className={styles.item}>
+          <li key={p.id} className={styles.item} data-print>
             <article className={styles.card} aria-labelledby={`proj-${p.id}`}>
               <div className={styles.code}>
                 <HclBlock project={p} />
@@ -124,7 +124,7 @@ export default function Projects() {
         ))}
       </ul>
 
-      <p className={styles.summaryLine}>
+      <p className={styles.summaryLine} data-print>
         Plan: <span className={styles.add}>{PROJECTS.length} to add</span>, 0 to change, 0 to destroy.
       </p>
     </div>

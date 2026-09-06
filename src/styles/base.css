@@ -130,6 +130,39 @@ pre {
   }
 }
 
+/* ------------------------------------------------------------------
+   Printing. Units marked data-print start unwritten and print when
+   (a) they've scrolled into view (data-printed, set by usePrintObserver
+   with a per-unit stagger delay) and (b) their section's command has
+   finished typing (no data-ready="false" ancestor). The html.js class
+   is added only when IntersectionObserver exists, so without it — or
+   under reduced motion — nothing is ever hidden.
+   ------------------------------------------------------------------ */
+html.js [data-print] {
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 240ms var(--ease),
+    transform 240ms var(--ease);
+}
+
+html.js tr[data-print] {
+  transform: none; /* transforms on table rows break the table */
+}
+
+html.js [data-print][data-printed]:not([data-ready="false"] *) {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-print] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* Utilities */
 .sr-only {
   position: absolute;

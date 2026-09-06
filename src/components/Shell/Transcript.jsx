@@ -10,12 +10,12 @@ export default function Transcript({ history }) {
     <Section id="transcript" title="Transcript" lead="Everything you run lands here. Type at the prompt below, or press / to jump to it.">
       <div className={styles.log} role="log" aria-live="polite" aria-relevant="additions" aria-label="Terminal output">
         {history.length === 0 ? (
-          <p className={styles.hint}>
+          <p className={styles.hint} data-print>
             Nothing yet. Try <code>help</code>, <code>juju status</code>, or <code>theme light</code>.
           </p>
         ) : null}
         {history.map((entry) => (
-          <div key={entry.id} className={styles.entry}>
+          <div key={entry.id} className={styles.entry} data-print>
             <div className={styles.cmdLine}>
               <span className={styles.p} aria-hidden="true">
                 $

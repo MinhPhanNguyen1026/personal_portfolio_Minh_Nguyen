@@ -74,7 +74,7 @@ export default function Skills() {
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.runHeader}>
+      <div className={styles.runHeader} data-print>
         <span className={styles.runDot} aria-hidden="true" />
         <span className={styles.runName}>build-minh</span>
         <span className={styles.runMeta}>
@@ -91,7 +91,7 @@ export default function Skills() {
 
       <ol className={styles.pipeline} aria-label="Skills by stage">
         {PIPELINE.map((stage) => (
-          <li key={stage.stage} className={styles.stage}>
+          <li key={stage.stage} className={styles.stage} data-print>
             <h3 className={styles.stageTitle}>{stage.stage}</h3>
             <ul className={styles.jobs} aria-label={`${stage.stage} jobs`}>
               {stage.jobs.map((job) => (

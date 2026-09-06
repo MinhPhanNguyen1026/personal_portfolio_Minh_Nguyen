@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { PROFILE } from "./data/profile";
 
 import { useTheme } from "./hooks/useTheme";
 import { useSection } from "./hooks/useSection";
 import { useDeployStatus } from "./hooks/useDeployStatus";
+import { usePrintObserver } from "./hooks/usePrintObserver";
 import { useShell } from "./engine/useShell";
 import { DEFAULT_SECTION, findSection } from "./engine/sections";
 
@@ -66,6 +67,10 @@ export default function App() {
 
   const shell = useShell({ current, theme, loggedIn, switchTo, setTheme, onLogin, onLogout, onOutput });
 
+  // Everything in <main> prints as it scrolls into view.
+  const main = useRef(null);
+  usePrintObserver(main);
+
   // Output landed in the transcript at the end of the page: go there.
   // Runs after the new entry has committed, so the scroll reaches it.
   useEffect(() => {
@@ -97,7 +102,7 @@ export default function App() {
 
       <StatusBar current={current} run={shell.run} theme={theme} cycleTheme={cycle} deploy={deploy} />
 
-      <main id="main" className={styles.main}>
+      <main id="main" ref={main} className={styles.main}>
         <Login phase={loginPhase} setPhase={setLoginPhase} run={shell.run} />
 
         <Section

@@ -41,12 +41,15 @@
   border-collapse: collapse;
 }
 
+/* Row rules are inset shadows, not borders: with border-collapse the
+   table paints borders itself and they ignore the row's opacity, which
+   left twelve empty rules on screen while rows were still unprinted. */
 .table th,
 .table td {
   text-align: left;
   vertical-align: middle;
   padding: 10px var(--s-2);
-  border-bottom: 1px solid var(--line);
+  box-shadow: inset 0 -1px 0 var(--line);
   white-space: nowrap;
 }
 
@@ -65,7 +68,7 @@
 }
 
 .rowOpen td {
-  border-bottom-color: transparent;
+  box-shadow: none;
 }
 
 .cell {
@@ -337,7 +340,7 @@
   }
   .row td {
     padding: 0;
-    border: 0;
+    box-shadow: none;
     white-space: normal;
   }
   .row td::before {

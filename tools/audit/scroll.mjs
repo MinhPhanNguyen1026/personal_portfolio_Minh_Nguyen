@@ -56,7 +56,8 @@ await page.waitForTimeout(500);
 s = await state();
 check("run `juju status --model experience` from between → lands at experience top", nearTop(s, "experience") && s.current === "experience", `y=${s.y} top=${s.tops.experience}`);
 
-await scrollTo(s.tops.experience + 700);
+// Keep the probe line (35% down the viewport) inside the section.
+await scrollTo(s.tops.experience + 300);
 s = await state();
 check("mid-experience again → readout experience", s.current === "experience", s.current);
 await page.getByRole("navigation", { name: /sections/i }).getByRole("button", { name: "experience", exact: true }).click();

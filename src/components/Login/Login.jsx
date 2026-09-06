@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { PROFILE } from "../../data/profile";
 import { CURRENT_ROLES } from "../../data/experience";
 import { switchCommand } from "../../engine/commands";
-import CommandBox from "../primitives/CommandBox";
+import CommandBox, { canAnimate } from "../primitives/CommandBox";
 import styles from "./Login.module.css";
 
 // The hero. Three phases, owned by App so the shell can drive them:
 //   locked  → the login card covers a blurred MOTD
 //   typing  → credentials auto-type (skipped under reduced motion)
-//   open    → the MOTD, sharp
+//   open    → the MOTD, sharp: `$ juju login` types, then it prints
 // The MOTD is always rendered and holds the page's h1, so crawlers and
 // assistive tech reach the content whether or not the card is showing.
 
@@ -120,74 +120,76 @@ function Motd({ open, run, lastLogin }) {
   // the lock screen. (String value: React 18 doesn't know `inert`.)
   const inert = open ? {} : { inert: "" };
   // The first transcript entry: `$ juju login` types once the card is
-  // gone, and the MOTD "prints" after it.
-  const [printed, setPrinted] = useState(0);
+  // gone, and only then does the MOTD print.
+  const [ready, setReady] = useState(() => !canAnimate());
   return (
     <div className={styles.motd} data-open={open ? "true" : "false"} {...inert}>
-      <CommandBox command="juju login" active={open} onRun={(c) => run(c)} onTyped={() => setPrinted((n) => n + 1)} />
-      <div key={printed} className={`${styles.output} ${printed ? styles.print : ""}`}>
-      <pre className={styles.banner} aria-hidden="true">
-        {BANNER}
-        {"\n"}Last login: {lastLogin} from your browser
-      </pre>
+      <CommandBox command="juju login" active={open} onRun={(c) => run(c)} onTyped={() => setReady(true)} />
+      <div className={styles.output} data-ready={ready ? "true" : "false"}>
+        <pre className={styles.banner} aria-hidden="true" data-print>
+          {BANNER}
+          {"\n"}Last login: {lastLogin} from your browser
+        </pre>
 
-      <h1 id="login-title" className={styles.name} tabIndex={-1} data-section-heading>
-        {PROFILE.firstName} <span className={styles.nameAccent}>{PROFILE.lastName}</span>
-      </h1>
+        <h1 id="login-title" className={styles.name} tabIndex={-1} data-section-heading data-print>
+          {PROFILE.firstName} <span className={styles.nameAccent}>{PROFILE.lastName}</span>
+        </h1>
 
-      <p className={styles.tagline}>
-        {PROFILE.title} at{" "}
-        <a href={PROFILE.employer.href} target="_blank" rel="noreferrer noopener">
-          {PROFILE.employer.name}
-        </a>
-        . {PROFILE.tagline}
-      </p>
-      <p className={styles.work}>{PROFILE.currentWork}</p>
+        <p className={styles.tagline} data-print>
+          {PROFILE.title} at{" "}
+          <a href={PROFILE.employer.href} target="_blank" rel="noreferrer noopener">
+            {PROFILE.employer.name}
+          </a>
+          . {PROFILE.tagline}
+        </p>
+        <p className={styles.work} data-print>
+          {PROFILE.currentWork}
+        </p>
 
-      <ul className={styles.chips} aria-label="Current status">
-        {CURRENT_ROLES.map((r) => (
-          <li key={r.app} className={styles.chip}>
-            <span className={`${styles.dot} ${styles.dotOk}`} aria-hidden="true" />
-            <span className={styles.chipApp}>{r.app}</span>
-            <span className={styles.chipStatus}>active</span>
-          </li>
-        ))}
-        <li className={styles.chip}>{PROFILE.location}</li>
-      </ul>
-
-      <ul className={styles.links} aria-label="Links">
-        {PROFILE.links.map((l) => {
-          const external = /^(https?:|mailto:)/.test(l.href);
-          return (
-            <li key={l.key}>
-              <a
-                className={styles.link}
-                href={external ? l.href : `${import.meta.env.BASE_URL}${l.href}`}
-                download={l.download}
-                target={l.external ? "_blank" : undefined}
-                rel={l.external ? "noreferrer noopener" : undefined}
-              >
-                {l.label}
-                <span className={styles.linkGlyph} aria-hidden="true">
-                  {l.download ? "↓" : l.external ? "↗" : "›"}
-                </span>
-              </a>
+        <ul className={styles.chips} aria-label="Current status" data-print>
+          {CURRENT_ROLES.map((r) => (
+            <li key={r.app} className={styles.chip}>
+              <span className={`${styles.dot} ${styles.dotOk}`} aria-hidden="true" />
+              <span className={styles.chipApp}>{r.app}</span>
+              <span className={styles.chipStatus}>active</span>
             </li>
-          );
-        })}
-      </ul>
+          ))}
+          <li className={styles.chip}>{PROFILE.location}</li>
+        </ul>
 
-      {/* Named by its visible text so the label matches what's on screen. */}
-      <button type="button" className={styles.promptLine} onClick={() => run(switchCommand("experience"))}>
-        <span className={styles.prompt}>
-          <span className={styles.promptHost}>
-            {PROFILE.handle}@{PROFILE.host}:~
+        <ul className={styles.links} aria-label="Links" data-print>
+          {PROFILE.links.map((l) => {
+            const external = /^(https?:|mailto:)/.test(l.href);
+            return (
+              <li key={l.key}>
+                <a
+                  className={styles.link}
+                  href={external ? l.href : `${import.meta.env.BASE_URL}${l.href}`}
+                  download={l.download}
+                  target={l.external ? "_blank" : undefined}
+                  rel={l.external ? "noreferrer noopener" : undefined}
+                >
+                  {l.label}
+                  <span className={styles.linkGlyph} aria-hidden="true">
+                    {l.download ? "↓" : l.external ? "↗" : "›"}
+                  </span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+
+        {/* Named by its visible text so the label matches what's on screen. */}
+        <button type="button" className={styles.promptLine} onClick={() => run(switchCommand("experience"))} data-print>
+          <span className={styles.prompt}>
+            <span className={styles.promptHost}>
+              {PROFILE.handle}@{PROFILE.host}:~
+            </span>
+            $
           </span>
-          $
-        </span>
-        <span className={styles.cmd}>{switchCommand("experience")}</span>
-        <span className={styles.caret} aria-hidden="true" />
-      </button>
+          <span className={styles.cmd}>{switchCommand("experience")}</span>
+          <span className={styles.caret} aria-hidden="true" />
+        </button>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ function href(link) {
 export default function Contact() {
   return (
     <div className={styles.wrap}>
-      <div className={styles.transcript} aria-hidden="true">
+      <div className={styles.transcript} aria-hidden="true" data-print>
         <div>
           <span className={styles.prompt}>$</span> juju expose contact
         </div>
@@ -27,14 +27,14 @@ export default function Contact() {
       </div>
 
       <ul className={styles.table} aria-label="Contact channels">
-        <li className={`${styles.row} ${styles.head}`} aria-hidden="true">
+        <li className={`${styles.row} ${styles.head}`} aria-hidden="true" data-print>
           <span>App</span>
           <span>Status</span>
           <span>Exposed</span>
           <span>Address</span>
         </li>
         {PROFILE.links.map((l) => (
-          <li key={l.key} className={styles.item}>
+          <li key={l.key} className={styles.item} data-print>
             <a
               className={styles.row}
               href={href(l)}
@@ -62,7 +62,7 @@ export default function Contact() {
         ))}
       </ul>
 
-      <p className={styles.note}>
+      <p className={styles.note} data-print>
         From interactive websites to maintainable software, I like building polished products that are clear, useful, and easy to
         keep improving. LinkedIn or email for a conversation; GitHub for the code; the resume for the short version.
       </p>

@@ -64,7 +64,7 @@ for (const s of scenarios) {
     const { c, page } = await ctx();
     await login(page);
     await nav(page, "projects").click();
-    await page.waitForTimeout(900);
+    await page.waitForTimeout(1500);
     await shot(page, "nav-projects");
     await c.close();
   } else if (s === "light") {
@@ -78,7 +78,7 @@ for (const s of scenarios) {
     await login(page);
     await shot(page, "mobile-motd");
     await nav(page, "experience").click();
-    await page.waitForTimeout(900);
+    await page.waitForTimeout(1500);
     await shot(page, "mobile-experience");
     await c.close();
   } else if (s === "expanded") {
@@ -86,7 +86,7 @@ for (const s of scenarios) {
     const { c, page } = await ctx();
     await login(page);
     await nav(page, "experience").click();
-    await page.waitForTimeout(900);
+    await page.waitForTimeout(1500);
     await page.getByRole("button", { name: "canonical", exact: true }).click();
     await page.waitForTimeout(400);
     await shot(page, "expanded-canonical");
@@ -97,6 +97,22 @@ for (const s of scenarios) {
     await page.evaluate(() => window.scrollBy(0, -120)); // clear the fixed status bar
     await page.waitForTimeout(300);
     await shot(page, "expanded-onc-ai");
+    await c.close();
+  } else if (s === "print") {
+    // The page printing as it scrolls: a frame mid-type (output still
+    // unwritten), then the same view once it has printed.
+    const { c, page } = await ctx();
+    await login(page);
+    await page.waitForTimeout(1200);
+    await page.evaluate(() => document.getElementById("experience").scrollIntoView({ behavior: "auto", block: "start" }));
+    await page.waitForTimeout(320);
+    await shot(page, "print-1-typing");
+    await page.waitForTimeout(1400);
+    await shot(page, "print-2-printed");
+    // Fast scroll straight to skills: the section must start itself.
+    await page.evaluate(() => document.getElementById("skills").scrollIntoView({ behavior: "auto", block: "start" }));
+    await page.waitForTimeout(1600);
+    await shot(page, "print-3-fast-scroll");
     await c.close();
   } else if (s === "transcript") {
     // Several commands typed in a row — checks entries read as separate.
@@ -115,7 +131,7 @@ for (const s of scenarios) {
     const { c, page } = await ctx();
     await login(page);
     await nav(page, id).click();
-    await page.waitForTimeout(900);
+    await page.waitForTimeout(1500);
     await shot(page, `section-${id}`);
     await c.close();
     // Mobile deep link. Note: Chromium's mobile emulation sometimes

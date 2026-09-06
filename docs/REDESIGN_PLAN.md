@@ -337,14 +337,25 @@ previewable (`npm run dev`) at the end of every phase.
 ## 10. Revision: the page is the transcript (2026-09-06)
 
 The docked terminal drawer duplicated what the page already was: a
-prompt line above each section followed by its output. It was removed.
+prompt line above each section followed by its output. It was removed,
+and the page now reads as one terminal from top to bottom.
 
-- Each section's command box types itself the first time it scrolls into
-  view (~0.7s max, once per load), then the section "prints" — a 220ms
-  settle on top of content that is fully visible at rest. `run ▸` replays.
-  `prefers-reduced-motion` disables all of it; the full command is always
-  in the accessible name.
-- The MOTD is the first entry: `$ juju login` types once the card resolves.
+- Each section opens with a real prompt line (`minh@portfolio:~$ …`, with
+  copy and run) that types itself the first time it scrolls into view
+  (≤0.7s, once per load). Section titles are `# comment` lines.
+- **Every unit of output prints as it enters the viewport** — each status
+  row, project, pipeline stage, contact row, and MOTD line carries
+  `data-print`. A single IntersectionObserver marks units printed with a
+  40ms stagger per unit; CSS reveals them only once their section's
+  command has finished typing (`data-ready`). If output reaches the
+  viewport before its prompt was seen (fast scroll), the section starts
+  the typing itself so nothing is ever stuck unwritten.
+- Safety rails: `html.js` is added only when IntersectionObserver exists,
+  so without it nothing is hidden; `prefers-reduced-motion` shows
+  everything instantly; content is always in the DOM for crawlers and
+  assistive tech; the full command is always in the accessible name.
+- The MOTD is the first entry: `$ juju login` types once the card resolves,
+  then the MOTD prints line by line.
 - The live prompt is one fixed line at the bottom of the viewport. Section
   commands scroll to their section; everything else appends to a
   **Transcript** section at the end of the page, which is an `aria-live`

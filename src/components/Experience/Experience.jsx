@@ -42,7 +42,7 @@ function Row({ role, open, onToggle }) {
 
   return (
     <>
-      <tr role="row" className={`${styles.row} ${open ? styles.rowOpen : ""}`}>
+      <tr role="row" className={`${styles.row} ${open ? styles.rowOpen : ""}`} data-print>
         <td role="cell" className={styles.cellApp} data-label="App">
           <button
             type="button"
@@ -140,7 +140,7 @@ export default function Experience() {
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.modelHeader} aria-label="Model">
+      <div className={styles.modelHeader} aria-label="Model" data-print>
         <div className={styles.modelRow}>
           <span className={styles.k}>Model</span>
           <span className={styles.k}>Controller</span>
@@ -164,7 +164,7 @@ export default function Experience() {
             Activate an application name to show details.
           </caption>
           <thead role="rowgroup">
-            <tr role="row" className={styles.head}>
+            <tr role="row" className={styles.head} data-print>
               <th role="columnheader" scope="col">App</th>
               <th role="columnheader" scope="col">Version</th>
               <th role="columnheader" scope="col">Status</th>
@@ -182,7 +182,7 @@ export default function Experience() {
         </table>
       </div>
 
-      <p className={styles.footnote}>
+      <p className={styles.footnote} data-print>
         <span className={styles.dotInline} aria-hidden="true" /> {counts.active ?? 0} active ·{" "}
         {counts.terminated ?? 0} terminated · {counts.volunteer ?? 0} volunteer
       </p>

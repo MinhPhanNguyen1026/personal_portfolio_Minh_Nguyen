@@ -1,17 +1,19 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { PROFILE } from "../../data/profile";
 import styles from "./CommandBox.module.css";
 
-// A command shown above a section, styled like a markdown code block:
-// prompt, the command, and copy / run buttons. Every command shown this
-// way is implemented in the engine, so "run" does exactly what typing
-// it would.
+// A prompt line in the transcript: `minh@portfolio:~$ <command>`, with
+// copy and run. Every command shown this way is implemented in the
+// engine, so "run" does exactly what typing it would.
 //
 // The command types itself the first time it scrolls into view, then
-// calls onTyped so the section can "print". "run" retypes it quickly
-// before running — a replay. Under prefers-reduced-motion, or without
-// IntersectionObserver, nothing animates and the text is simply there.
-// The full command is always in the accessible name; the animated text
-// is presentational.
+// calls onTyped so its output can print. A parent can also call
+// ref.start() — a section does this when its output comes into view
+// before the prompt has been seen (fast scrolling), so output is never
+// stuck waiting. "run" retypes quickly before running — a replay.
+// Under prefers-reduced-motion, or without IntersectionObserver, nothing
+// animates. The full command is always in the accessible name; the
+// animated text is presentational.
 
 function prefersReducedMotion() {
   try {
@@ -21,7 +23,7 @@ function prefersReducedMotion() {
   }
 }
 
-const canAnimate = () => typeof IntersectionObserver !== "undefined" && !prefersReducedMotion();
+export const canAnimate = () => typeof IntersectionObserver !== "undefined" && !prefersReducedMotion();
 
 async function copyText(text) {
   if (navigator.clipboard?.writeText) {
@@ -44,7 +46,7 @@ async function copyText(text) {
   return done;
 }
 
-export default function CommandBox({ command, onRun, onTyped, active = true, label }) {
+const CommandBox = forwardRef(function CommandBox({ command, onRun, onTyped, active = true, label }, ref) {
   const animate = canAnimate();
   const [typed, setTyped] = useState(animate ? "" : command);
   const [typing, setTyping] = useState(false);
@@ -69,33 +71,40 @@ export default function CommandBox({ command, onRun, onTyped, active = true, lab
       setTyping(true);
       const perChar = Math.min(38, 700 / command.length);
       for (let i = 1; i <= command.length; i++) {
-        timers.current.push(setTimeout(() => setTyped(command.slice(0, i)), 120 + i * perChar));
+        timers.current.push(setTimeout(() => setTyped(command.slice(0, i)), 100 + i * perChar));
       }
       timers.current.push(
         setTimeout(() => {
           setTyping(false);
           onTypedRef.current?.();
           onEnd?.();
-        }, 120 + command.length * perChar + 160)
+        }, 100 + command.length * perChar + 140)
       );
     },
     [command, clearTimers]
   );
+
+  const start = useCallback(() => {
+    if (started.current) return;
+    started.current = true;
+    type();
+  }, [type]);
+
+  useImperativeHandle(ref, () => ({ start }), [start]);
 
   useEffect(() => {
     if (started.current || !active || !box.current) return undefined;
     const io = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-        started.current = true;
         io.disconnect();
-        type();
+        start();
       },
-      { threshold: 0.6 }
+      { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
     );
     io.observe(box.current);
     return () => io.disconnect();
-  }, [active, type]);
+  }, [active, start]);
 
   useEffect(
     () => () => {
@@ -127,9 +136,12 @@ export default function CommandBox({ command, onRun, onTyped, active = true, lab
   }
 
   return (
-    <div ref={box} className={styles.box} role="group" aria-label={label ?? `Command: ${command}`}>
+    <div ref={box} className={styles.line} role="group" aria-label={label ?? `Command: ${command}`}>
       <span className={styles.prompt} aria-hidden="true">
-        $
+        <span className={styles.host}>
+          {PROFILE.handle}@{PROFILE.host}
+        </span>
+        <span className={styles.path}>:~</span>$
       </span>
       <code className={styles.cmd} aria-hidden="true">
         {typed}
@@ -151,4 +163,6 @@ export default function CommandBox({ command, onRun, onTyped, active = true, lab
       </span>
     </div>
   );
-}
+});
+
+export default CommandBox;

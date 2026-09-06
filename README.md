@@ -4,13 +4,15 @@ Minh Nguyen's portfolio, built as a control plane you can navigate.
 
 > **Live:** https://minhphannguyen1026.github.io/personal_portfolio_Minh_Nguyen/
 
-The whole page is one terminal transcript. You "log in" (one click — the
-credentials type themselves), `$ juju login` types and the MOTD prints,
-and as you scroll each section's command types itself and its output —
-the section — prints: `juju status` for experience, a `terraform plan`
-for projects, a CI pipeline for skills. A live prompt sits at the bottom
-of the viewport; anything you type there runs through the same engine as
-every button, with output landing in a Transcript section at the end.
+The whole page is one terminal transcript that writes itself as you
+scroll. You "log in" (one click — the credentials type themselves),
+`$ juju login` types and the MOTD prints line by line; then each
+section's prompt types itself as it comes into view and its output —
+every row of `juju status`, every resource in the `terraform plan`, every
+stage of the CI pipeline — prints in a quick cascade. A live prompt sits
+at the bottom of the viewport; anything you type there runs through the
+same engine as every button, with output landing in a Transcript section
+at the end.
 
 The design brief and rationale live in [docs/REDESIGN_PLAN.md](docs/REDESIGN_PLAN.md).
 
