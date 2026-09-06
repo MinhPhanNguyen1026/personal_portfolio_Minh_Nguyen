@@ -28,7 +28,7 @@ async function open(opts = {}) {
 }
 
 async function skipLogin(page) {
-  await page.getByRole("button", { name: /skip/i }).click();
+  await page.keyboard.press("Escape");
   await page.waitForTimeout(450); // let the MOTD un-blur finish before sampling colours
 }
 

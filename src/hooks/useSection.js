@@ -4,6 +4,16 @@ import { DEFAULT_SECTION, SECTIONS, findSection } from "../engine/sections";
 // Owns "where am I": the active section id, kept in sync with the URL
 // hash and with scroll position. switchTo() is the only way to move
 // deliberately; scrolling just updates the readout.
+//
+// The readout is *computed from the scroll position* on every scroll
+// frame rather than inferred from intersection events. Event-based
+// tracking could miss a transition (fast scroll, a suppressed window) and
+// then had no way to notice it was wrong; a pure function of scrollY has
+// no memory to get stuck in.
+
+const LAST_SECTION = SECTIONS[SECTIONS.length - 1].id;
+const STATUSBAR_PX = 40;
+const PROBE = 0.35; // how far down the viewport the "current" line sits
 
 function fromHash() {
   const id = window.location.hash.replace(/^#/, "");
@@ -18,73 +28,125 @@ function prefersReducedMotion() {
   }
 }
 
+// The last section whose top has passed the probe line. Pinned to the
+// first section at the very top of the page and the last at the very
+// bottom, so the two ends are never ambiguous.
+function sectionAtScroll() {
+  const y = window.scrollY;
+  const vh = window.innerHeight;
+  if (y <= 4) return DEFAULT_SECTION;
+  const maxY = document.documentElement.scrollHeight - vh;
+  if (y >= maxY - 4) return LAST_SECTION;
+
+  const probe = y + STATUSBAR_PX + vh * PROBE;
+  let active = DEFAULT_SECTION;
+  for (const s of SECTIONS) {
+    const el = document.getElementById(s.id);
+    if (!el) continue;
+    if (el.getBoundingClientRect().top + y <= probe) active = s.id;
+    else break;
+  }
+  return active;
+}
+
+function hashFor(id) {
+  return id === DEFAULT_SECTION ? "" : `#${id}`;
+}
+
+function replaceHash(id) {
+  const want = hashFor(id);
+  if (window.location.hash !== want) {
+    window.history.replaceState(null, "", window.location.pathname + window.location.search + want);
+  }
+}
+
 export function useSection() {
   const [current, setCurrent] = useState(fromHash);
-  // While a programmatic scroll is in flight, ignore observer updates so
-  // the readout doesn't flicker through the sections it scrolls past.
-  const settling = useRef(null);
+  // While a programmatic scroll is in flight, the readout is pinned to
+  // the destination instead of flickering through what it scrolls past.
+  const pinned = useRef(false);
+  const fallback = useRef(null);
 
-  const switchTo = useCallback((id, { focus = true } = {}) => {
-    const section = findSection(id);
-    if (!section) return;
-    setCurrent(section.id);
-
-    const el = document.getElementById(section.id);
-    if (!el) return;
-
-    if (window.location.hash !== `#${section.id}`) {
-      window.history.pushState(null, "", `#${section.id}`);
-    }
-
-    clearTimeout(settling.current);
-    settling.current = setTimeout(() => (settling.current = null), 700);
-
-    el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
-
-    if (focus) {
-      const heading = el.querySelector("[data-section-heading]");
-      if (heading) heading.focus({ preventScroll: true });
-    }
+  const sync = useCallback(() => {
+    const id = sectionAtScroll();
+    setCurrent(id);
+    replaceHash(id);
   }, []);
 
-  // Deep links: the browser's own hash-jump fires before React has
-  // rendered the target, so it lands on nothing. Repeat it once the DOM
-  // exists — instantly, without focus, so it feels like a normal page load.
-  useEffect(() => {
-    const id = fromHash();
-    if (id === DEFAULT_SECTION) return;
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "auto", block: "start" });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const unpin = useCallback(() => {
+    if (!pinned.current) return;
+    pinned.current = false;
+    clearTimeout(fallback.current);
+    sync();
+  }, [sync]);
 
-  // Back/forward and manual hash edits.
+  const switchTo = useCallback(
+    (id, { focus = true } = {}) => {
+      const section = findSection(id);
+      if (!section) return;
+      const el = document.getElementById(section.id);
+      if (!el) return;
+
+      setCurrent(section.id);
+      const want = hashFor(section.id);
+      if (window.location.hash !== want) {
+        window.history.pushState(null, "", window.location.pathname + window.location.search + want);
+      }
+
+      // Always scroll — even when this section is already "current".
+      // Current only means the probe line is somewhere inside it, which
+      // is exactly when someone mid-section wants to get to its top.
+      pinned.current = true;
+      clearTimeout(fallback.current);
+      fallback.current = setTimeout(unpin, 1500); // for browsers without scrollend
+      el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
+
+      if (focus) {
+        el.querySelector("[data-section-heading]")?.focus({ preventScroll: true });
+      }
+    },
+    [unpin]
+  );
+
   useEffect(() => {
+    // Deep links: the browser's own hash-jump fires before React has
+    // rendered the target. Repeat it instantly now that the DOM exists.
+    const initial = fromHash();
+    if (initial !== DEFAULT_SECTION) {
+      document.getElementById(initial)?.scrollIntoView({ behavior: "auto", block: "start" });
+    }
+
+    let raf = 0;
+    const onScroll = () => {
+      if (pinned.current || raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        sync();
+      });
+    };
+    // A person scrolling during a programmatic scroll takes control back.
+    const onUserScroll = () => unpin();
     const onHash = () => setCurrent(fromHash());
-    window.addEventListener("hashchange", onHash);
-    return () => window.removeEventListener("hashchange", onHash);
-  }, []);
 
-  // Scroll tracking: the section covering the top band of the viewport is
-  // current. rootMargin pushes the band below the fixed status bar.
-  useEffect(() => {
-    if (typeof IntersectionObserver === "undefined") return undefined;
-    const els = SECTIONS.map((s) => document.getElementById(s.id)).filter(Boolean);
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (settling.current) return;
-        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible[0]) {
-          const id = visible[0].target.id;
-          setCurrent(id);
-          if (window.location.hash !== `#${id}`) window.history.replaceState(null, "", `#${id}`);
-        }
-      },
-      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.01, 0.5] }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    window.addEventListener("scrollend", unpin);
+    window.addEventListener("wheel", onUserScroll, { passive: true });
+    window.addEventListener("touchmove", onUserScroll, { passive: true });
+    window.addEventListener("hashchange", onHash);
+    sync();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(fallback.current);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("scrollend", unpin);
+      window.removeEventListener("wheel", onUserScroll);
+      window.removeEventListener("touchmove", onUserScroll);
+      window.removeEventListener("hashchange", onHash);
+    };
+  }, [sync, unpin]);
 
   return { current, switchTo };
 }

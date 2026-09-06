@@ -117,6 +117,7 @@ Each audit needs a server running in **another terminal**:
 | Audit | Terminal 1 (root) | Terminal 2 (root) | Output |
 | --- | --- | --- | --- |
 | Accessibility (axe, keyboard, reduced motion) | `npm run dev` | `npm --prefix tools/audit run a11y` | printed; exit 2 on violations |
+| Scroll ↔ URL sync and command navigation | `npm run dev` | `npm --prefix tools/audit run scroll` | printed; exit 2 on failure |
 | Screenshots of every state | `npm run dev` | `npm --prefix tools/audit run shots` | `tools/audit/out/shots/*.png` |
 | Lighthouse, desktop + mobile | `npm run build && npm run preview` | `npm --prefix tools/audit run lighthouse` | scores printed; HTML reports in `tools/audit/out/` |
 

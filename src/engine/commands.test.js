@@ -24,10 +24,11 @@ describe("juju switch", () => {
     expect(execute("juju switch login", ctx).effects.switchTo).toBeUndefined();
   });
 
-  test("is a no-op when already on the target", () => {
+  test("still scrolls to the section when it is already current", () => {
     const r = execute("juju switch experience", ctx);
-    expect(r.effects.switchTo).toBeUndefined();
+    expect(r.effects.switchTo).toBe("experience");
     expect(r.lines[0].kind).toBe("muted");
+    expect(r.lines[0].text).toContain("already current");
   });
 
   test("switchCommand is what the nav buttons run", () => {
@@ -63,8 +64,12 @@ describe("juju status", () => {
     expect(execute("juju status --model=contact", ctx).effects.switchTo).toBe("contact");
   });
 
-  test("does not navigate when the model is already current", () => {
-    expect(execute("juju status --model experience", ctx).effects.switchTo).toBeUndefined();
+  test("navigates even when the model is already current", () => {
+    expect(execute("juju status --model experience", ctx).effects.switchTo).toBe("experience");
+  });
+
+  test("plain juju status (no model) shows the current section and scrolls to it", () => {
+    expect(execute("juju status", ctx).effects.switchTo).toBe("experience");
   });
 
   test("rejects an unknown model", () => {

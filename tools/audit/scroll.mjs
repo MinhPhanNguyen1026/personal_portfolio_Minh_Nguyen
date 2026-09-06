@@ -1,0 +1,77 @@
+// Scroll ↔ URL sync and command navigation. Needs the dev server running.
+// Checks the things that went wrong once: the readout at the top, the
+// bottom, mid-section, and that a navigating command always lands at the
+// section's top — even when that section is already "current".
+import { launch, assertUp, DEV_URL } from "./browser.mjs";
+
+await assertUp(DEV_URL);
+const browser = await launch();
+// Reduced motion → instant scrolls, so positions can be asserted exactly.
+const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, colorScheme: "dark", reducedMotion: "reduce" });
+const page = await ctx.newPage();
+await page.goto(DEV_URL, { waitUntil: "networkidle" });
+await page.keyboard.press("Escape"); // past the login card
+await page.waitForTimeout(300);
+
+let failures = 0;
+function check(label, ok, detail) {
+  console.log(`${ok ? " ok " : "FAIL"} ${label}${detail ? `   (${detail})` : ""}`);
+  if (!ok) failures += 1;
+}
+
+const state = () =>
+  page.evaluate(() => ({
+    y: Math.round(window.scrollY),
+    hash: location.hash,
+    current: document.querySelector('nav[aria-label="Sections"] [aria-current="true"]')?.textContent.trim() ?? null,
+    tops: Object.fromEntries(
+      [...document.querySelectorAll("main section[id]")].map((s) => [s.id, Math.round(s.getBoundingClientRect().top + window.scrollY)])
+    ),
+  }));
+
+async function scrollTo(y) {
+  await page.evaluate((v) => window.scrollTo(0, v), y);
+  await page.waitForTimeout(250);
+}
+
+const STATUSBAR = 40;
+const nearTop = (s, id) => Math.abs(s.y - (s.tops[id] - STATUSBAR)) <= 4;
+
+let s = await state();
+
+await scrollTo(s.tops.experience + 600);
+s = await state();
+check("mid-experience → readout experience, hash #experience", s.current === "experience" && s.hash === "#experience", `${s.current} ${s.hash}`);
+
+await scrollTo(0);
+s = await state();
+check("top → readout login, hash cleared", s.current === "login" && s.hash === "", `${s.current} "${s.hash}"`);
+
+await scrollTo(s.tops.experience - 500);
+s = await state();
+check("between login and experience → readout login", s.current === "login", s.current);
+
+await page.getByRole("button", { name: 'Run "juju status --model experience"' }).click();
+await page.waitForTimeout(500);
+s = await state();
+check("run `juju status --model experience` from between → lands at experience top", nearTop(s, "experience") && s.current === "experience", `y=${s.y} top=${s.tops.experience}`);
+
+await scrollTo(s.tops.experience + 700);
+s = await state();
+check("mid-experience again → readout experience", s.current === "experience", s.current);
+await page.getByRole("navigation", { name: /sections/i }).getByRole("button", { name: "experience", exact: true }).click();
+await page.waitForTimeout(500);
+s = await state();
+check("`juju switch experience` while already in experience → scrolls to its top", nearTop(s, "experience"), `y=${s.y} top=${s.tops.experience}`);
+
+await scrollTo(1e9);
+s = await state();
+check("bottom → readout contact, hash #contact", s.current === "contact" && s.hash === "#contact", `${s.current} ${s.hash}`);
+
+await scrollTo(0);
+s = await state();
+check("back to top after everything → login, hash cleared", s.current === "login" && s.hash === "", `${s.current} "${s.hash}"`);
+
+await browser.close();
+console.log(failures ? `\n${failures} failure(s)` : "\nall scroll/URL checks pass");
+process.exitCode = failures ? 2 : 0;

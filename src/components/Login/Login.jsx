@@ -56,7 +56,7 @@ function useTypewriter(active, text, speed, delay, onDone) {
   return typed;
 }
 
-function LoginCard({ phase, onLogin, onSkip, onDone }) {
+function LoginCard({ phase, onLogin, onDone }) {
   const typing = phase === "typing";
   const [stage, setStage] = useState("user"); // user → pass → done
   const user = useTypewriter(typing, PROFILE.handle, 80, 150, () => setStage("pass"));
@@ -102,10 +102,10 @@ function LoginCard({ phase, onLogin, onSkip, onDone }) {
         <button type="button" className={styles.primary} onClick={onLogin} disabled={typing} autoFocus>
           {typing ? "Authenticating…" : `Log in as ${PROFILE.handle}`}
         </button>
-        <button type="button" className={styles.skip} onClick={onSkip}>
-          Skip <span aria-hidden="true">→</span>
-        </button>
       </div>
+      <p className={styles.hint} aria-hidden="true">
+        or press <kbd>Esc</kbd>
+      </p>
       <p className="sr-only" aria-live="polite">
         {typing ? "Authenticating." : ""}
       </p>
@@ -196,9 +196,6 @@ export default function Login({ phase, setPhase, run }) {
   function login() {
     setPhase(prefersReducedMotion() ? "open" : "typing");
   }
-  function skip() {
-    setPhase("open");
-  }
 
   // Hand focus to the name only when the login just happened — not on a
   // fresh load that started open — so returning visitors aren't yanked.
@@ -227,7 +224,7 @@ export default function Login({ phase, setPhase, run }) {
         <Motd open={open} run={run} lastLogin={lastLogin} />
         {!open ? (
           <div className={styles.overlay}>
-            <LoginCard phase={phase} onLogin={login} onSkip={skip} onDone={() => setPhase("open")} />
+            <LoginCard phase={phase} onLogin={login} onDone={() => setPhase("open")} />
           </div>
         ) : null}
       </div>

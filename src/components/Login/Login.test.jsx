@@ -15,12 +15,11 @@ test("starts locked: the card shows, and the h1 is still in the document", () =>
   expect(screen.getByRole("heading", { level: 1, name: PROFILE.name })).toBeInTheDocument();
 });
 
-test("skip opens the MOTD and remembers the session", async () => {
+test("there is no skip button; Log in is the only control", () => {
   render(<App />);
-  await userEvent.click(screen.getByRole("button", { name: /skip/i }));
-  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-  expect(sessionStorage.getItem(SESSION_KEY)).toBe("1");
-  expect(screen.getByRole("heading", { level: 1 })).toHaveFocus();
+  const dialog = screen.getByRole("dialog");
+  expect(within(dialog).getAllByRole("button")).toHaveLength(1);
+  expect(within(dialog).getByRole("button", { name: /log in as minh/i })).toHaveFocus();
 });
 
 test("Log in auto-types the credentials and then opens", () => {
@@ -68,8 +67,10 @@ test("`juju logout` locks the hero again", async () => {
   expect(within(screen.getByRole("log")).getByText(/logged out of minh/i)).toBeInTheDocument();
 });
 
-test("Escape skips the login", () => {
+test("Escape opens the MOTD, remembers the session, and focuses the name", () => {
   render(<App />);
   fireEvent.keyDown(window, { key: "Escape" });
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(sessionStorage.getItem(SESSION_KEY)).toBe("1");
+  expect(screen.getByRole("heading", { level: 1 })).toHaveFocus();
 });

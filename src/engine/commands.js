@@ -71,8 +71,10 @@ function flags(args, spec) {
   return result;
 }
 
-// Navigate only when the target differs from where we are.
-const go = (target, ctx) => (target && target !== ctx.current ? { switchTo: target } : {});
+// A command that shows a section always scrolls to it — including when
+// it's already "current", which just means the reader is somewhere inside
+// it and probably wants its top.
+const go = (target) => (target ? { switchTo: target } : {});
 
 /* ------------------------------ views ------------------------------ */
 // Each section has one function that renders its "view" as lines. The
@@ -144,7 +146,7 @@ function jujuSwitch(args, ctx) {
     };
   }
   if (section.id === ctx.current) {
-    return { lines: [muted(`${CONTROLLER}:admin/${section.id} (already current)`)], effects: {} };
+    return { lines: [muted(`${CONTROLLER}:admin/${section.id} (already current)`)], effects: { switchTo: section.id } };
   }
   return {
     lines: [out(`${CONTROLLER}:admin/${ctx.current} -> ${CONTROLLER}:admin/${section.id}`)],
@@ -173,14 +175,14 @@ function jujuStatus(args, ctx) {
   }
   const view = VIEWS[model];
   const body = view ? view() : [ok(`${PROFILE.handle}/0  active  ${PROFILE.title} @ ${PROFILE.employer.name}`)];
-  return { lines: [...statusHeader(model), blank(), ...body], effects: go(model, ctx) };
+  return { lines: [...statusHeader(model), blank(), ...body], effects: go(model) };
 }
 
 function jujuExpose(args, ctx) {
   const app = args[0];
   if (!app) return { lines: [err("ERROR no application name specified")], effects: {} };
   if (app !== "contact") return { lines: [err(`ERROR application "${app}" not found`)], effects: {} };
-  return { lines: [out(`${PROFILE.links.length} endpoints exposed on contact/0:`), ...contactView()], effects: go("contact", ctx) };
+  return { lines: [out(`${PROFILE.links.length} endpoints exposed on contact/0:`), ...contactView()], effects: go("contact") };
 }
 
 function jujuWhoami(_args, ctx) {
@@ -227,7 +229,7 @@ function terraform(args, ctx) {
       if (f.target && f.target !== "module.projects") {
         return { lines: [err(`Error: no resource matches -target=${f.target}`), muted("Try: terraform plan -target=module.projects")], effects: {} };
       }
-      return { lines: projectsView(), effects: go("projects", ctx) };
+      return { lines: projectsView(), effects: go("projects") };
     }
     case "apply":
       return { lines: [err("Error: apply is not permitted on this workspace."), muted("This is a portfolio. Run `terraform plan` to see what it would build.")], effects: {} };
@@ -246,7 +248,7 @@ function gh(args, ctx) {
     if (target && target !== "build-minh") {
       return { lines: [err(`could not find run "${target}"`), muted("Try: gh run view build-minh")], effects: {} };
     }
-    return { lines: skillsView(), effects: go("skills", ctx) };
+    return { lines: skillsView(), effects: go("skills") };
   }
   if (sub === "run" && action === "list") {
     return { lines: [ok(`completed  success  build-minh  main  #${BUILD_SHA}`)], effects: {} };

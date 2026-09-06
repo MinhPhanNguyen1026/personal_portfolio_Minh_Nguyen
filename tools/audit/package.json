@@ -6,8 +6,9 @@
   "scripts": {
     "shots": "node shots.mjs",
     "a11y": "node a11y.mjs",
+    "scroll": "node scroll.mjs",
     "lighthouse": "node lighthouse.mjs",
-    "all": "node shots.mjs && node a11y.mjs && node lighthouse.mjs"
+    "all": "node shots.mjs && node a11y.mjs && node scroll.mjs && node lighthouse.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
