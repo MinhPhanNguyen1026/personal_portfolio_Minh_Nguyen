@@ -83,6 +83,15 @@ await scrollTo(0);
 s = await state();
 check("back to top after everything → login, hash cleared", s.current === "login" && s.hash === "", `${s.current} "${s.hash}"`);
 
+// The top-left minh@portfolio link is Home: top of page, no error, no login replay.
+await scrollTo(s.tops.skills + 200);
+await page.getByRole("link", { name: "Home" }).click();
+await page.waitForTimeout(500);
+s = await state();
+const homeError = await page.evaluate(() => /not a controller/.test(document.querySelector('[role="log"]')?.textContent ?? ""));
+const dialogs = await page.getByRole("dialog").count();
+check("Home link → top, hash cleared, no error, no login card", s.y <= 4 && s.hash === "" && !homeError && dialogs === 0, `y=${s.y} hash="${s.hash}" error=${homeError} dialogs=${dialogs}`);
+
 await browser.close();
 console.log(failures ? `\n${failures} failure(s)` : "\nall scroll/URL checks pass");
 process.exitCode = failures ? 2 : 0;

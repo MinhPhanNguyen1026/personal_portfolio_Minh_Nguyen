@@ -119,7 +119,7 @@ function LoginCard({ phase, onLogin, onDone }) {
 
 // The block Ubuntu prints after login — `landscape-sysinfo` — with this
 // site's real numbers in the usual slots.
-function SysInfo({ deploy, when }) {
+function SysInfo({ deploy, when, ready }) {
   const skills = PIPELINE.reduce((n, s) => n + s.jobs.length, 0);
   const rows = [
     ["System load:", "0.08", "Sections:", `${SECTIONS.length}`],
@@ -127,14 +127,17 @@ function SysInfo({ deploy, when }) {
     ["Memory usage:", `${skills} skills`, "Users logged in:", "1 (you)"],
     ["Deployed:", deploy.source === "actions" ? `${deploy.sha} · ${relativeTime(deploy.at)}` : `${deploy.sha} (this build)`, "Controller:", `${PROFILE.handle} · juju 3.6.4`],
   ];
+  // Line-by-line: each unit carries its own delay so the block visibly
+  // runs, rather than arriving in the same batch as the MOTD above it.
+  const delay = (i) => `${i * 110}ms`;
   return (
-    <div className={styles.sysinfo} aria-label="System information">
-      <p className={styles.sysinfoTitle} data-print>
+    <div className={styles.sysinfo} aria-label="System information" data-ready={ready ? "true" : "false"}>
+      <p className={styles.sysinfoTitle} data-print data-delay={delay(0)}>
         System information as of {when}
       </p>
       <dl className={styles.sysinfoGrid}>
-        {rows.map(([k1, v1, k2, v2]) => (
-          <div key={k1} className={styles.sysinfoRow} data-print>
+        {rows.map(([k1, v1, k2, v2], i) => (
+          <div key={k1} className={styles.sysinfoRow} data-print data-delay={delay(i + 1)}>
             <dt>{k1}</dt>
             <dd>{v1}</dd>
             <dt>{k2}</dt>
@@ -142,7 +145,7 @@ function SysInfo({ deploy, when }) {
           </div>
         ))}
       </dl>
-      <p className={styles.sysinfoNote} data-print>
+      <p className={styles.sysinfoNote} data-print data-delay={delay(rows.length + 1)}>
         0 updates can be applied immediately.
       </p>
     </div>
@@ -155,8 +158,29 @@ function Motd({ open, run, lastLogin, deploy }) {
   // the lock screen. (String value: React 18 doesn't know `inert`.)
   const inert = open ? {} : { inert: "" };
   // The first transcript entry: `$ juju login` types once the card is
-  // gone, and only then does the MOTD print.
+  // gone, and only then does the MOTD print. The system-information
+  // block is a second program that runs after it. Logging out resets
+  // both, so logging in again replays the whole entry.
   const [ready, setReady] = useState(() => !canAnimate());
+  const [sysReady, setSysReady] = useState(() => !canAnimate());
+  useEffect(() => {
+    if (!open && canAnimate()) {
+      setReady(false);
+      setSysReady(false);
+    }
+  }, [open]);
+  useEffect(() => {
+    if (!ready) {
+      setSysReady(false);
+      return undefined;
+    }
+    if (!canAnimate()) {
+      setSysReady(true);
+      return undefined;
+    }
+    const t = setTimeout(() => setSysReady(true), 700);
+    return () => clearTimeout(t);
+  }, [ready]);
   return (
     <div className={styles.motd} data-open={open ? "true" : "false"} {...inert}>
       <CommandBox command="juju login" active={open} onRun={(c) => run(c)} onTyped={() => setReady(true)} onReset={() => setReady(false)} />
@@ -214,7 +238,7 @@ function Motd({ open, run, lastLogin, deploy }) {
           })}
         </ul>
 
-        <SysInfo deploy={deploy} when={lastLogin} />
+        <SysInfo deploy={deploy} when={lastLogin} ready={sysReady} />
       </div>
     </div>
   );

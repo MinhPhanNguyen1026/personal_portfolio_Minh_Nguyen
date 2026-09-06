@@ -15,7 +15,8 @@ const THEME_NEXT = { system: "light", light: "dark", dark: "system" };
 export default function StatusBar({ current, run, theme, cycleTheme, deploy }) {
   return (
     <header className={styles.bar} role="banner">
-      <a className={styles.user} href="#login" onClick={(e) => { e.preventDefault(); run(switchCommand("login")); }}>
+      {/* Home: back to the top without replaying the login. */}
+      <a className={styles.user} href="#login" aria-label="Home" onClick={(e) => { e.preventDefault(); run("cd ~"); }}>
         <span className={styles.handle}>{PROFILE.handle}</span>
         <span className={styles.at}>@</span>
         <span>{PROFILE.host}</span>

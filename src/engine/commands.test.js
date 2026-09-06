@@ -19,9 +19,19 @@ describe("juju switch", () => {
     expect(r.lines[0].text).toContain("minh:admin/experience -> minh:admin/projects");
   });
 
-  test("rejects unknown controllers and the login pseudo-controller", () => {
+  test("rejects unknown controllers; login is a valid target (it's listed by `juju models`)", () => {
     expect(execute("juju switch nope", ctx).lines[0].kind).toBe("err");
-    expect(execute("juju switch login", ctx).effects.switchTo).toBeUndefined();
+    expect(execute("juju switch login", ctx).effects.switchTo).toBe("login");
+  });
+
+  test("`cd ~` (and bare `cd`) go home without replaying the login", () => {
+    for (const cmd of ["cd ~", "cd", "cd /"]) {
+      const r = execute(cmd, ctx);
+      expect(r.effects).toEqual({ switchTo: "login" });
+      expect(r.lines).toEqual([]);
+    }
+    expect(execute("cd ~/projects", ctx).effects.switchTo).toBe("projects");
+    expect(execute("cd controllers/skills", ctx).effects.switchTo).toBe("skills");
   });
 
   test("still scrolls to the section when it is already current", () => {

@@ -67,6 +67,19 @@ test("a section's command box copies and runs its command", async () => {
   expect(window.location.hash).toBe("#projects");
 });
 
+test("the top-left minh@portfolio link goes home without an error or a login replay", async () => {
+  render(<App />);
+  await userEvent.click(within(nav()).getByRole("button", { name: "projects" }));
+  expect(window.location.hash).toBe("#projects");
+
+  await userEvent.click(screen.getByRole("link", { name: "Home" }));
+  expect(window.location.hash).toBe("");
+  const log = screen.getByRole("log");
+  expect(within(log).getByText("cd ~")).toBeInTheDocument();
+  expect(within(log).queryByText(/not a controller/)).not.toBeInTheDocument();
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+});
+
 test("the status bar's >_ button focuses the prompt", async () => {
   render(<App />);
   await userEvent.click(screen.getByRole("button", { name: /focus the prompt/i }));

@@ -139,9 +139,9 @@ function jujuSwitch(args, ctx) {
     return { lines: [out(`${CONTROLLER}:admin/${ctx.current}`)], effects: {} };
   }
   const section = findSection(target);
-  if (!section || section.id === "login") {
+  if (!section) {
     return {
-      lines: [err(`ERROR "${target}" is not a controller. Try: ${SWITCHABLE.map((s) => s.id).join(", ")}`)],
+      lines: [err(`ERROR "${target}" is not a controller. Try: ${SECTIONS.map((s) => s.id).join(", ")}`)],
       effects: {},
     };
   }
@@ -280,8 +280,13 @@ const BUILTINS = {
     if (/about|readme/i.test(f)) return { lines: PROFILE.about.map(out), effects: {} };
     return { lines: [err(`cat: ${f || "(none)"}: No such file or directory`)], effects: {} };
   },
-  // Convenience aliases so the obvious things work.
-  cd: (args, ctx) => jujuSwitch(args.length ? [args[0].replace(/^\/?controllers\//, "").replace(/\/$/, "")] : [], ctx),
+  // Convenience aliases so the obvious things work. `cd` / `cd ~` is home:
+  // the top of the page, without replaying the login.
+  cd: (args, ctx) => {
+    const target = args[0];
+    if (!target || target === "~" || target === "/" || target === "~/") return { lines: [], effects: { switchTo: "login" } };
+    return jujuSwitch([target.replace(/^~?\/?(controllers\/)?/, "").replace(/\/$/, "")], ctx);
+  },
   exit: () => ({ lines: [muted("There is no exit. There is only scroll.")], effects: {} }),
 };
 

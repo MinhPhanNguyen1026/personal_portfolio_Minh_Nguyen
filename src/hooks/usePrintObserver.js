@@ -29,7 +29,9 @@ export function usePrintObserver(rootRef) {
       (entries) => {
         const hits = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
         hits.forEach((e, i) => {
-          e.target.style.transitionDelay = `${Math.min(i * 40, 320)}ms`;
+          // A unit may bring its own delay (data-delay) for line-by-line
+          // sequences; otherwise stagger by arrival order.
+          e.target.style.transitionDelay = e.target.dataset.delay ?? `${Math.min(i * 40, 320)}ms`;
           e.target.setAttribute("data-printed", "");
         });
         for (const e of entries) {

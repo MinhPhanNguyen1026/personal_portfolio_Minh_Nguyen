@@ -115,6 +115,18 @@ for (const s of scenarios) {
     await page.waitForTimeout(1600);
     await shot(page, "print-3-fast-scroll");
     await c.close();
+  } else if (s === "sysinfo") {
+    // MOTD printed but the system-information block not yet started,
+    // then the block mid-print, then done.
+    const { c, page } = await ctx();
+    await login(page);
+    await page.waitForTimeout(1250);
+    await shot(page, "sysinfo-1-motd-only");
+    await page.waitForTimeout(650);
+    await shot(page, "sysinfo-2-printing");
+    await page.waitForTimeout(900);
+    await shot(page, "sysinfo-3-done");
+    await c.close();
   } else if (s === "bridge") {
     // The bridge between login and experience, printed.
     const { c, page } = await ctx();
