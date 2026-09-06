@@ -8,7 +8,7 @@
 //   ctx.loggedIn  boolean
 //
 //   lines[]       { kind: "out" | "ok" | "warn" | "err" | "info" | "muted", text }
-//   effects       { switchTo?, clear?, theme?, login?, open? }  — the hook
+//   effects       { switchTo?, clear?, theme?, login?, logout? }  — the hook
 //                 applies these; the engine only describes them.
 
 import { parse } from "./parse";
@@ -140,7 +140,7 @@ function juju(args, ctx) {
     case "login":
       return { lines: [out(`Connecting to ${CONTROLLER}…`)], effects: { login: true, switchTo: "login" } };
     case "logout":
-      return { lines: [out(`Logged out. You are now logged out of ${CONTROLLER}.`)], effects: { switchTo: "login", login: true } };
+      return { lines: [out(`Logged out of ${CONTROLLER}.`)], effects: { logout: true, switchTo: "login" } };
     case undefined:
     case "help":
     case "--help":

@@ -168,6 +168,11 @@
   .window {
     padding: 0 10px;
   }
+  /* The list scrolls sideways; fade the edge so that's discoverable. */
+  .windows {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  }
 }
 
 @media (max-width: 480px) {

@@ -11,7 +11,7 @@ import { execute } from "./commands";
 
 let seq = 0;
 
-export function useShell({ current, theme, loggedIn, switchTo, setTheme, onLogin }) {
+export function useShell({ current, theme, loggedIn, switchTo, setTheme, onLogin, onLogout }) {
   const [history, setHistory] = useState([]);
   const commands = useRef([]);
   const cursor = useRef(-1);
@@ -34,9 +34,10 @@ export function useShell({ current, theme, loggedIn, switchTo, setTheme, onLogin
 
       if (effects.theme) setTheme(effects.theme);
       if (effects.login) onLogin?.();
-      if (effects.switchTo) switchTo(effects.switchTo);
+      if (effects.logout) onLogout?.();
+      if (effects.switchTo) switchTo(effects.switchTo, { focus: !effects.login && !effects.logout });
     },
-    [current, theme, loggedIn, switchTo, setTheme, onLogin]
+    [current, theme, loggedIn, switchTo, setTheme, onLogin, onLogout]
   );
 
   const clear = useCallback(() => setHistory([]), []);
