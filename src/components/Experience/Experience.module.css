@@ -30,9 +30,11 @@
 
 /* ------------------------------ table ------------------------------ */
 
+/* No rule above the header: it isn't a print unit, so it would sit
+   alone on screen before the rows print — and juju's own output has
+   none either. */
 .tableScroll {
   overflow-x: auto;
-  border-top: 1px solid var(--line);
 }
 
 .table {
