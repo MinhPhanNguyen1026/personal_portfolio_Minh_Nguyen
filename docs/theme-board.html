@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Theme board for the redesign. Standalone: open this file directly, or
+     `npm run theme` from the repo root. Palette values here mirror
+     src/styles/tokens.css. -->
+<title>Ember on Ink</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+  /* ---------- Page chrome tokens: light (Paper) as the bare :root ---------- */
+  :root {
+    --bg-0: #f7f6f3; --bg-1: #ffffff; --bg-2: #efede8;
+    --line: #e2dfd8; --line-strong: #c9c5bb;
+    --fg-0: #1a1d24; --fg-1: #4b5160; --fg-2: #626a79;
+    --accent: #bf3f10; --accent-soft: rgba(191,63,16,.12);
+    --ok: #167a41; --warn: #8a5f00; --err: #c43d3d; --info: #1a64bd; --meta: #7a4fd6;
+    --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg-0: #0a0d13; --bg-1: #10141c; --bg-2: #171c26;
+      --line: #232a37; --line-strong: #303849;
+      --fg-0: #e8ebf0; --fg-1: #a9b1c0; --fg-2: #7f8a9d;
+      --accent: #ff7a45; --accent-soft: rgba(255,122,69,.14);
+      --ok: #5cc98a; --warn: #e3b341; --err: #f06f6f; --info: #6cb6ff; --meta: #b48cff;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg-0: #0a0d13; --bg-1: #10141c; --bg-2: #171c26;
+    --line: #232a37; --line-strong: #303849;
+    --fg-0: #e8ebf0; --fg-1: #a9b1c0; --fg-2: #7f8a9d;
+    --accent: #ff7a45; --accent-soft: rgba(255,122,69,.14);
+    --ok: #5cc98a; --warn: #e3b341; --err: #f06f6f; --info: #6cb6ff; --meta: #b48cff;
+  }
+  /* ---------- Forced-theme panels: the specimens ignore the viewer's theme ---------- */
+  .ink {
+    --bg-0: #0a0d13; --bg-1: #10141c; --bg-2: #171c26;
+    --line: #232a37; --line-strong: #303849;
+    --fg-0: #e8ebf0; --fg-1: #a9b1c0; --fg-2: #7f8a9d;
+    --accent: #ff7a45; --accent-soft: rgba(255,122,69,.14);
+    --ok: #5cc98a; --warn: #e3b341; --err: #f06f6f; --info: #6cb6ff; --meta: #b48cff;
+    color-scheme: dark;
+  }
+  .paper {
+    --bg-0: #f7f6f3; --bg-1: #ffffff; --bg-2: #efede8;
+    --line: #e2dfd8; --line-strong: #c9c5bb;
+    --fg-0: #1a1d24; --fg-1: #4b5160; --fg-2: #626a79;
+    --accent: #bf3f10; --accent-soft: rgba(191,63,16,.12);
+    --ok: #167a41; --warn: #8a5f00; --err: #c43d3d; --info: #1a64bd; --meta: #7a4fd6;
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg-0); color: var(--fg-0);
+    font: 15px/1.6 var(--sans); -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 1080px; margin: 0 auto; padding: 48px 24px 96px; display: flex; flex-direction: column; gap: 56px; }
+  h1, h2, h3 { margin: 0; text-wrap: balance; letter-spacing: -0.02em; }
+  h1 { font-size: 34px; font-weight: 800; line-height: 1.1; }
+  h2 { font-size: 20px; font-weight: 700; }
+  p { margin: 0; max-width: 64ch; color: var(--fg-1); }
+  .eyebrow { font: 600 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+  .intro { display: flex; flex-direction: column; gap: 12px; }
+  section { display: flex; flex-direction: column; gap: 16px; }
+  .sec-head { display: flex; flex-direction: column; gap: 6px; }
+  .sec-head p { font-size: 14px; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 760px) { .pair { grid-template-columns: 1fr; } }
+  .panel {
+    background: var(--bg-0); color: var(--fg-0); border: 1px solid var(--line);
+    border-radius: 6px; padding: 18px; overflow: hidden; display: flex; flex-direction: column; gap: 14px;
+    font-family: var(--sans);
+  }
+  .panel-label { font: 500 11px/1 var(--mono); color: var(--fg-2); letter-spacing: .08em; text-transform: uppercase; display: flex; justify-content: space-between; }
+  .mono { font-family: var(--mono); }
+  code, pre { font-family: var(--mono); font-size: 13px; }
+  pre { margin: 0; overflow-x: auto; line-height: 1.55; }
+
+  /* ---------- Status bar ---------- */
+  .statusbar {
+    display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+    background: var(--bg-1); border: 1px solid var(--line); border-radius: 4px;
+    font: 500 12.5px/1 var(--mono); color: var(--fg-1); min-height: 36px;
+  }
+  .statusbar > span { padding: 10px 12px; border-right: 1px solid var(--line); white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
+  .statusbar > span:last-child { border-right: 0; margin-left: auto; }
+  .statusbar .user { color: var(--accent); font-weight: 600; }
+  .statusbar .key { color: var(--fg-2); }
+  .statusbar .val { color: var(--fg-0); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
+  .dot.ok { background: var(--ok); } .dot.warn { background: var(--warn); } .dot.err { background: var(--err); }
+
+  /* ---------- Login card / MOTD ---------- */
+  .hero { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  .hero-panel { padding: 0; }
+  .hero-stage { display: grid; grid-template-columns: minmax(0,1fr); min-height: 380px; }
+  .login {
+    justify-self: center; align-self: center; width: min(100%, 380px); margin: 40px 20px;
+    background: var(--bg-1); border: 1px solid var(--line-strong); border-radius: 6px; padding: 26px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .login h3 { font-size: 17px; font-weight: 700; }
+  .login .sub { font: 12px/1.4 var(--mono); color: var(--fg-2); }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font: 600 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--fg-2); }
+  .field .box {
+    font: 14px/1 var(--mono); background: var(--bg-0); border: 1px solid var(--line); border-radius: 4px;
+    padding: 11px 12px; min-height: 38px; color: var(--fg-0); display: flex; align-items: center;
+  }
+  .caret::after { content: ''; display: inline-block; width: 7px; height: 15px; background: var(--accent); margin-left: 2px; vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .btn {
+    font: 600 13px/1 var(--sans); background: var(--accent); color: #fff; border: 0; border-radius: 4px;
+    padding: 12px 16px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn:focus-visible, .ghost:focus-visible, .seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn.ghost, .ghost { background: transparent; color: var(--fg-1); border: 1px solid var(--line-strong); }
+  .btn-row { display: flex; gap: 8px; align-items: center; }
+  .skip { font: 12px var(--mono); color: var(--fg-2); background: none; border: 0; cursor: pointer; padding: 6px; }
+  .skip:hover { color: var(--fg-0); }
+
+  .motd { padding: 36px 32px; display: flex; flex-direction: column; gap: 22px; }
+  .motd pre { color: var(--fg-1); font-size: 13px; }
+  .motd .banner { color: var(--fg-2); }
+  .motd .name { font: 800 clamp(28px, 5vw, 44px)/1.05 var(--sans); color: var(--fg-0); letter-spacing: -0.03em; }
+  .motd .name em { font-style: normal; color: var(--accent); }
+  .motd .tag { font-size: 16px; color: var(--fg-1); max-width: 52ch; }
+  .motd .links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font: 500 12px/1 var(--mono); padding: 8px 10px; border: 1px solid var(--line); border-radius: 4px; color: var(--fg-1); background: var(--bg-1); display: inline-flex; gap: 8px; align-items: center; }
+  .chip .dot { width: 6px; height: 6px; }
+  .prompt-line { font: 13px var(--mono); color: var(--fg-1); }
+  .prompt-line .p { color: var(--accent); font-weight: 600; }
+  .prompt-line .cmd { color: var(--fg-0); }
+  .hidden { display: none !important; }
+  .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .seg { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 4px; overflow: hidden; }
+  .seg button { font: 500 12px var(--mono); background: transparent; color: var(--fg-1); border: 0; padding: 8px 12px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--bg-2); color: var(--fg-0); }
+
+  /* ---------- juju status ---------- */
+  .jstatus { display: flex; flex-direction: column; gap: 14px; }
+  .jhead { display: grid; grid-template-columns: repeat(5, auto); gap: 4px 24px; font: 13px/1.5 var(--mono); width: max-content; max-width: 100%; }
+  .jhead .k { color: var(--fg-2); }
+  .jrows { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line); font: 13px/1.5 var(--mono); }
+  .jrow { display: grid; grid-template-columns: 1.4fr .8fr 1.1fr .5fr 1.2fr .8fr; gap: 12px; padding: 9px 8px; border-bottom: 1px solid var(--line); align-items: center; min-width: 0; }
+  .jrow.head { color: var(--fg-2); font-weight: 500; }
+  .jrow.head { padding-top: 8px; }
+  .jrow:not(.head):hover { background: var(--bg-2); }
+  .jrow .app { color: var(--fg-0); font-weight: 500; }
+  .jrow .st { display: inline-flex; align-items: center; gap: 7px; }
+  .jrow .st.active { color: var(--ok); } .jrow .st.term { color: var(--fg-2); }
+  .jrow .st.term .dot { background: var(--fg-2); opacity: .6; }
+  .jrow .muted { color: var(--fg-1); }
+  .jrow .c { color: var(--fg-2); }
+  .scrollx { overflow-x: auto; }
+  .jrows { min-width: 560px; }
+
+  /* ---------- Terraform / HCL ---------- */
+  .hcl { background: var(--bg-1); border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; }
+  .hcl .add { color: var(--ok); }
+  .hcl .kw { color: var(--meta); }
+  .hcl .ty { color: var(--info); }
+  .hcl .str { color: var(--info); }
+  .hcl .key { color: var(--fg-0); }
+  .hcl .cm { color: var(--fg-2); }
+  .hcl .num { color: var(--warn); }
+  .plan-summary { font: 500 13px var(--mono); color: var(--fg-1); }
+  .plan-summary b { color: var(--ok); font-weight: 600; }
+
+  /* ---------- Pipeline ---------- */
+  .pipe { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; overflow-x: auto; }
+  .stage { display: flex; flex-direction: column; gap: 8px; padding: 0 14px; border-left: 1px dashed var(--line-strong); min-width: 0; }
+  .stage:first-child { border-left: 0; padding-left: 0; }
+  .stage h4 { margin: 0 0 4px; font: 600 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-2); }
+  .job { display: flex; align-items: center; gap: 9px; font: 500 12.5px/1 var(--mono); background: var(--bg-1); border: 1px solid var(--line); border-radius: 4px; padding: 9px 10px; color: var(--fg-0); min-height: 34px; }
+  .job .tick { width: 14px; height: 14px; border-radius: 50%; background: var(--ok); color: var(--bg-0); display: inline-grid; place-items: center; font-size: 10px; font-weight: 700; flex: none; }
+  .job.run .tick { background: var(--warn); }
+  @media (max-width: 760px) { .pipe { grid-template-columns: 1fr; } .stage { border-left: 0; border-top: 1px dashed var(--line-strong); padding: 12px 0 0; } .stage:first-child { border-top: 0; padding-top: 0; } }
+
+  /* ---------- Terminal drawer ---------- */
+  .term { background: var(--bg-1); border: 1px solid var(--line); border-radius: 4px; display: flex; flex-direction: column; }
+  .term-bar { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--line); font: 500 11px/1 var(--mono); color: var(--fg-2); letter-spacing: .08em; text-transform: uppercase; }
+  .term-bar .lights { display: inline-flex; gap: 5px; }
+  .term-bar .lights i { width: 9px; height: 9px; border-radius: 50%; background: var(--line-strong); display: block; }
+  .term-bar .right { margin-left: auto; text-transform: none; letter-spacing: 0; }
+  .term pre { padding: 14px 16px; color: var(--fg-1); }
+  .term .p { color: var(--accent); font-weight: 600; }
+  .term .cmd { color: var(--fg-0); }
+  .term .out { color: var(--fg-1); }
+  .term .ok { color: var(--ok); }
+
+  /* ---------- Swatches ---------- */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .sw { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; background: var(--bg-1); }
+  .sw .chip-color { height: 52px; border-bottom: 1px solid var(--line); }
+  .sw .meta { padding: 8px 10px; display: flex; flex-direction: column; gap: 2px; }
+  .sw .n { font: 600 12px/1.3 var(--mono); color: var(--fg-0); }
+  .sw .h { font: 11px/1.3 var(--mono); color: var(--fg-2); font-variant-numeric: tabular-nums; }
+  .sw .r { font: 11px/1.3 var(--sans); color: var(--fg-1); }
+
+  /* ---------- Type specimen ---------- */
+  .spec { display: flex; flex-direction: column; gap: 18px; }
+  .spec .display { font: 800 clamp(30px, 5vw, 46px)/1.05 var(--sans); letter-spacing: -0.03em; color: var(--fg-0); }
+  .spec .display em { font-style: normal; color: var(--accent); }
+  .spec .body { font-size: 16px; line-height: 1.65; color: var(--fg-1); max-width: 60ch; }
+  .spec .util { font: 13px/1.6 var(--mono); color: var(--fg-1); }
+  .spec .scale { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 12px var(--mono); color: var(--fg-2); }
+
+  .note { font-size: 13px; color: var(--fg-2); }
+  .note code { font-size: 12px; background: var(--bg-2); padding: 2px 5px; border-radius: 3px; color: var(--fg-1); }
+  @media (prefers-reduced-motion: reduce) { .caret::after { animation: none; } }
+</style>
+<style>body{margin:0}</style>
+</head>
+<body>
+<div class="page">
+  <header class="intro">
+    <span class="eyebrow">Theme board · portfolio redesign</span>
+    <h1>Ember on Ink</h1>
+    <p>The visual system for the control-plane portfolio. Dark-first because terminals are dark; one warm accent so it reads as chosen, not generated. Every specimen below is real content from the site, rendered in both themes. Click <strong>Log in</strong> to feel the intro.</p>
+  </header>
+
+  <!-- ================= HERO: LOGIN → MOTD ================= -->
+  <section>
+    <div class="sec-head">
+      <h2>Login → MOTD</h2>
+      <p>One click, no input. Credentials auto-type, the card resolves into the message-of-the-day, and the MOTD is the page's real <code>&lt;h1&gt;</code>. Skip and Esc both jump straight to the end; reduced-motion renders the end state immediately.</p>
+    </div>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Hero theme">
+        <button type="button" data-hero-theme="ink" aria-pressed="true">Ink</button>
+        <button type="button" data-hero-theme="paper" aria-pressed="false">Paper</button>
+      </div>
+      <button type="button" class="btn ghost" id="replay">Replay login</button>
+    </div>
+    <div class="panel hero-panel ink" id="hero">
+      <div class="statusbar" style="border:0;border-bottom:1px solid var(--line);border-radius:0">
+        <span class="user">minh@portfolio</span>
+        <span><span class="key">controller</span><span class="val" id="sb-ctrl">login</span></span>
+        <span><span class="key">cloud</span><span class="val">microk8s/localhost</span></span>
+        <span><span class="dot ok"></span><span class="val">a6b1cbd</span><span class="key">deployed 2h ago</span></span>
+        <span class="key" aria-hidden="true">◐</span>
+      </div>
+      <div class="hero-stage">
+        <div class="login" id="login">
+          <div>
+            <h3>Log in to minh-portfolio</h3>
+            <div class="sub">controller minh · juju 3.6 · JAAS-compatible</div>
+          </div>
+          <div class="field">
+            <label for="u">Username</label>
+            <div class="box" id="u"><span id="u-text"></span><span class="caret" id="u-caret"></span></div>
+          </div>
+          <div class="field">
+            <label for="pw">Password</label>
+            <div class="box" id="pw"><span id="pw-text"></span><span class="caret hidden" id="pw-caret"></span></div>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn" id="login-btn">Log in</button>
+            <button type="button" class="skip" id="skip-btn">Skip →</button>
+          </div>
+        </div>
+
+        <div class="motd hidden" id="motd">
+          <pre class="banner">Welcome to minh-portfolio (Juju 3.6.4 · MicroK8s 1.31 · Ubuntu 24.04 LTS)
+Last login: just now from your browser</pre>
+          <div class="name">Minh <em>Nguyen</em></div>
+          <div class="tag">Software Engineer at Canonical. Crafting software end to end — platform tooling on one side, fast and accessible web on the other, with a soft spot for thoughtful detail.</div>
+          <div class="links">
+            <span class="chip"><span class="dot ok"></span>canonical · active</span>
+            <span class="chip"><span class="dot ok"></span>interplay-lab · active</span>
+            <span class="chip">Rochester, NY</span>
+          </div>
+          <div class="links">
+            <span class="chip">LinkedIn ↗</span><span class="chip">GitHub ↗</span><span class="chip">Email</span><span class="chip">Resume ↓</span>
+          </div>
+          <div class="prompt-line"><span class="p">minh@portfolio</span>:~$ <span class="cmd">juju switch experience</span><span class="caret"></span></div>
+        </div>
+      </div>
+    </div>
+    <p class="note">The status bar's deploy pill shows a <em>real</em> commit — pulled from the GitHub API, falling back to the SHA baked in at build time.</p>
+  </section>
+
+  <!-- ================= PALETTES ================= -->
+  <section>
+    <div class="sec-head">
+      <h2>Palettes</h2>
+      <p>Ink is the default. Paper is a real light mode, not an inversion — warm ground, darker ember for contrast. Status colours exist only for status and always ride with a word or glyph.</p>
+    </div>
+    <div class="pair">
+      <div class="panel ink">
+        <div class="panel-label"><span>Ink · dark</span><span>default</span></div>
+        <div class="swatches">
+          <div class="sw"><div class="chip-color" style="background:#0a0d13"></div><div class="meta"><span class="n">bg-0</span><span class="h">#0a0d13</span><span class="r">page</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#10141c"></div><div class="meta"><span class="n">bg-1</span><span class="h">#10141c</span><span class="r">terminal, panels</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#171c26"></div><div class="meta"><span class="n">bg-2</span><span class="h">#171c26</span><span class="r">cards, hover rows</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#e8ebf0"></div><div class="meta"><span class="n">fg-0</span><span class="h">#e8ebf0</span><span class="r">text · 16.8:1</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#a9b1c0"></div><div class="meta"><span class="n">fg-1</span><span class="h">#a9b1c0</span><span class="r">secondary · 9.1:1</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#7f8a9d"></div><div class="meta"><span class="n">fg-2</span><span class="h">#7f8a9d</span><span class="r">muted · 4.6:1</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#ff7a45"></div><div class="meta"><span class="n">accent</span><span class="h">#ff7a45</span><span class="r">ember · 8.5:1</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#5cc98a"></div><div class="meta"><span class="n">ok</span><span class="h">#5cc98a</span><span class="r">active, ✓</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#e3b341"></div><div class="meta"><span class="n">warn</span><span class="h">#e3b341</span><span class="r">waiting</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#f06f6f"></div><div class="meta"><span class="n">err</span><span class="h">#f06f6f</span><span class="r">blocked</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#6cb6ff"></div><div class="meta"><span class="n">info</span><span class="h">#6cb6ff</span><span class="r">strings, links</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#b48cff"></div><div class="meta"><span class="n">meta</span><span class="h">#b48cff</span><span class="r">HCL keywords</span></div></div>
+        </div>
+      </div>
+      <div class="panel paper">
+        <div class="panel-label"><span>Paper · light</span><span>toggle / OS</span></div>
+        <div class="swatches">
+          <div class="sw"><div class="chip-color" style="background:#f7f6f3"></div><div class="meta"><span class="n">bg-0</span><span class="h">#f7f6f3</span><span class="r">page</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#ffffff"></div><div class="meta"><span class="n">bg-1</span><span class="h">#ffffff</span><span class="r">terminal, panels</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#efede8"></div><div class="meta"><span class="n">bg-2</span><span class="h">#efede8</span><span class="r">cards, hover rows</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#1a1d24"></div><div class="meta"><span class="n">fg-0</span><span class="h">#1a1d24</span><span class="r">text · 15.9:1</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#4b5160"></div><div class="meta"><span class="n">fg-1</span><span class="h">#4b5160</span><span class="r">secondary · 7.6:1</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#626a79"></div><div class="meta"><span class="n">fg-2</span><span class="h">#626a79</span><span class="r">muted · 4.5:1</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#bf3f10"></div><div class="meta"><span class="n">accent</span><span class="h">#bf3f10</span><span class="r">ember · 4.9:1</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#167a41"></div><div class="meta"><span class="n">ok</span><span class="h">#167a41</span><span class="r">active, ✓</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#8a5f00"></div><div class="meta"><span class="n">warn</span><span class="h">#8a5f00</span><span class="r">waiting</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#c43d3d"></div><div class="meta"><span class="n">err</span><span class="h">#c43d3d</span><span class="r">blocked</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#1a64bd"></div><div class="meta"><span class="n">info</span><span class="h">#1a64bd</span><span class="r">strings, links</span></div></div>
+          <div class="sw"><div class="chip-color" style="background:#7a4fd6"></div><div class="meta"><span class="n">meta</span><span class="h">#7a4fd6</span><span class="r">HCL keywords</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TYPE ================= -->
+  <section>
+    <div class="sec-head">
+      <h2>Type</h2>
+      <p>Inter where Minh speaks; JetBrains Mono where the machine speaks. All-mono is the purist move and it makes paragraphs tiring — the split is what keeps the CLI theme from becoming a wall of code.</p>
+    </div>
+    <div class="pair">
+      <div class="panel ink spec">
+        <div class="panel-label"><span>Ink</span><span>Inter 800 / 400 · JetBrains Mono 500</span></div>
+        <div class="display">Crafting software, <em>end to end</em>.</div>
+        <div class="body">I've worked across startups, big tech, and research labs, turning ideas into production features and collaborating with teams to build inclusive, polished products.</div>
+        <div class="util">$ juju models --controller minh<br>Model        Cloud/Region        Status     Access<br>experience*  microk8s/localhost  available  admin</div>
+        <div class="scale"><span>display 44</span><span>h2 28</span><span>h3 20</span><span>body 16</span><span>mono 13</span><span>label 11 / .1em</span></div>
+      </div>
+      <div class="panel paper spec">
+        <div class="panel-label"><span>Paper</span><span>same scale</span></div>
+        <div class="display">Crafting software, <em>end to end</em>.</div>
+        <div class="body">I've worked across startups, big tech, and research labs, turning ideas into production features and collaborating with teams to build inclusive, polished products.</div>
+        <div class="util">$ juju models --controller minh<br>Model        Cloud/Region        Status     Access<br>experience*  microk8s/localhost  available  admin</div>
+        <div class="scale"><span>display 44</span><span>h2 28</span><span>h3 20</span><span>body 16</span><span>mono 13</span><span>label 11 / .1em</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= JUJU STATUS ================= -->
+  <section>
+    <div class="sec-head">
+      <h2>Experience → <code>juju status</code></h2>
+      <p>Faithful to the real layout — Canonical engineers will look. Current roles are <em>active</em>; past roles <em>terminated</em>. Rows expand for details. Under 768px the same list renders as stacked cards; the markup stays a list so screen readers keep the semantics.</p>
+    </div>
+    <div class="pair">
+      <div class="panel ink jstatus">
+        <div class="panel-label"><span>Ink</span></div>
+        <div class="jhead">
+          <span class="k">Model</span><span class="k">Controller</span><span class="k">Cloud/Region</span><span class="k">Version</span><span class="k">Timestamp</span>
+          <span>minh</span><span>experience</span><span>microk8s/localhost</span><span>3.6.4</span><span>now</span>
+        </div>
+        <div class="scrollx"><div class="jrows">
+          <div class="jrow head"><span>App</span><span>Version</span><span>Status</span><span>Scale</span><span>Charm</span><span>Channel</span></div>
+          <div class="jrow"><span class="app">canonical</span><span class="muted">2025–</span><span class="st active"><span class="dot ok"></span>active</span><span class="muted">1</span><span class="muted">software-eng</span><span class="c">stable</span></div>
+          <div class="jrow"><span class="app">interplay-lab</span><span class="muted">2025–</span><span class="st active"><span class="dot ok"></span>active</span><span class="muted">1</span><span class="muted">research-asst</span><span class="c">stable</span></div>
+          <div class="jrow"><span class="app">onc-ai</span><span class="muted">2025</span><span class="st term"><span class="dot"></span>terminated</span><span class="muted">1</span><span class="muted">software-eng</span><span class="c">—</span></div>
+          <div class="jrow"><span class="app">salesforce</span><span class="muted">2024</span><span class="st term"><span class="dot"></span>terminated</span><span class="muted">1</span><span class="muted">swe-intern</span><span class="c">—</span></div>
+        </div></div>
+      </div>
+      <div class="panel paper jstatus">
+        <div class="panel-label"><span>Paper</span></div>
+        <div class="jhead">
+          <span class="k">Model</span><span class="k">Controller</span><span class="k">Cloud/Region</span><span class="k">Version</span><span class="k">Timestamp</span>
+          <span>minh</span><span>experience</span><span>microk8s/localhost</span><span>3.6.4</span><span>now</span>
+        </div>
+        <div class="scrollx"><div class="jrows">
+          <div class="jrow head"><span>App</span><span>Version</span><span>Status</span><span>Scale</span><span>Charm</span><span>Channel</span></div>
+          <div class="jrow"><span class="app">canonical</span><span class="muted">2025–</span><span class="st active"><span class="dot ok"></span>active</span><span class="muted">1</span><span class="muted">software-eng</span><span class="c">stable</span></div>
+          <div class="jrow"><span class="app">interplay-lab</span><span class="muted">2025–</span><span class="st active"><span class="dot ok"></span>active</span><span class="muted">1</span><span class="muted">research-asst</span><span class="c">stable</span></div>
+          <div class="jrow"><span class="app">onc-ai</span><span class="muted">2025</span><span class="st term"><span class="dot"></span>terminated</span><span class="muted">1</span><span class="muted">software-eng</span><span class="c">—</span></div>
+          <div class="jrow"><span class="app">salesforce</span><span class="muted">2024</span><span class="st term"><span class="dot"></span>terminated</span><span class="muted">1</span><span class="muted">swe-intern</span><span class="c">—</span></div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TERRAFORM ================= -->
+  <section>
+    <div class="sec-head">
+      <h2>Projects → <code>terraform plan</code></h2>
+      <p>Each project is an HCL resource block; the green <code>+</code> and the plan summary frame the section. Terraform over Juju bundles here because far more people can read it on sight.</p>
+    </div>
+    <div class="pair">
+      <div class="panel ink">
+        <div class="panel-label"><span>Ink</span></div>
+<pre class="hcl"><span class="cm"># module.projects</span>
+<span class="add">+</span> <span class="kw">resource</span> <span class="ty">"web_app"</span> <span class="str">"melcourses"</span> {
+    <span class="key">name</span>  = <span class="str">"Melcourses CDCS System"</span>
+    <span class="key">role</span>  = <span class="str">"Frontend Lead"</span>
+    <span class="key">stack</span> = [<span class="str">"Next.js"</span>, <span class="str">"React"</span>, <span class="str">"TypeScript"</span>, <span class="str">"SQL"</span>]
+    <span class="key">users</span> = <span class="num">2000</span><span class="str">+</span>
+    <span class="key">url</span>   = <span class="str">"https://melcourses.com"</span>
+  }</pre>
+        <div class="plan-summary">Plan: <b>4 to add</b>, 0 to change, 0 to destroy.</div>
+      </div>
+      <div class="panel paper">
+        <div class="panel-label"><span>Paper</span></div>
+<pre class="hcl"><span class="cm"># module.projects</span>
+<span class="add">+</span> <span class="kw">resource</span> <span class="ty">"web_app"</span> <span class="str">"melcourses"</span> {
+    <span class="key">name</span>  = <span class="str">"Melcourses CDCS System"</span>
+    <span class="key">role</span>  = <span class="str">"Frontend Lead"</span>
+    <span class="key">stack</span> = [<span class="str">"Next.js"</span>, <span class="str">"React"</span>, <span class="str">"TypeScript"</span>, <span class="str">"SQL"</span>]
+    <span class="key">users</span> = <span class="num">2000</span><span class="str">+</span>
+    <span class="key">url</span>   = <span class="str">"https://melcourses.com"</span>
+  }</pre>
+        <div class="plan-summary">Plan: <b>4 to add</b>, 0 to change, 0 to destroy.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PIPELINE ================= -->
+  <section>
+    <div class="sec-head">
+      <h2>Skills → CI pipeline</h2>
+      <p>Stages as columns, skills as green-check jobs. Hover or focus a job to see where it was used. Vertical on mobile.</p>
+    </div>
+    <div class="panel ink">
+      <div class="panel-label"><span>Ink</span><span>✓ 14 passed · 1 running</span></div>
+      <div class="pipe">
+        <div class="stage"><h4>languages</h4><div class="job"><span class="tick">✓</span>typescript</div><div class="job"><span class="tick">✓</span>python</div><div class="job"><span class="tick">✓</span>go</div><div class="job"><span class="tick">✓</span>rust</div></div>
+        <div class="stage"><h4>frontend</h4><div class="job"><span class="tick">✓</span>react</div><div class="job"><span class="tick">✓</span>next.js</div><div class="job"><span class="tick">✓</span>redux</div><div class="job"><span class="tick">✓</span>a11y</div></div>
+        <div class="stage"><h4>backend</h4><div class="job"><span class="tick">✓</span>fastapi</div><div class="job"><span class="tick">✓</span>postgres</div><div class="job"><span class="tick">✓</span>firebase</div></div>
+        <div class="stage"><h4>infra &amp; cloud</h4><div class="job"><span class="tick">✓</span>kubernetes</div><div class="job"><span class="tick">✓</span>docker</div><div class="job"><span class="tick">✓</span>gcp</div><div class="job run"><span class="tick">›</span>charms</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TERMINAL DRAWER ================= -->
+  <section>
+    <div class="sec-head">
+      <h2>Terminal drawer</h2>
+      <p>Docked at the bottom, collapsed by default on mobile. Every nav click writes the command it ran here; typing the same command does the same thing because both go through one <code>run()</code>. Output is an <code>aria-live</code> log.</p>
+    </div>
+    <div class="pair">
+      <div class="panel ink" style="padding:0;border:0;background:transparent">
+        <div class="term">
+          <div class="term-bar"><span class="lights"><i></i><i></i><i></i></span>minh@portfolio · bash<span class="right">▾ collapse</span></div>
+<pre><span class="p">$</span> <span class="cmd">juju switch experience</span>
+<span class="out">Switched to "experience" on controller "minh".</span>
+<span class="p">$</span> <span class="cmd">juju status --format=short</span>
+<span class="out">- canonical/0: <span class="ok">active</span>
+- interplay-lab/0: <span class="ok">active</span></span>
+<span class="p">$</span> <span class="caret"></span></pre>
+        </div>
+      </div>
+      <div class="panel paper" style="padding:0;border:0;background:transparent">
+        <div class="term">
+          <div class="term-bar"><span class="lights"><i></i><i></i><i></i></span>minh@portfolio · bash<span class="right">▾ collapse</span></div>
+<pre><span class="p">$</span> <span class="cmd">juju switch experience</span>
+<span class="out">Switched to "experience" on controller "minh".</span>
+<span class="p">$</span> <span class="cmd">juju status --format=short</span>
+<span class="out">- canonical/0: <span class="ok">active</span>
+- interplay-lab/0: <span class="ok">active</span></span>
+<span class="p">$</span> <span class="caret"></span></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var reduce = false;
+  try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+  var login = document.getElementById('login'), motd = document.getElementById('motd');
+  var uT = document.getElementById('u-text'), pT = document.getElementById('pw-text');
+  var uC = document.getElementById('u-caret'), pC = document.getElementById('pw-caret');
+  var btn = document.getElementById('login-btn'), skip = document.getElementById('skip-btn');
+  var replay = document.getElementById('replay'), sbCtrl = document.getElementById('sb-ctrl');
+  var hero = document.getElementById('hero');
+  var timers = [];
+  function clear() { timers.forEach(clearTimeout); timers = []; }
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function typeInto(el, text, i, done) {
+    if (i > text.length) { done(); return; }
+    el.textContent = text.slice(0, i);
+    later(function () { typeInto(el, text, i + 1, done); }, 55 + Math.random() * 45);
+  }
+  function finish() {
+    clear();
+    login.classList.add('hidden'); motd.classList.remove('hidden');
+    sbCtrl.textContent = 'login ✓';
+  }
+  function reset() {
+    clear();
+    uT.textContent = ''; pT.textContent = '';
+    uC.classList.remove('hidden'); pC.classList.add('hidden');
+    motd.classList.add('hidden'); login.classList.remove('hidden');
+    btn.disabled = false; btn.textContent = 'Log in';
+    sbCtrl.textContent = 'login';
+  }
+  function run() {
+    if (reduce) { finish(); return; }
+    btn.disabled = true; btn.textContent = 'Authenticating…';
+    typeInto(uT, 'minh', 0, function () {
+      uC.classList.add('hidden'); pC.classList.remove('hidden');
+      later(function () {
+        typeInto(pT, '••••••••••', 0, function () {
+          pC.classList.add('hidden');
+          later(finish, 420);
+        });
+      }, 220);
+    });
+  }
+  btn.addEventListener('click', run);
+  skip.addEventListener('click', finish);
+  replay.addEventListener('click', function () { reset(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !login.classList.contains('hidden')) finish(); });
+  document.querySelectorAll('[data-hero-theme]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.getAttribute('data-hero-theme');
+      hero.classList.remove('ink', 'paper'); hero.classList.add(t);
+      document.querySelectorAll('[data-hero-theme]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -12,6 +12,10 @@
 /build
 /dist
 
+# audit tooling (separate dependency tree, see docs/RUNNING.md)
+/tools/audit/node_modules
+/tools/audit/out
+
 # misc
 .DS_Store
 .env.local

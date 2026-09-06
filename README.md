@@ -25,13 +25,16 @@ The design brief and rationale live in [docs/REDESIGN_PLAN.md](docs/REDESIGN_PLA
 
 ```sh
 npm ci          # install exactly what's in the lockfile
-npm run dev     # http://localhost:5173/personal_portfolio_Minh_Nguyen/
+npm run dev     # opens http://localhost:5173/personal_portfolio_Minh_Nguyen/
+npm run theme   # opens the theme board (docs/theme-board.html) on :5174
 npm test        # vitest, once
-npm run build   # production build → dist/
-npm run preview # serve dist/ locally
+npm run check   # tests + production build — the pre-ship gate
+npm run preview # build first, then serve dist/ the way Pages will
 ```
 
-Node 20+ (CI uses 20; developed on 24).
+Node 20+ (CI uses 20; developed on 24). Step-by-step, including the
+browser audits behind the Lighthouse/axe numbers:
+**[docs/RUNNING.md](docs/RUNNING.md)**.
 
 ## Edit content
 

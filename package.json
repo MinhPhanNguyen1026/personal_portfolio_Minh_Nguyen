@@ -5,11 +5,13 @@
   "type": "module",
   "homepage": "https://minhphannguyen1026.github.io/personal_portfolio_Minh_Nguyen",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "vite --open",
+    "theme": "vite --config docs/vite.theme.config.js",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "build": "vite build",
+    "preview": "vite preview --open",
+    "check": "vitest run && vite build"
   },
   "dependencies": {
     "@fontsource-variable/inter": "5.3.0",

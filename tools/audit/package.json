@@ -1,0 +1,17 @@
+{
+  "name": "portfolio-audit",
+  "private": true,
+  "type": "module",
+  "description": "Browser-level checks for the portfolio: screenshots, axe accessibility audit, Lighthouse. Separate dependency tree — not installed by the root `npm ci`.",
+  "scripts": {
+    "shots": "node shots.mjs",
+    "a11y": "node a11y.mjs",
+    "lighthouse": "node lighthouse.mjs",
+    "all": "node shots.mjs && node a11y.mjs && node lighthouse.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "lighthouse": "13.4.1",
+    "playwright": "1.63.0"
+  }
+}

@@ -1,0 +1,112 @@
+// Screenshots of the app's main states, desktop and iPhone-sized, written
+// to out/shots/. Needs the dev server running (`npm run dev` at the root).
+//
+//   npm run shots                      all scenarios
+//   npm run shots -- login mobile      just those
+//   npm run shots -- section=projects  one section, desktop + mobile
+import { devices } from "playwright";
+import { mkdirSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { launch, assertUp, DEV_URL } from "./browser.mjs";
+
+const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "out", "shots");
+mkdirSync(OUT, { recursive: true });
+
+const wanted = process.argv.slice(2);
+const scenarios = wanted.length ? wanted : ["locked", "typing", "login", "nav", "light", "mobile"];
+
+await assertUp(DEV_URL);
+const browser = await launch();
+const errors = [];
+
+async function ctx(opts = {}) {
+  const c = await browser.newContext({ viewport: { width: 1440, height: 900 }, colorScheme: "dark", ...opts });
+  const page = await c.newPage();
+  page.on("console", (m) => m.type() === "error" && errors.push(`[console] ${m.text()}`));
+  page.on("pageerror", (e) => errors.push(`[pageerror] ${e.message}`));
+  await page.goto(DEV_URL, { waitUntil: "networkidle" });
+  await page.evaluate(() => document.fonts.ready);
+  return { c, page };
+}
+
+async function shot(page, name) {
+  const file = path.join(OUT, `${name}.png`);
+  await page.screenshot({ path: file });
+  console.log(`wrote ${path.relative(process.cwd(), file)}`);
+}
+
+async function login(page) {
+  await page.getByRole("button", { name: /log in as minh/i }).click();
+  await page.getByRole("dialog").waitFor({ state: "detached", timeout: 8000 });
+  await page.waitForTimeout(350);
+}
+
+const nav = (page, id) => page.getByRole("navigation", { name: /sections/i }).getByRole("button", { name: id, exact: true });
+
+for (const s of scenarios) {
+  if (s === "locked") {
+    const { c, page } = await ctx();
+    await shot(page, "locked");
+    await c.close();
+  } else if (s === "typing") {
+    const { c, page } = await ctx();
+    await page.getByRole("button", { name: /log in as minh/i }).click();
+    await page.waitForTimeout(450);
+    await shot(page, "typing");
+    await c.close();
+  } else if (s === "login") {
+    const { c, page } = await ctx();
+    await login(page);
+    await shot(page, "motd");
+    await c.close();
+  } else if (s === "nav") {
+    const { c, page } = await ctx();
+    await login(page);
+    await nav(page, "projects").click();
+    await page.waitForTimeout(900);
+    await shot(page, "nav-projects");
+    await c.close();
+  } else if (s === "light") {
+    const { c, page } = await ctx({ colorScheme: "light" });
+    await login(page);
+    await shot(page, "motd-light");
+    await c.close();
+  } else if (s === "mobile") {
+    const { c, page } = await ctx({ ...devices["iPhone 14"], colorScheme: "dark" });
+    await shot(page, "mobile-locked");
+    await login(page);
+    await shot(page, "mobile-motd");
+    await nav(page, "experience").click();
+    await page.waitForTimeout(900);
+    await shot(page, "mobile-experience");
+    await c.close();
+  } else if (s.startsWith("section=")) {
+    const id = s.split("=")[1];
+    const { c, page } = await ctx();
+    await login(page);
+    await nav(page, id).click();
+    await page.waitForTimeout(900);
+    await shot(page, `section-${id}`);
+    await c.close();
+    // Mobile deep link. Note: Chromium's mobile emulation sometimes
+    // captures the screenshot offset by the scroll position; the layout
+    // itself is fine (measured header top = 0).
+    const { c: cm, page: pm } = await ctx({ ...devices["iPhone 14"], colorScheme: "dark" });
+    await pm.goto(`${DEV_URL}#${id}`, { waitUntil: "networkidle" });
+    await pm.waitForTimeout(500);
+    await shot(pm, `section-${id}-mobile`);
+    await cm.close();
+  } else {
+    console.error(`unknown scenario: ${s}`);
+  }
+}
+
+await browser.close();
+if (errors.length) {
+  console.log("\nCONSOLE ERRORS:");
+  for (const e of errors) console.log("  " + e);
+  process.exitCode = 2;
+} else {
+  console.log("\nno console errors");
+}
