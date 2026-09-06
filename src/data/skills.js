@@ -43,7 +43,8 @@ export const PIPELINE = [
   {
     stage: "infra & cloud",
     jobs: [
-      { name: "Kubernetes / MicroK8s", usedAt: ["canonical"] },
+      { name: "Kubernetes", usedAt: ["canonical"] },
+      { name: "MicroK8s", usedAt: ["canonical"] },
       { name: "Juju charms", usedAt: ["canonical"] },
       { name: "Docker", usedAt: [] },
       { name: "GCP", usedAt: ["onc-ai", "onc_kpi"] },
@@ -59,7 +60,8 @@ export const PIPELINE = [
       { name: "Jest / RTL", usedAt: ["onc-ai", "salesforce"] },
       { name: "Cypress", usedAt: ["onc-ai"] },
       { name: "Pytest", usedAt: ["ur-psych-lab"] },
-      { name: "Git / GitHub Actions", usedAt: ["aif"] },
+      { name: "GitHub Actions", usedAt: ["aif"] },
+      { name: "Git", usedAt: [] },
       { name: "Vite / Webpack", usedAt: [] },
     ],
   },

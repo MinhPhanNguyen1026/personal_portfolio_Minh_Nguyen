@@ -1,9 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { PROFILE } from "./data/profile";
-import { CURRENT_ROLES, PREVIOUS_EXPERIENCE, VOLUNTEER_EXPERIENCE } from "./data/experience";
-import { PROJECTS } from "./data/projects";
-import { PIPELINE } from "./data/skills";
 
 import { useTheme } from "./hooks/useTheme";
 import { useSection } from "./hooks/useSection";
@@ -15,6 +12,10 @@ import StatusBar from "./components/Shell/StatusBar";
 import TerminalDrawer from "./components/Shell/TerminalDrawer";
 import Login, { SESSION_KEY } from "./components/Login/Login";
 import Section from "./components/primitives/Section";
+import Experience from "./components/Experience/Experience";
+import Projects from "./components/Projects/Projects";
+import Skills from "./components/Skills/Skills";
+import Contact from "./components/Contact/Contact";
 
 import styles from "./App.module.css";
 
@@ -46,18 +47,6 @@ function initialLoginPhase() {
   const hash = window.location.hash.replace(/^#/, "");
   if (hash && hash !== DEFAULT_SECTION && findSection(hash)) return "open";
   return "locked";
-}
-
-function RoleList({ roles }) {
-  return (
-    <ul className={styles.plainList}>
-      {roles.map((r) => (
-        <li key={r.app}>
-          <code>{r.app}</code> — {r.company}, {r.role} <span className={styles.muted}>({r.status})</span>
-        </li>
-      ))}
-    </ul>
-  );
 }
 
 export default function App() {
@@ -113,56 +102,35 @@ export default function App() {
       <main id="main" className={styles.main}>
         <Login phase={loginPhase} setPhase={setLoginPhase} run={shell.run} />
 
-        <Section id="experience" title="Experience" lead="Employers as applications. Current roles are active; the rest ran their course.">
-          <h3 className={styles.h3}>Current</h3>
-          <RoleList roles={CURRENT_ROLES} />
-          <h3 className={styles.h3}>Previous</h3>
-          <RoleList roles={PREVIOUS_EXPERIENCE} />
-          <h3 className={styles.h3}>Volunteer</h3>
-          <RoleList roles={VOLUNTEER_EXPERIENCE} />
+        <Section
+          id="experience"
+          title="Experience"
+          eyebrow="juju status --model experience"
+          lead="Employers as applications. Current roles are active; the rest ran their course. Select an app for details."
+        >
+          <Experience />
         </Section>
 
-        <Section id="projects" title="Projects" lead="Shipped work, expressed as the plan that would build it.">
-          <ul className={styles.plainList}>
-            {PROJECTS.map((p) => (
-              <li key={p.id}>
-                <code>
-                  resource "{p.type}" "{p.id}"
-                </code>{" "}
-                — {p.title}
-              </li>
-            ))}
-          </ul>
+        <Section
+          id="projects"
+          title="Projects"
+          eyebrow="terraform plan -target=module.projects"
+          lead="Shipped work, expressed as the plan that would build it."
+        >
+          <Projects />
         </Section>
 
-        <Section id="skills" title="Skills" lead="The pipeline that builds everything else.">
-          {PIPELINE.map((stage) => (
-            <div key={stage.stage}>
-              <h3 className={styles.h3}>{stage.stage}</h3>
-              <ul className={styles.plainList}>
-                {stage.jobs.map((j) => (
-                  <li key={j.name}>{j.name}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
+        <Section
+          id="skills"
+          title="Skills"
+          eyebrow="gh run view build-minh"
+          lead="The pipeline that builds everything else. Select a job to see where it ran."
+        >
+          <Skills />
         </Section>
 
-        <Section id="contact" title="Contact" lead="Reach out on LinkedIn or email, browse the code on GitHub, or grab the resume.">
-          <ul className={styles.plainList}>
-            {PROFILE.links.map((l) => (
-              <li key={l.key}>
-                <a
-                  href={l.href.startsWith("http") || l.href.startsWith("mailto:") ? l.href : `${import.meta.env.BASE_URL}${l.href}`}
-                  download={l.download}
-                  target={l.external ? "_blank" : undefined}
-                  rel={l.external ? "noreferrer noopener" : undefined}
-                >
-                  {l.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+        <Section id="contact" title="Contact" eyebrow="juju expose contact" lead="Everything is exposed. Pick a channel.">
+          <Contact />
         </Section>
 
         <footer className={styles.footer}>
