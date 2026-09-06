@@ -19,17 +19,8 @@
   gap: var(--s-3);
 }
 
-.eyebrow {
-  font-family: var(--mono);
-  font-size: var(--fs-mono);
-  color: var(--fg-2);
-}
-
-.hash {
-  color: var(--accent);
-}
-
 .title {
+  margin-top: var(--s-1);
   font-size: var(--fs-h2);
   font-weight: 700;
   color: var(--fg-0);

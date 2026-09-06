@@ -136,6 +136,7 @@ function Motd({ open, run, lastLogin }) {
         </a>
         . {PROFILE.tagline}
       </p>
+      <p className={styles.work}>{PROFILE.currentWork}</p>
 
       <ul className={styles.chips} aria-label="Current status">
         {CURRENT_ROLES.map((r) => (

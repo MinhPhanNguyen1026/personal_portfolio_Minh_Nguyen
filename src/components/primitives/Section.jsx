@@ -1,17 +1,17 @@
+import CommandBox from "./CommandBox";
 import styles from "./Section.module.css";
 
-// Every content section: a mono eyebrow that names the controller, an
-// h2 that receives focus after `juju switch`, and an optional lead.
+// Every content section: the command that produces this view (with copy
+// and run), an h2 that receives focus after `juju switch`, and an
+// optional lead.
 
-export default function Section({ id, title, eyebrow, lead, children, className = "" }) {
+export default function Section({ id, title, command, onRun, lead, children, className = "" }) {
   const headingId = `${id}-title`;
   return (
     <section id={id} className={`${styles.section} ${className}`} aria-labelledby={headingId}>
       <div className={styles.inner}>
         <header className={styles.head}>
-          <p className={styles.eyebrow} aria-hidden="true">
-            <span className={styles.hash}>#</span> {eyebrow ?? `controller: ${id}`}
-          </p>
+          {command ? <CommandBox command={command} onRun={onRun} /> : null}
           <h2 id={headingId} className={styles.title} tabIndex={-1} data-section-heading>
             {title}
           </h2>

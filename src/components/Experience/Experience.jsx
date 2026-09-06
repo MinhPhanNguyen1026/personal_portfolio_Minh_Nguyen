@@ -83,15 +83,20 @@ function Row({ role, open, onToggle }) {
             <div className={styles.detailsHead}>
               <a className={styles.company} href={role.href} target="_blank" rel="noreferrer noopener">
                 {role.logo ? (
-                  <span className={`${styles.logoBox} ${role.logo.needsCanvas ? styles.logoCanvas : ""}`}>
+                  // A fixed white plate in both themes: logos come in every
+                  // colour and size, and a white ground is the one every
+                  // brand mark is designed for. If the image fails to load
+                  // the plate goes away rather than showing a broken icon.
+                  <span className={styles.logoBox}>
                     <img
                       className={styles.logo}
                       src={role.logo.src}
                       alt=""
-                      width={role.logo.width}
-                      height={role.logo.height}
                       loading="lazy"
                       decoding="async"
+                      onError={(e) => {
+                        e.currentTarget.parentElement.hidden = true;
+                      }}
                     />
                   </span>
                 ) : null}

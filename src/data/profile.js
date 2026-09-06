@@ -18,11 +18,9 @@ export const PROFILE = {
   // One sentence, human voice. Shown under the name in the MOTD.
   tagline:
     "Crafting software end to end — platform tooling on one side, fast and accessible web on the other, with a soft spot for thoughtful detail.",
-  // TODO(minh): replace with what you actually build at Canonical (team,
-  // product, stack). Shown as the second MOTD line and in the canonical
-  // experience row.
+  // TODO(minh): team and product would sharpen this. The tools are yours.
   currentWork:
-    "Software Engineer at Canonical and part-time Research Assistant at Inter.play Lab.",
+    "At Canonical: Go and Python, RAG services, Terraform, and CI/CD on GitHub Actions. Part-time Research Assistant at Inter.play Lab.",
   about: [
     "I'm a software engineer focused on building fast, accessible frontend experiences and dependable backend systems.",
     "I've worked across startups, big tech, and research labs, turning ideas into production features and collaborating with teams to build inclusive, polished products.",

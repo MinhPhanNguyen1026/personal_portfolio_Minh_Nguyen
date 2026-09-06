@@ -54,6 +54,23 @@ test("unknown commands fail like bash and do not navigate", async () => {
   expect(window.location.hash).toBe(before);
 });
 
+test("a section's command box copies and runs its command", async () => {
+  const writeText = vi.fn(() => Promise.resolve());
+  Object.assign(navigator, { clipboard: { writeText } });
+  render(<App />);
+  await openTerminal();
+
+  await userEvent.click(screen.getByRole("button", { name: 'Copy "terraform plan -target=module.projects"' }));
+  expect(writeText).toHaveBeenCalledWith("terraform plan -target=module.projects");
+  expect(await screen.findByText("Copied to clipboard.")).toBeInTheDocument();
+
+  await userEvent.click(screen.getByRole("button", { name: 'Run "terraform plan -target=module.projects"' }));
+  const log = screen.getByRole("log");
+  expect(within(log).getByText("terraform plan -target=module.projects")).toBeInTheDocument();
+  expect(within(log).getByText(/^Plan: 4 to add/)).toBeInTheDocument();
+  expect(window.location.hash).toBe("#projects");
+});
+
 test("theme button cycles system → light → dark and stamps the root", async () => {
   render(<App />);
   const btn = screen.getByRole("button", { name: /^theme: system/i });

@@ -105,7 +105,8 @@ export default function App() {
         <Section
           id="experience"
           title="Experience"
-          eyebrow="juju status --model experience"
+          command={findSection("experience").command}
+          onRun={shell.run}
           lead="Employers as applications. Current roles are active; the rest ran their course. Select an app for details."
         >
           <Experience />
@@ -114,7 +115,8 @@ export default function App() {
         <Section
           id="projects"
           title="Projects"
-          eyebrow="terraform plan -target=module.projects"
+          command={findSection("projects").command}
+          onRun={shell.run}
           lead="Shipped work, expressed as the plan that would build it."
         >
           <Projects />
@@ -123,13 +125,14 @@ export default function App() {
         <Section
           id="skills"
           title="Skills"
-          eyebrow="gh run view build-minh"
+          command={findSection("skills").command}
+          onRun={shell.run}
           lead="The pipeline that builds everything else. Select a job to see where it ran."
         >
           <Skills />
         </Section>
 
-        <Section id="contact" title="Contact" eyebrow="juju expose contact" lead="Everything is exposed. Pick a channel.">
+        <Section id="contact" title="Contact" command={findSection("contact").command} onRun={shell.run} lead="Everything is exposed. Pick a channel.">
           <Contact />
         </Section>
 

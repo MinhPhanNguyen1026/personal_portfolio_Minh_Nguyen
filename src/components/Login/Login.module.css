@@ -61,6 +61,13 @@
   color: var(--fg-1);
 }
 
+.work {
+  max-width: var(--measure);
+  font-size: var(--fs-small);
+  color: var(--fg-1);
+  margin-top: calc(-1 * var(--s-3));
+}
+
 .chips,
 .links {
   display: flex;

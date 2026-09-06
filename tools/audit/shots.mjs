@@ -81,6 +81,35 @@ for (const s of scenarios) {
     await page.waitForTimeout(900);
     await shot(page, "mobile-experience");
     await c.close();
+  } else if (s === "expanded") {
+    // Experience with a row expanded — checks the logo plate and details.
+    const { c, page } = await ctx();
+    await login(page);
+    await nav(page, "experience").click();
+    await page.waitForTimeout(900);
+    await page.getByRole("button", { name: "canonical", exact: true }).click();
+    await page.waitForTimeout(400);
+    await shot(page, "expanded-canonical");
+    const onc = page.getByRole("button", { name: "onc-ai", exact: true });
+    await onc.click();
+    await page.waitForTimeout(400);
+    await onc.scrollIntoViewIfNeeded();
+    await page.evaluate(() => window.scrollBy(0, -120)); // clear the fixed status bar
+    await page.waitForTimeout(300);
+    await shot(page, "expanded-onc-ai");
+    await c.close();
+  } else if (s === "transcript") {
+    // Several commands typed in a row — checks entries read as separate.
+    const { c, page } = await ctx();
+    await login(page);
+    const input = page.getByRole("textbox", { name: /command input/i });
+    for (const cmd of ["terraform plan -target=module.projects", "juju status --model experience", "juju switch experience"]) {
+      await input.fill(cmd);
+      await input.press("Enter");
+      await page.waitForTimeout(500);
+    }
+    await shot(page, "transcript");
+    await c.close();
   } else if (s.startsWith("section=")) {
     const id = s.split("=")[1];
     const { c, page } = await ctx();

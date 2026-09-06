@@ -27,9 +27,13 @@ export const CURRENT_ROLES = [
       width: 1329,
       height: 400,
     },
-    cloud: ["Ubuntu", "Juju", "MicroK8s"],
-    // TODO(minh): team, product, what you build, stack.
-    details: [],
+    cloud: ["Ubuntu", "Juju", "MicroK8s", "Terraform", "GitHub Actions"],
+    // TODO(minh): team and product would make this stronger; the tools
+    // below are the ones you named.
+    details: [
+      "Go and Python services, with RAG components where retrieval belongs in the loop.",
+      "Infrastructure as code with Terraform; CI/CD on GitHub Actions with Pytest-backed suites.",
+    ],
   },
   {
     app: "interplay-lab",

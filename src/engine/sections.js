@@ -4,13 +4,16 @@
 //   id       DOM id and URL hash
 //   title    human name for headings and button labels
 //   blurb    one line for `juju controllers` / `juju models` output
+//   command  the command that produces this section's view. Shown above
+//            the section with copy/run buttons, and every one of them is
+//            implemented in commands.js — typing it does what the box says.
 
 export const SECTIONS = [
-  { id: "login", title: "Login", blurb: "who is this, and why are you here" },
-  { id: "experience", title: "Experience", blurb: "employers as applications" },
-  { id: "projects", title: "Projects", blurb: "shipped work as a terraform plan" },
-  { id: "skills", title: "Skills", blurb: "the pipeline that builds the rest" },
-  { id: "contact", title: "Contact", blurb: "get in touch" },
+  { id: "login", title: "Login", blurb: "who is this, and why are you here", command: "juju login" },
+  { id: "experience", title: "Experience", blurb: "employers as applications", command: "juju status --model experience" },
+  { id: "projects", title: "Projects", blurb: "shipped work as a terraform plan", command: "terraform plan -target=module.projects" },
+  { id: "skills", title: "Skills", blurb: "the pipeline that builds the rest", command: "gh run view build-minh" },
+  { id: "contact", title: "Contact", blurb: "get in touch", command: "juju expose contact" },
 ];
 
 export const DEFAULT_SECTION = SECTIONS[0].id;
