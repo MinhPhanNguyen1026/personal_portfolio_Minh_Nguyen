@@ -8,7 +8,16 @@ the repo root. Windows (PowerShell), macOS, and Linux all work the same.
 - **Node 20 or newer** — check with `node -v`. If the command isn't
   recognised right after installing Node, open a new terminal; the old one
   has the old PATH.
-- **Google Chrome** — only needed for the browser audits in §5.
+- **Google Chrome** — only needed for the browser audits in §6.
+- **Windows PowerShell only:** if `npm` fails with *"running scripts is
+  disabled on this system"*, run this once (no admin needed):
+
+  ```powershell
+  Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+  ```
+
+  It applies to your account only and allows local scripts like npm's
+  shim. Alternatively, `npm.cmd run dev` works without changing anything.
 
 ## 1. First time (or after switching branches)
 
@@ -122,6 +131,7 @@ npm --prefix tools/audit run shots -- section=projects
 | Symptom | Fix |
 | --- | --- |
 | `node` / `npm` not recognised | Open a new terminal (PATH is read at terminal start). |
+| `npm.ps1 cannot be loaded because running scripts is disabled` | PowerShell's default policy. See §0 — one command fixes it, or use `npm.cmd`. |
 | Blank page at `localhost:5173` | Add the path: `/personal_portfolio_Minh_Nguyen/`. `npm run dev` opens the right one. |
 | `Port 5173 is already in use` | A previous `npm run dev` is still running. Find and close it, or `Ctrl+C` in that terminal. |
 | Weird errors after `git checkout` | `npm ci` — the branches don't share dependencies. |
