@@ -50,6 +50,7 @@ All copy lives in `src/data/` — components only render it.
 | `src/data/profile.js`    | Name, title, employer, tagline, links, education. Also feeds the SEO tags and JSON-LD at build time. |
 | `src/data/experience.js` | Roles, modelled like `juju status` applications (`app`, `status`, `charm`, `period`, `details`). |
 | `src/data/projects.js`   | Projects, modelled as Terraform resources (`type`, `id`, `attrs`, `links`). |
+| `src/data/opensource.js` | Open-source repos (`fullName`, what/why, `contributions`, `highlights` with links). Star counts are fetched live. |
 | `src/data/skills.js`     | Skills as pipeline stages and jobs; `usedAt` links a job to roles/projects. |
 
 Search for `TODO(minh)` for the placeholders still waiting on real copy.
@@ -66,7 +67,8 @@ does. Section commands scroll to their section; everything else prints
 into the Transcript section at the end of the page.
 
 ```
-juju switch <controller>   go to a section (experience, projects, skills, contact)
+juju switch <controller>   go to a section (experience, projects, opensource, skills, contact)
+gh search prs --author=@me open-source contributions; gh repo view <repo> for one
 juju controllers           list sections
 juju status                what's running in the current section
 juju whoami                controller, model, and user

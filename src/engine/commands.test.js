@@ -103,7 +103,20 @@ describe("terraform and gh", () => {
     const r = execute("terraform plan -target=module.projects", ctx);
     expect(r.effects.switchTo).toBe("projects");
     expect(r.lines.at(-1).text).toMatch(/^Plan: \d+ to add, 0 to change, 0 to destroy\.$/);
-    expect(r.lines.filter((l) => /^\s+\+ resource/.test(l.text)).length).toBeGreaterThanOrEqual(4);
+    expect(r.lines.filter((l) => /^\s+\+ resource/.test(l.text)).length).toBeGreaterThanOrEqual(3);
+  });
+
+  test("gh search prs shows the open-source repos and navigates there", () => {
+    const r = execute("gh search prs --author=@me --owner=canonical --merged", ctx);
+    expect(r.effects.switchTo).toBe("opensource");
+    expect(r.lines.some((l) => l.text.includes("canonical/rockcraft"))).toBe(true);
+    expect(r.lines.some((l) => l.text.includes("canonical/charmcraft"))).toBe(true);
+  });
+
+  test("gh repo view resolves a repo by short or full name", () => {
+    expect(execute("gh repo view rockcraft", ctx).lines[0].text).toBe("canonical/rockcraft");
+    expect(execute("gh repo view canonical/charmcraft", ctx).effects.switchTo).toBe("opensource");
+    expect(execute("gh repo view nope", ctx).lines[0].kind).toBe("err");
   });
 
   test("terraform apply is refused politely", () => {

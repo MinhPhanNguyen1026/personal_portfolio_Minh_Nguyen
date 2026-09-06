@@ -10,11 +10,12 @@ test("renders the profile name as the page heading", () => {
 test("bridges between sections are present, in order, and hidden from assistive tech", () => {
   render(<App />);
   const bridges = document.querySelectorAll("[data-bridge]");
-  expect(bridges).toHaveLength(5);
+  expect(bridges).toHaveLength(6);
   bridges.forEach((b) => expect(b).toHaveAttribute("aria-hidden", "true"));
   expect(bridges[0].textContent).toContain("juju models");
   expect(bridges[1].textContent).toContain("terraform init");
-  expect(bridges[4].textContent).toContain("history");
+  expect(bridges[2].textContent).toContain("gh auth status");
+  expect(bridges[5].textContent).toContain("history");
 });
 
 test("exposes a main landmark and a skip link", () => {

@@ -2,7 +2,6 @@ import { PROJECTS } from "../../data/projects";
 import styles from "./Projects.module.css";
 
 import project1 from "../../assets/projects/project1.webp";
-import project2 from "../../assets/projects/project2.webp";
 import project3 from "../../assets/projects/project3.webp";
 import project4 from "../../assets/projects/project4.webp";
 
@@ -10,7 +9,7 @@ import project4 from "../../assets/projects/project4.webp";
 // rendered from its attrs with keys padded so `=` aligns, the way
 // `terraform fmt` would — then the screenshot, summary, and links.
 
-const IMAGES = { project1, project2, project3, project4 };
+const IMAGES = { project1, project3, project4 };
 
 // Lists render one item per line with trailing commas — what
 // `terraform fmt` does — which also keeps long stacks from overflowing.

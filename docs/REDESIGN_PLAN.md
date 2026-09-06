@@ -374,6 +374,22 @@ and the page now reads as one terminal from top to bottom.
   **Transcript** section at the end of the page, which is an `aria-live`
   log, and the page scrolls there. `/` focuses the prompt.
 
+### Open source section (2026-09-06)
+
+The KPI dashboard project was removed. A new **Open source** section sits
+between Projects and Skills, rendered like `gh repo view`: `owner/repo`
+with a live star count (GitHub API, session-cached, static fallback),
+language, what the project is and why it matters in the platform, then
+Minh's contributions and linked highlights (commits or PRs). Its command
+is `gh search prs --author=@me --owner=canonical --merged`; `gh repo view
+<repo>` shows one. Bridge in: `cd ~/src && ls` → `gh auth status`.
+
+Verified contributions were found for `canonical/gopkg-charmed` (direct
+commits by Sonicfires2: repo bootstrap, gopkg.in import, 12-Factor III
+config, the MicroK8s deployment runbook). Charmcraft, Rockcraft, and
+haproxy-operator show no commits, PRs, or reviews under that account —
+their `contributions`/`highlights` are empty pending details from Minh.
+
 ## 11. Open items
 
 - **Canonical role content.** The resume PDF predates the Canonical role and

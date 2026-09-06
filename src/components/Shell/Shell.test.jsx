@@ -63,7 +63,7 @@ test("a section's command box copies and runs its command", async () => {
   await userEvent.click(screen.getByRole("button", { name: 'Run "terraform plan -target=module.projects"' }));
   const log = screen.getByRole("log");
   expect(within(log).getByText("terraform plan -target=module.projects")).toBeInTheDocument();
-  expect(within(log).getByText(/^Plan: 4 to add/)).toBeInTheDocument();
+  expect(within(log).getByText(/^Plan: \d+ to add/)).toBeInTheDocument();
   expect(window.location.hash).toBe("#projects");
 });
 

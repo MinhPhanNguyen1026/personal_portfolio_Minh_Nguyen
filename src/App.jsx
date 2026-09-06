@@ -18,6 +18,7 @@ import Bridge from "./components/primitives/Bridge";
 import { BRIDGES } from "./data/bridges";
 import Experience from "./components/Experience/Experience";
 import Projects from "./components/Projects/Projects";
+import OpenSource from "./components/OpenSource/OpenSource";
 import Skills from "./components/Skills/Skills";
 import Contact from "./components/Contact/Contact";
 
@@ -127,6 +128,17 @@ export default function App() {
           lead="Shipped work, expressed as the plan that would build it."
         >
           <Projects />
+        </Section>
+
+        <Bridge steps={BRIDGES.opensource} />
+        <Section
+          id="opensource"
+          title="Open source"
+          command={findSection("opensource").command}
+          onRun={shell.run}
+          lead="Upstream work at Canonical, in the tools that build the platform itself."
+        >
+          <OpenSource />
         </Section>
 
         <Bridge steps={BRIDGES.skills} />

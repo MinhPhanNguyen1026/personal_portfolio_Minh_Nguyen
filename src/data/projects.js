@@ -31,29 +31,6 @@ export const PROJECTS = [
     alt: "Melcourses course discovery interface",
   },
   {
-    type: "dashboard",
-    id: "onc_kpi",
-    title: "KPI Dashboard",
-    summary:
-      "An embedded operations dashboard for Onc.AI that surfaces pipeline health, task progress, and team-facing KPIs directly inside Confluence.",
-    attrs: [
-      ["name", "Onc.AI KPI Dashboard"],
-      ["role", "Software Engineer"],
-      ["stack", ["Python", "JavaScript", "MongoDB", "GCP"]],
-      ["integrations", ["Trello API", "Valohai API", "SharePoint"]],
-      ["host", "Confluence"],
-    ],
-    links: [
-      {
-        label: "Case study",
-        href: "https://test-react-to-make-data-analysis-dashboard-two.atlassian.net/l/cp/JjJFkWo1",
-      },
-      { label: "Code", href: null },
-    ],
-    image: "project2",
-    alt: "KPI dashboard embedded in Confluence",
-  },
-  {
     type: "research_tool",
     id: "teacher_authoring",
     title: "Teacher Authoring Tool",

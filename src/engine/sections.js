@@ -12,6 +12,7 @@ export const SECTIONS = [
   { id: "login", title: "Login", blurb: "who is this, and why are you here", command: "juju login" },
   { id: "experience", title: "Experience", blurb: "employers as applications", command: "juju status --model experience" },
   { id: "projects", title: "Projects", blurb: "shipped work as a terraform plan", command: "terraform plan -target=module.projects" },
+  { id: "opensource", title: "Open source", blurb: "upstream work in the tools that build the platform", command: "gh search prs --author=@me --owner=canonical --merged" },
   { id: "skills", title: "Skills", blurb: "the pipeline that builds the rest", command: "gh run view build-minh" },
   { id: "contact", title: "Contact", blurb: "get in touch", command: "juju expose contact" },
   // The tail of the transcript: output of anything typed at the prompt

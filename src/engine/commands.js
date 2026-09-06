@@ -19,6 +19,7 @@ import { PROFILE } from "../data/profile";
 import { CURRENT_ROLES, PREVIOUS_EXPERIENCE } from "../data/experience";
 import { PROJECTS } from "../data/projects";
 import { PIPELINE } from "../data/skills";
+import { OPEN_SOURCE } from "../data/opensource";
 
 /* global __BUILD_SHA__ */
 const BUILD_SHA = typeof __BUILD_SHA__ === "string" ? __BUILD_SHA__ : "local";
@@ -38,6 +39,7 @@ const HELP = [
   ["juju expose contact", "reveal the contact channels"],
   ["juju login | logout", "replay the login / lock the hero"],
   ["terraform plan", "the projects, as the plan that would build them"],
+  ["gh search prs --author=@me", "open-source contributions"],
   ["gh run view build-minh", "the skills pipeline"],
   ["theme [dark|light|system]", "set the colour scheme"],
   ["ls, pwd, cat, whoami, clear", "the usual"],
@@ -122,6 +124,17 @@ function skillsView() {
   ];
 }
 
+function openSourceView() {
+  const rows = [["Repository", "Language", "Role"]];
+  for (const r of OPEN_SOURCE) rows.push([r.fullName, r.language, "contributor"]);
+  const receipts = OPEN_SOURCE.reduce((n, r) => n + r.highlights.length, 0);
+  return [
+    out(`Showing ${OPEN_SOURCE.length} repositories in canonical${receipts ? ` · ${receipts} highlighted changes` : ""}`),
+    blank(),
+    ...table(rows).map((t, i) => (i === 0 ? muted(t) : ok(t))),
+  ];
+}
+
 function contactView() {
   return [
     muted(table([["App", "Status", "Exposed", "Address"]])[0]),
@@ -129,7 +142,7 @@ function contactView() {
   ];
 }
 
-const VIEWS = { experience: experienceView, projects: projectsView, skills: skillsView, contact: contactView };
+const VIEWS = { experience: experienceView, projects: projectsView, opensource: openSourceView, skills: skillsView, contact: contactView };
 
 /* ------------------------------ juju ------------------------------ */
 
@@ -244,6 +257,17 @@ function terraform(args, ctx) {
 
 function gh(args, ctx) {
   const [sub, action, target] = args;
+  if (sub === "search" && action === "prs") {
+    return { lines: openSourceView(), effects: go("opensource") };
+  }
+  if (sub === "repo" && action === "view" && target) {
+    const r = OPEN_SOURCE.find((x) => x.fullName === target || x.fullName.endsWith(`/${target}`));
+    if (!r) return { lines: [err(`could not resolve to a Repository: ${target}`), muted(`Try: ${OPEN_SOURCE.map((x) => x.fullName).join(", ")}`)], effects: {} };
+    return {
+      lines: [out(`${r.fullName}`), out(r.what), blank(), out(`  ★ ${r.stars}  ·  ${r.language}  ·  ${r.url}`)],
+      effects: go("opensource"),
+    };
+  }
   if (sub === "run" && action === "view") {
     if (target && target !== "build-minh") {
       return { lines: [err(`could not find run "${target}"`), muted("Try: gh run view build-minh")], effects: {} };
@@ -253,7 +277,7 @@ function gh(args, ctx) {
   if (sub === "run" && action === "list") {
     return { lines: [ok(`completed  success  build-minh  main  #${BUILD_SHA}`)], effects: {} };
   }
-  return { lines: [err(`unknown command "${args.join(" ")}" for "gh"`), muted("Try: gh run view build-minh")], effects: {} };
+  return { lines: [err(`unknown command "${args.join(" ")}" for "gh"`), muted("Try: gh run view build-minh, gh search prs --author=@me")], effects: {} };
 }
 
 /* ----------------------------- builtins ----------------------------- */

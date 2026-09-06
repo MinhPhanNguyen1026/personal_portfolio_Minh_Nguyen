@@ -1,0 +1,183 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.preamble {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  color: var(--fg-2);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.repo {
+  padding: var(--s-4) 0;
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+
+.repo article {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-2) var(--s-4);
+}
+
+.fullName {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fg-0);
+  text-decoration: none;
+}
+
+.fullName:hover {
+  text-decoration: none;
+}
+
+.fullName:hover .name {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.2em;
+}
+
+.owner {
+  color: var(--fg-2);
+  font-weight: 500;
+}
+
+.ext {
+  color: var(--accent);
+}
+
+.meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--fg-1);
+}
+
+.stars {
+  color: var(--fg-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.langDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--fg-2);
+}
+
+/* GitHub's language colours, so the dot means what it means there. */
+.lang_Python {
+  background: #3572a5;
+}
+
+.lang_Go {
+  background: #00add8;
+}
+
+.lang_C {
+  background: #555555;
+}
+
+.role {
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ok);
+  font-size: 11.5px;
+}
+
+.what {
+  color: var(--fg-0);
+  font-size: var(--fs-small);
+  max-width: 78ch;
+}
+
+.why {
+  color: var(--fg-1);
+  font-size: var(--fs-small);
+  max-width: 78ch;
+}
+
+.bullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  padding-left: 1.1em;
+  list-style: disc;
+  color: var(--fg-1);
+  font-size: var(--fs-small);
+  max-width: 78ch;
+}
+
+.bullets li::marker {
+  color: var(--accent);
+}
+
+.foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  padding: 3px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-1);
+  color: var(--fg-1);
+  background: var(--bg-1);
+}
+
+.prs {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pr {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--fg-1);
+  text-decoration: none;
+}
+
+.pr:hover {
+  color: var(--fg-0);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.2em;
+}
+
+.prNum {
+  color: var(--accent);
+}
