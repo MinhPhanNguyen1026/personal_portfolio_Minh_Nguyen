@@ -19,7 +19,7 @@ import { PROFILE } from "../data/profile";
 import { CURRENT_ROLES, PREVIOUS_EXPERIENCE } from "../data/experience";
 import { PROJECTS } from "../data/projects";
 import { PIPELINE } from "../data/skills";
-import { OPEN_SOURCE } from "../data/opensource";
+import { OPEN_SOURCE, OSS_ACCOUNT } from "../data/opensource";
 
 /* global __BUILD_SHA__ */
 const BUILD_SHA = typeof __BUILD_SHA__ === "string" ? __BUILD_SHA__ : "local";
@@ -125,11 +125,11 @@ function skillsView() {
 }
 
 function openSourceView() {
-  const rows = [["Repository", "Language", "Role"]];
-  for (const r of OPEN_SOURCE) rows.push([r.fullName, r.language, "contributor"]);
-  const receipts = OPEN_SOURCE.reduce((n, r) => n + r.highlights.length, 0);
+  const rows = [["Repository", "Merged", "Open", "Role"]];
+  for (const r of OPEN_SOURCE) rows.push([r.fullName, String(r.prs.merged), String(r.prs.open), r.role]);
+  const merged = OPEN_SOURCE.reduce((n, r) => n + r.prs.merged, 0);
   return [
-    out(`Showing ${OPEN_SOURCE.length} repositories in canonical${receipts ? ` · ${receipts} highlighted changes` : ""}`),
+    out(`Showing ${OPEN_SOURCE.length} repositories in canonical · ${merged} merged pull requests as @${OSS_ACCOUNT.login}`),
     blank(),
     ...table(rows).map((t, i) => (i === 0 ? muted(t) : ok(t))),
   ];
@@ -264,7 +264,7 @@ function gh(args, ctx) {
     const r = OPEN_SOURCE.find((x) => x.fullName === target || x.fullName.endsWith(`/${target}`));
     if (!r) return { lines: [err(`could not resolve to a Repository: ${target}`), muted(`Try: ${OPEN_SOURCE.map((x) => x.fullName).join(", ")}`)], effects: {} };
     return {
-      lines: [out(`${r.fullName}`), out(r.what), blank(), out(`  ★ ${r.stars}  ·  ${r.language}  ·  ${r.url}`)],
+      lines: [out(`${r.fullName}`), out(r.what), blank(), out(`  ★ ${r.stars}  ·  ${r.language}  ·  ${r.prs.merged} merged, ${r.prs.open} open  ·  ${r.url}`)],
       effects: go("opensource"),
     };
   }

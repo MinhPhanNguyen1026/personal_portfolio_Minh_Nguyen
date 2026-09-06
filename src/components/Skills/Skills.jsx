@@ -19,7 +19,8 @@ const NAMES = Object.fromEntries([
 
 function Job({ job, open, onToggle }) {
   const running = job.state === "running";
-  const used = job.usedAt.map((k) => NAMES[k] ?? k);
+  // Two roles at the same company share a display name; show it once.
+  const used = [...new Set(job.usedAt.map((k) => NAMES[k] ?? k))];
   const interactive = used.length > 0;
   const id = `job-${job.name.replace(/[^a-z0-9]+/gi, "-").toLowerCase()}`;
 

@@ -15,12 +15,12 @@ export const PROJECTS = [
     id: "melcourses",
     title: "Melcourses CDCS System",
     summary:
-      "A modern course description and discovery system for University of Rochester students, replacing an outdated CDCS workflow and supporting course planning at scale.",
+      "A modern course description and discovery system for University of Rochester students, replacing an outdated CDCS workflow and supporting course planning for 1,200+ active users.",
     attrs: [
       ["name", "Melcourses CDCS System"],
       ["role", "Frontend Lead"],
       ["stack", ["Next.js", "React", "TypeScript", "SQL", "Chakra UI"]],
-      ["users", "2000+"],
+      ["users", "1200+"],
       ["url", "https://melcourses.com"],
     ],
     links: [

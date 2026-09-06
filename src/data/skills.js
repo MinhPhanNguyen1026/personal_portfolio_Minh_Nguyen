@@ -9,7 +9,7 @@ export const PIPELINE = [
   {
     stage: "languages",
     jobs: [
-      { name: "TypeScript", usedAt: ["onc-ai", "roc-hci", "melcourses", "teacher_authoring"] },
+      { name: "TypeScript", usedAt: ["onc-ai", "upstart", "roclab", "roc-hci", "melcourses", "teacher_authoring"] },
       { name: "JavaScript", usedAt: ["roclab", "aif", "ur-psych-lab"] },
       { name: "Python", usedAt: ["canonical", "onc-ai", "salesforce"] },
       { name: "Go", usedAt: ["canonical"] },
@@ -21,7 +21,7 @@ export const PIPELINE = [
   {
     stage: "frontend",
     jobs: [
-      { name: "React", usedAt: ["onc-ai", "roclab", "roc-hci", "aif", "ur-psych-lab"] },
+      { name: "React", usedAt: ["onc-ai", "upstart", "roclab", "roc-hci", "aif", "ur-psych-lab"] },
       { name: "Next.js", usedAt: ["melcourses"] },
       { name: "Redux", usedAt: ["roc-hci", "teacher_authoring"] },
       { name: "React Native", usedAt: [] },
@@ -48,7 +48,8 @@ export const PIPELINE = [
       { name: "Juju charms", usedAt: ["canonical"] },
       { name: "Terraform", usedAt: ["canonical"] },
       { name: "Docker", usedAt: [] },
-      { name: "GCP", usedAt: ["onc-ai"] },
+      { name: "GCP", usedAt: ["onc-ai", "onc-ai-intern"] },
+      { name: "AWS S3", usedAt: ["upstart"] },
       { name: "CI/CD", usedAt: ["canonical", "onc-ai", "salesforce", "aif"] },
       { name: "Ubuntu / Linux", usedAt: ["canonical"] },
     ],
@@ -59,6 +60,8 @@ export const PIPELINE = [
       { name: "Pytest", usedAt: ["canonical", "ur-psych-lab"] },
       { name: "Jest / RTL", usedAt: ["onc-ai", "salesforce"] },
       { name: "Cypress", usedAt: ["onc-ai"] },
+      { name: "Selenium", usedAt: ["salesforce"] },
+      { name: "Sphinx / Read the Docs", usedAt: ["canonical"] },
       { name: "GitHub Actions", usedAt: ["canonical", "aif"] },
       { name: "Git", usedAt: ["canonical"] },
       { name: "Vite / Webpack", usedAt: [] },

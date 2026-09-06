@@ -81,7 +81,7 @@ function Row({ role, open, onToggle }) {
         <td role="cell" colSpan={7} className={styles.detailsCell}>
           <div className={styles.details}>
             <div className={styles.detailsHead}>
-              <a className={styles.company} href={role.href} target="_blank" rel="noreferrer noopener">
+              <a className={styles.company} href={role.href ?? undefined} target={role.href ? "_blank" : undefined} rel={role.href ? "noreferrer noopener" : undefined}>
                 {role.logo ? (
                   // A fixed white plate in both themes: logos come in every
                   // colour and size, and a white ground is the one every
@@ -102,12 +102,15 @@ function Row({ role, open, onToggle }) {
                 ) : null}
                 <span className={styles.companyName}>
                   {role.company}
-                  <span className={styles.ext} aria-hidden="true">
-                    {" "}
-                    ↗
-                  </span>
+                  {role.href ? (
+                    <span className={styles.ext} aria-hidden="true">
+                      {" "}
+                      ↗
+                    </span>
+                  ) : null}
                 </span>
               </a>
+              {role.where ? <span className={styles.where}>{role.where}</span> : null}
               {role.cloud.length ? (
                 <ul className={styles.chips} aria-label="Platforms and tools">
                   {role.cloud.map((c) => (

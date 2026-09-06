@@ -384,11 +384,12 @@ Minh's contributions and linked highlights (commits or PRs). Its command
 is `gh search prs --author=@me --owner=canonical --merged`; `gh repo view
 <repo>` shows one. Bridge in: `cd ~/src && ls` → `gh auth status`.
 
-Verified contributions were found for `canonical/gopkg-charmed` (direct
-commits by Sonicfires2: repo bootstrap, gopkg.in import, 12-Factor III
-config, the MicroK8s deployment runbook). Charmcraft, Rockcraft, and
-haproxy-operator show no commits, PRs, or reviews under that account —
-their `contributions`/`highlights` are empty pending details from Minh.
+Minh's open-source work is under the `minulo` GitHub account (30 PRs at
+time of writing). Everything in `opensource.js` was read from that
+account's pull requests: `gopkg-charmed` (created by Minh; 14 merged, 5
+open), `haproxy-operator` (the get-configuration action), `charmcraft`
+and `rockcraft` (docs), and `indico-operator` (bot approval logic, doc
+links). PR counts are static snapshots; star counts are live.
 
 ## 11. Open items
 

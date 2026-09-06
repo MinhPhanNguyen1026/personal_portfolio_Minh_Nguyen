@@ -39,10 +39,10 @@ export const BRIDGES = {
     },
   ],
   opensource: [
-    { cmd: "cd ~/src && ls", out: ["charmcraft/  rockcraft/  haproxy-operator/  gopkg-charmed/"] },
+    { cmd: "cd ~/src && ls", out: ["gopkg-charmed/  haproxy-operator/  charmcraft/  rockcraft/  indico-operator/"] },
     {
       cmd: "gh auth status",
-      out: ["github.com", "  ✓ Logged in to github.com account minh (keyring)", "  - Active account: true", "  - Token scopes: 'repo', 'read:org', 'workflow'"],
+      out: ["github.com", "  ✓ Logged in to github.com account minulo (keyring)", "  - Active account: true", "  - Token scopes: 'repo', 'read:org', 'workflow'"],
     },
   ],
   skills: [

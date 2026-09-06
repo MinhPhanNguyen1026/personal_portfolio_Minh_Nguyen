@@ -9,7 +9,7 @@ export const PROFILE = {
   // Used as the shell user and in the prompt: minh@portfolio
   handle: "minh",
   host: "portfolio",
-  title: "Software Engineer",
+  title: "Associate Software Engineer",
   employer: {
     name: "Canonical",
     href: "https://canonical.com/",
@@ -18,9 +18,8 @@ export const PROFILE = {
   // One sentence, human voice. Shown under the name in the MOTD.
   tagline:
     "Crafting software end to end — platform tooling on one side, fast and accessible web on the other, with a soft spot for thoughtful detail.",
-  // TODO(minh): team and product would sharpen this. The tools are yours.
   currentWork:
-    "At Canonical: Go and Python, RAG services, Terraform, and CI/CD on GitHub Actions. Part-time Research Assistant at Inter.play Lab.",
+    "At Canonical: gopkg-charmed, the 12-factor charm replacing gopkg.in; Terraform, Juju, JAAS, and MicroK8s; charms and rocks; docs on Sphinx; CI/CD on charm-ci. Part-time Research Assistant at Inter.play Lab, on human-AI interaction.",
   about: [
     "I'm a software engineer focused on building fast, accessible frontend experiences and dependable backend systems.",
     "I've worked across startups, big tech, and research labs, turning ideas into production features and collaborating with teams to build inclusive, polished products.",
