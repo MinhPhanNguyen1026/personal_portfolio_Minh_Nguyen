@@ -1,9 +1,15 @@
 .hero {
   scroll-margin-top: var(--statusbar-h);
-  padding: var(--s-8) 0 var(--s-6);
-  min-height: calc(100vh - var(--statusbar-h) - var(--prompt-h));
+  padding: var(--s-7) 0 var(--s-5);
   display: grid;
   align-items: center;
+}
+
+/* Full-height only while the card is up, so it centres on a blurred
+   screen. Once open, the MOTD is content-sized like any other entry and
+   the bridge below follows directly. */
+.hero[data-open="false"] {
+  min-height: calc(100vh - var(--statusbar-h) - var(--prompt-h));
 }
 
 .inner {
@@ -133,40 +139,50 @@
   color: var(--accent);
 }
 
-.promptLine {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s-2);
-  align-self: flex-start;
-  min-height: 44px;
-  padding: 0 var(--s-3) 0 0;
+/* ---------------------------- sysinfo ---------------------------- */
+
+.sysinfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin-top: var(--s-2);
   font-family: var(--mono);
-  font-size: var(--fs-mono);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--fg-2);
+}
+
+.sysinfoTitle,
+.sysinfoNote {
+  color: var(--fg-2);
+}
+
+.sysinfoGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 2ch;
+}
+
+.sysinfoRow {
+  display: grid;
+  grid-template-columns: 15ch minmax(12ch, 22ch) 17ch auto;
+  gap: 0 var(--s-2);
+  white-space: nowrap;
+}
+
+.sysinfoRow dt {
+  color: var(--fg-2);
+}
+
+.sysinfoRow dd {
+  margin: 0;
   color: var(--fg-1);
-  border-radius: var(--r-1);
 }
 
-.promptLine:hover .cmd {
-  text-decoration: underline;
-  text-decoration-color: var(--accent);
-  text-underline-offset: 0.2em;
-}
-
-.prompt {
-  color: var(--accent);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.cmd {
-  color: var(--fg-0);
-  white-space: nowrap;
-}
-
-@media (max-width: 480px) {
-  /* "minh@portfolio:~$ juju switch experience" doesn't fit; "$" does. */
-  .promptHost {
-    display: none;
+@media (max-width: 640px) {
+  .sysinfoRow {
+    grid-template-columns: 15ch auto;
   }
 }
 

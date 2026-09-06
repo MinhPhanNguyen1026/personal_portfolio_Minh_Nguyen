@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { PROFILE } from "../../data/profile";
-import { CURRENT_ROLES } from "../../data/experience";
-import { switchCommand } from "../../engine/commands";
+import { ALL_EXPERIENCE, CURRENT_ROLES } from "../../data/experience";
+import { PROJECTS } from "../../data/projects";
+import { PIPELINE } from "../../data/skills";
+import { SECTIONS } from "../../engine/sections";
+import { relativeTime } from "../../hooks/useDeployStatus";
 import CommandBox, { canAnimate } from "../primitives/CommandBox";
 import styles from "./Login.module.css";
 
@@ -114,7 +117,39 @@ function LoginCard({ phase, onLogin, onDone }) {
   );
 }
 
-function Motd({ open, run, lastLogin }) {
+// The block Ubuntu prints after login — `landscape-sysinfo` — with this
+// site's real numbers in the usual slots.
+function SysInfo({ deploy, when }) {
+  const skills = PIPELINE.reduce((n, s) => n + s.jobs.length, 0);
+  const rows = [
+    ["System load:", "0.08", "Sections:", `${SECTIONS.length}`],
+    ["Usage of /:", `${PROJECTS.length} projects`, "Roles:", `${ALL_EXPERIENCE.length} (${CURRENT_ROLES.length} active)`],
+    ["Memory usage:", `${skills} skills`, "Users logged in:", "1 (you)"],
+    ["Deployed:", deploy.source === "actions" ? `${deploy.sha} · ${relativeTime(deploy.at)}` : `${deploy.sha} (this build)`, "Controller:", `${PROFILE.handle} · juju 3.6.4`],
+  ];
+  return (
+    <div className={styles.sysinfo} aria-label="System information">
+      <p className={styles.sysinfoTitle} data-print>
+        System information as of {when}
+      </p>
+      <dl className={styles.sysinfoGrid}>
+        {rows.map(([k1, v1, k2, v2]) => (
+          <div key={k1} className={styles.sysinfoRow} data-print>
+            <dt>{k1}</dt>
+            <dd>{v1}</dd>
+            <dt>{k2}</dt>
+            <dd>{v2}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className={styles.sysinfoNote} data-print>
+        0 updates can be applied immediately.
+      </p>
+    </div>
+  );
+}
+
+function Motd({ open, run, lastLogin, deploy }) {
   // While the card covers it, the MOTD is inert: still in the DOM for
   // crawlers, but out of the tab order so nothing focusable hides behind
   // the lock screen. (String value: React 18 doesn't know `inert`.)
@@ -179,23 +214,13 @@ function Motd({ open, run, lastLogin }) {
           })}
         </ul>
 
-        {/* Named by its visible text so the label matches what's on screen. */}
-        <button type="button" className={styles.promptLine} onClick={() => run(switchCommand("experience"))} data-print>
-          <span className={styles.prompt}>
-            <span className={styles.promptHost}>
-              {PROFILE.handle}@{PROFILE.host}:~
-            </span>
-            $
-          </span>
-          <span className={styles.cmd}>{switchCommand("experience")}</span>
-          <span className={styles.caret} aria-hidden="true" />
-        </button>
+        <SysInfo deploy={deploy} when={lastLogin} />
       </div>
     </div>
   );
 }
 
-export default function Login({ phase, setPhase, run }) {
+export default function Login({ phase, setPhase, run, deploy }) {
   const [lastLogin] = useState(() =>
     new Date().toLocaleString(undefined, { weekday: "short", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })
   );
@@ -228,9 +253,9 @@ export default function Login({ phase, setPhase, run }) {
   }, [open, setPhase]);
 
   return (
-    <section id="login" className={styles.hero} aria-labelledby="login-title">
+    <section id="login" className={styles.hero} aria-labelledby="login-title" data-open={open ? "true" : "false"}>
       <div className={styles.inner}>
-        <Motd open={open} run={run} lastLogin={lastLogin} />
+        <Motd open={open} run={run} lastLogin={lastLogin} deploy={deploy} />
         {!open ? (
           <div className={styles.overlay}>
             <LoginCard phase={phase} onLogin={login} onDone={() => setPhase("open")} />

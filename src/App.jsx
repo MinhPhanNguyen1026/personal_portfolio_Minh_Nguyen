@@ -105,7 +105,7 @@ export default function App() {
       <StatusBar current={current} run={shell.run} theme={theme} cycleTheme={cycle} deploy={deploy} />
 
       <main id="main" ref={main} className={styles.main}>
-        <Login phase={loginPhase} setPhase={setLoginPhase} run={shell.run} />
+        <Login phase={loginPhase} setPhase={setLoginPhase} run={shell.run} deploy={deploy} />
 
         <Bridge steps={BRIDGES.experience} />
         <Section

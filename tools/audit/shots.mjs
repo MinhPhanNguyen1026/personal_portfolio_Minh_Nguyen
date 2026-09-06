@@ -58,6 +58,7 @@ for (const s of scenarios) {
   } else if (s === "login") {
     const { c, page } = await ctx();
     await login(page);
+    await page.waitForTimeout(2600); // `juju login` types, then the MOTD prints
     await shot(page, "motd");
     await c.close();
   } else if (s === "nav") {
