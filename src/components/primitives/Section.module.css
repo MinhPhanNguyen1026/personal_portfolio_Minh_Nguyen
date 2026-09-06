@@ -1,6 +1,6 @@
 .section {
   scroll-margin-top: var(--statusbar-h);
-  padding: var(--s-7) 0 var(--s-8);
+  padding: var(--s-6) 0 var(--s-7);
 }
 
 .inner {

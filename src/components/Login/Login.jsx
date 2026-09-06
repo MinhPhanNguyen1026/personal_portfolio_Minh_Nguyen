@@ -124,7 +124,7 @@ function Motd({ open, run, lastLogin }) {
   const [ready, setReady] = useState(() => !canAnimate());
   return (
     <div className={styles.motd} data-open={open ? "true" : "false"} {...inert}>
-      <CommandBox command="juju login" active={open} onRun={(c) => run(c)} onTyped={() => setReady(true)} />
+      <CommandBox command="juju login" active={open} onRun={(c) => run(c)} onTyped={() => setReady(true)} onReset={() => setReady(false)} />
       <div className={styles.output} data-ready={ready ? "true" : "false"}>
         <pre className={styles.banner} aria-hidden="true" data-print>
           {BANNER}

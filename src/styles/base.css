@@ -138,27 +138,29 @@ pre {
    is added only when IntersectionObserver exists, so without it — or
    under reduced motion — nothing is ever hidden.
    ------------------------------------------------------------------ */
+/* Units unroll top to bottom: clipped to nothing at their top edge, then
+   the clip slides down. Unprinting reverses it. */
 html.js [data-print] {
   opacity: 0;
-  transform: translateY(6px);
+  clip-path: inset(0 0 100% 0);
   transition:
-    opacity 240ms var(--ease),
-    transform 240ms var(--ease);
+    opacity 220ms var(--ease),
+    clip-path 360ms var(--ease);
 }
 
 html.js tr[data-print] {
-  transform: none; /* transforms on table rows break the table */
+  clip-path: none; /* clip-path on table rows is unreliable; rows fade */
 }
 
 html.js [data-print][data-printed]:not([data-ready="false"] *) {
   opacity: 1;
-  transform: none;
+  clip-path: inset(0 0 0 0);
 }
 
 @media (prefers-reduced-motion: reduce) {
   html.js [data-print] {
     opacity: 1;
-    transform: none;
+    clip-path: none;
     transition: none;
   }
 }

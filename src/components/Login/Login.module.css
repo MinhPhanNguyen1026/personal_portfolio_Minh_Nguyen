@@ -1,6 +1,6 @@
 .hero {
   scroll-margin-top: var(--statusbar-h);
-  padding: var(--s-8) 0 var(--s-8);
+  padding: var(--s-8) 0 var(--s-6);
   min-height: calc(100vh - var(--statusbar-h) - var(--prompt-h));
   display: grid;
   align-items: center;

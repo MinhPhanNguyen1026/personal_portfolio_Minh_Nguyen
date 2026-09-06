@@ -46,9 +46,11 @@ Things to try once it's open:
 
 - Click **Log in as minh** — the credentials type themselves, then
   `$ juju login` types and the MOTD prints.
-- Scroll slowly: each section's prompt types itself as it comes into view,
-  then its output prints row by row. Scroll fast and sections start
-  themselves. Click **run ▸** on any prompt to replay it.
+- Scroll slowly: bridge commands between sections type and answer, each
+  section's prompt types itself, then its output unrolls row by row.
+  Scroll fast and sections start themselves. Scroll back up and it all
+  unwrites; come back down and it replays. Click **run ▸** on any prompt
+  to replay it on the spot.
 - Type at the prompt at the bottom: `help`, `juju status`, `theme light`,
   `juju logout`. Output lands in the Transcript section at the end of the
   page; section commands scroll to their section.

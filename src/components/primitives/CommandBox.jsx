@@ -4,16 +4,18 @@ import styles from "./CommandBox.module.css";
 
 // A prompt line in the transcript: `minh@portfolio:~$ <command>`, with
 // copy and run. Every command shown this way is implemented in the
-// engine, so "run" does exactly what typing it would.
+// engine, so "run" does exactly what typing it would. `quiet` renders a
+// muted, non-interactive line for the bridges between sections.
 //
-// The command types itself the first time it scrolls into view, then
-// calls onTyped so its output can print. A parent can also call
+// The command types itself when it scrolls into view, then calls
+// onTyped so its output can print. If it later leaves through the bottom
+// of the viewport (the reader scrolled back up), it un-types and calls
+// onReset, so it types again on the way down. A parent can also call
 // ref.start() — a section does this when its output comes into view
-// before the prompt has been seen (fast scrolling), so output is never
-// stuck waiting. "run" retypes quickly before running — a replay.
-// Under prefers-reduced-motion, or without IntersectionObserver, nothing
-// animates. The full command is always in the accessible name; the
-// animated text is presentational.
+// before the prompt has been seen (fast scrolling). "run" retypes
+// quickly before running — a replay. Under prefers-reduced-motion, or
+// without IntersectionObserver, nothing animates. The full command is
+// always in the accessible name; the animated text is presentational.
 
 function prefersReducedMotion() {
   try {
@@ -46,7 +48,7 @@ async function copyText(text) {
   return done;
 }
 
-const CommandBox = forwardRef(function CommandBox({ command, onRun, onTyped, active = true, label }, ref) {
+const CommandBox = forwardRef(function CommandBox({ command, onRun, onTyped, onReset, active = true, quiet = false, label }, ref) {
   const animate = canAnimate();
   const [typed, setTyped] = useState(animate ? "" : command);
   const [typing, setTyping] = useState(false);
@@ -56,7 +58,9 @@ const CommandBox = forwardRef(function CommandBox({ command, onRun, onTyped, act
   const started = useRef(!animate);
   const copyTimer = useRef(null);
   const onTypedRef = useRef(onTyped);
+  const onResetRef = useRef(onReset);
   onTypedRef.current = onTyped;
+  onResetRef.current = onReset;
 
   const clearTimers = useCallback(() => {
     timers.current.forEach(clearTimeout);
@@ -69,7 +73,7 @@ const CommandBox = forwardRef(function CommandBox({ command, onRun, onTyped, act
       clearTimers();
       setTyped("");
       setTyping(true);
-      const perChar = Math.min(38, 700 / command.length);
+      const perChar = Math.min(quiet ? 26 : 38, 700 / command.length);
       for (let i = 1; i <= command.length; i++) {
         timers.current.push(setTimeout(() => setTyped(command.slice(0, i)), 100 + i * perChar));
       }
@@ -81,7 +85,7 @@ const CommandBox = forwardRef(function CommandBox({ command, onRun, onTyped, act
         }, 100 + command.length * perChar + 140)
       );
     },
-    [command, clearTimers]
+    [command, quiet, clearTimers]
   );
 
   const start = useCallback(() => {
@@ -90,21 +94,32 @@ const CommandBox = forwardRef(function CommandBox({ command, onRun, onTyped, act
     type();
   }, [type]);
 
-  useImperativeHandle(ref, () => ({ start }), [start]);
+  const reset = useCallback(() => {
+    if (!started.current) return;
+    started.current = false;
+    clearTimers();
+    setTyped("");
+    setTyping(false);
+    onResetRef.current?.();
+  }, [clearTimers]);
+
+  useImperativeHandle(ref, () => ({ start, reset }), [start, reset]);
 
   useEffect(() => {
-    if (started.current || !active || !box.current) return undefined;
+    if (!animate || !active || !box.current) return undefined;
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) return;
-        io.disconnect();
-        start();
+        if (entry.isIntersecting) {
+          start();
+        } else if (entry.boundingClientRect.top >= (entry.rootBounds?.bottom ?? window.innerHeight)) {
+          reset();
+        }
       },
       { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
     );
     io.observe(box.current);
     return () => io.disconnect();
-  }, [active, start]);
+  }, [animate, active, start, reset]);
 
   useEffect(
     () => () => {
@@ -135,6 +150,23 @@ const CommandBox = forwardRef(function CommandBox({ command, onRun, onTyped, act
     copyTimer.current = setTimeout(() => setCopied(false), 1600);
   }
 
+  const showCaret = typing || (animate && !typed);
+
+  if (quiet) {
+    return (
+      <div ref={box} className={`${styles.line} ${styles.quiet}`}>
+        <span className={styles.prompt} aria-hidden="true">
+          $
+        </span>
+        <code className={styles.cmd} aria-hidden="true">
+          {typed}
+          {showCaret ? <span className={`${styles.caret} ${typing ? styles.caretSolid : ""}`} /> : null}
+        </code>
+        <span className="sr-only">{command}</span>
+      </div>
+    );
+  }
+
   return (
     <div ref={box} className={styles.line} role="group" aria-label={label ?? `Command: ${command}`}>
       <span className={styles.prompt} aria-hidden="true">
@@ -145,7 +177,7 @@ const CommandBox = forwardRef(function CommandBox({ command, onRun, onTyped, act
       </span>
       <code className={styles.cmd} aria-hidden="true">
         {typed}
-        {typing || (animate && !typed) ? <span className={`${styles.caret} ${typing ? styles.caretSolid : ""}`} /> : null}
+        {showCaret ? <span className={`${styles.caret} ${typing ? styles.caretSolid : ""}`} /> : null}
       </code>
       <span className="sr-only">{command}</span>
       <div className={styles.actions}>

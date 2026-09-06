@@ -9,10 +9,12 @@ scroll. You "log in" (one click — the credentials type themselves),
 `$ juju login` types and the MOTD prints line by line; then each
 section's prompt types itself as it comes into view and its output —
 every row of `juju status`, every resource in the `terraform plan`, every
-stage of the CI pipeline — prints in a quick cascade. A live prompt sits
-at the bottom of the viewport; anything you type there runs through the
-same engine as every button, with output landing in a Transcript section
-at the end.
+stage of the CI pipeline — unrolls top to bottom. Muted bridge commands
+between sections (`juju models`, `terraform init`, `git log`, …) keep the
+session continuous, and scrolling back up unwrites what you've passed so
+the way down replays. A live prompt sits at the bottom of the viewport;
+anything you type there runs through the same engine as every button,
+with output landing in a Transcript section at the end.
 
 The design brief and rationale live in [docs/REDESIGN_PLAN.md](docs/REDESIGN_PLAN.md).
 

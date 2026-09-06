@@ -18,6 +18,27 @@
   background: var(--bg-1);
 }
 
+/* Bridge lines: part of the session, deliberately not highlighted. */
+.quiet,
+.quiet:hover {
+  min-height: 28px;
+  background: transparent;
+}
+
+.quiet .prompt {
+  color: var(--fg-2);
+  font-weight: 500;
+}
+
+.quiet .cmd {
+  color: var(--fg-1);
+  padding: 4px 0;
+}
+
+.quiet .caret {
+  background: var(--fg-2);
+}
+
 .prompt {
   color: var(--accent);
   font-weight: 600;

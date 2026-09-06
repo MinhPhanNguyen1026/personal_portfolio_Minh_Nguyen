@@ -114,6 +114,32 @@ for (const s of scenarios) {
     await page.waitForTimeout(1600);
     await shot(page, "print-3-fast-scroll");
     await c.close();
+  } else if (s === "bridge") {
+    // The bridge between login and experience, printed.
+    const { c, page } = await ctx();
+    await login(page);
+    await page.waitForTimeout(1200);
+    await page.evaluate(() => {
+      const b = document.querySelector("[data-bridge]");
+      window.scrollTo(0, b.getBoundingClientRect().top + window.scrollY - 160);
+    });
+    await page.waitForTimeout(2200);
+    await shot(page, "bridge");
+    await c.close();
+  } else if (s === "reverse") {
+    // Print projects, scroll back up to experience: projects must unwrite.
+    const { c, page } = await ctx();
+    await login(page);
+    await page.evaluate(() => document.getElementById("projects").scrollIntoView({ behavior: "auto", block: "start" }));
+    await page.waitForTimeout(2200);
+    const printedBefore = await page.evaluate(() => document.querySelectorAll("#projects [data-printed]").length);
+    await page.evaluate(() => document.getElementById("experience").scrollIntoView({ behavior: "auto", block: "start" }));
+    await page.waitForTimeout(800);
+    const printedAfter = await page.evaluate(() => document.querySelectorAll("#projects [data-printed]").length);
+    const ready = await page.evaluate(() => document.getElementById("projects").getAttribute("data-ready"));
+    console.log(`reverse: projects printed units ${printedBefore} → ${printedAfter}, data-ready=${ready} (want fewer, "false")`);
+    if (!(printedAfter < printedBefore && ready === "false")) errors.push("[reverse] projects did not unwrite on scroll-up");
+    await c.close();
   } else if (s === "transcript") {
     // Several commands typed in a row — checks entries read as separate.
     const { c, page } = await ctx();

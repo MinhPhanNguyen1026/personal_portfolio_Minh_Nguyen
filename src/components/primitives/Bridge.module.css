@@ -1,0 +1,40 @@
+.bridge {
+  padding: var(--s-2) 0;
+}
+
+.inner {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.out {
+  display: flex;
+  flex-direction: column;
+}
+
+.line {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--fg-2);
+  white-space: pre-wrap;
+  padding-left: 2ch;
+  min-height: 1lh;
+}
+
+@media (max-width: 768px) {
+  .line {
+    white-space: pre;
+    overflow-x: auto;
+  }
+}

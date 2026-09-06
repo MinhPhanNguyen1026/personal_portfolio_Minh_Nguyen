@@ -354,6 +354,19 @@ and the page now reads as one terminal from top to bottom.
   so without it nothing is hidden; `prefers-reduced-motion` shows
   everything instantly; content is always in the DOM for crawlers and
   assistive tech; the full command is always in the accessible name.
+- Units unroll **top to bottom** (a clip-path wipe from the top edge),
+  not fade up. **Scrolling back up reverses it**: a unit that leaves
+  through the bottom of the viewport unprints, and a prompt that leaves
+  that way un-types (`data-ready` returns to false), so the way down
+  replays. Units that leave through the top stay, like scrollback.
+- **Bridges** (`src/data/bridges.js`) sit between sections: muted,
+  non-interactive command/response pairs that make the session logically
+  continuous — `juju models` → `juju switch experience` before
+  Experience; `cd ~/projects && ls` → `terraform init` before Projects;
+  `git log` → `gh run list` before Skills (real SHAs from this repo);
+  `juju status contact` (not exposed yet) before Contact; `history | tail`
+  before the Transcript. Same typing/printing mechanics, none of the
+  emphasis; `aria-hidden`, since nothing in them is unique information.
 - The MOTD is the first entry: `$ juju login` types once the card resolves,
   then the MOTD prints line by line.
 - The live prompt is one fixed line at the bottom of the viewport. Section

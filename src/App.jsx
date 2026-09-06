@@ -14,6 +14,8 @@ import PromptLine, { PROMPT_INPUT_ID } from "./components/Shell/PromptLine";
 import Transcript from "./components/Shell/Transcript";
 import Login, { SESSION_KEY } from "./components/Login/Login";
 import Section from "./components/primitives/Section";
+import Bridge from "./components/primitives/Bridge";
+import { BRIDGES } from "./data/bridges";
 import Experience from "./components/Experience/Experience";
 import Projects from "./components/Projects/Projects";
 import Skills from "./components/Skills/Skills";
@@ -105,6 +107,7 @@ export default function App() {
       <main id="main" ref={main} className={styles.main}>
         <Login phase={loginPhase} setPhase={setLoginPhase} run={shell.run} />
 
+        <Bridge steps={BRIDGES.experience} />
         <Section
           id="experience"
           title="Experience"
@@ -115,6 +118,7 @@ export default function App() {
           <Experience />
         </Section>
 
+        <Bridge steps={BRIDGES.projects} />
         <Section
           id="projects"
           title="Projects"
@@ -125,6 +129,7 @@ export default function App() {
           <Projects />
         </Section>
 
+        <Bridge steps={BRIDGES.skills} />
         <Section
           id="skills"
           title="Skills"
@@ -135,10 +140,12 @@ export default function App() {
           <Skills />
         </Section>
 
+        <Bridge steps={BRIDGES.contact} />
         <Section id="contact" title="Contact" command={findSection("contact").command} onRun={shell.run} lead="Everything is exposed. Pick a channel.">
           <Contact />
         </Section>
 
+        <Bridge steps={BRIDGES.transcript} />
         <Transcript history={shell.history} />
 
         <footer className={styles.footer}>
