@@ -1,6 +1,8 @@
-/* Bridges are connective tissue: present, never competing with sections. */
+/* Bridges are connective tissue: present, never competing with sections.
+   Muted colour carries the hierarchy; the type itself stays readable and
+   the lines get room to breathe. */
 .bridge {
-  padding: var(--s-1) 0;
+  padding: var(--s-2) 0;
 }
 
 .inner {
@@ -9,24 +11,25 @@
   padding: 0 var(--gutter);
   display: flex;
   flex-direction: column;
-  gap: var(--s-2);
+  gap: var(--s-5);
 }
 
 .step {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: var(--s-1);
 }
 
 .out {
   display: flex;
   flex-direction: column;
+  gap: 3px;
 }
 
 .line {
   font-family: var(--mono);
-  font-size: 11.5px;
-  line-height: 1.5;
+  font-size: 12.5px;
+  line-height: 1.7;
   color: var(--fg-2);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
