@@ -1,6 +1,7 @@
 {
   "short_name": "Minh Nguyen",
-  "name": "Minh Nguyen Portfolio",
+  "name": "Minh Nguyen — Software Engineer",
+  "description": "Minh Nguyen's portfolio: experience, projects, and skills, presented as a control plane you can navigate.",
   "icons": [
     {
       "src": "favicon.svg",
@@ -20,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#0f1b61",
-  "background_color": "#f4f9fc"
+  "theme_color": "#0a0d13",
+  "background_color": "#0a0d13"
 }
