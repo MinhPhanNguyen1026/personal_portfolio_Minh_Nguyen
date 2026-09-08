@@ -1,0 +1,143 @@
+/* A prompt line, not a box: it belongs to the transcript. */
+.line {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  max-width: 100%;
+  min-height: 36px;
+  margin: 0 calc(-1 * var(--s-2));
+  padding: 0 var(--s-2);
+  border-radius: var(--r-1);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  transition: background var(--t-fast) var(--ease);
+}
+
+.line:hover,
+.line:focus-within {
+  background: var(--bg-1);
+}
+
+/* Bridge lines: part of the session, deliberately not highlighted. */
+.quiet,
+.quiet:hover {
+  min-height: 30px;
+  background: transparent;
+  font-size: 12.5px;
+}
+
+.quiet .prompt {
+  color: var(--fg-2);
+  font-weight: 500;
+}
+
+.quiet .cmd {
+  color: var(--fg-2);
+  padding: 3px 0;
+}
+
+.quiet .caret {
+  width: 6px;
+  background: var(--fg-2);
+}
+
+.prompt {
+  color: var(--accent);
+  font-weight: 600;
+  flex: none;
+  white-space: nowrap;
+}
+
+.host {
+  color: var(--accent);
+}
+
+.path {
+  color: var(--fg-1);
+  font-weight: 500;
+}
+
+.cmd {
+  color: var(--fg-0);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  min-width: 0;
+  min-height: 1lh;
+  padding: var(--s-2) 0;
+  font: inherit;
+}
+
+.caret {
+  display: inline-block;
+  width: 7px;
+  height: 1em;
+  margin-left: 1px;
+  background: var(--accent);
+  vertical-align: -2px;
+  animation: blink 1s steps(1) infinite;
+}
+
+/* Solid while characters are arriving; blinks only when idle. */
+.caretSolid {
+  animation: none;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Quiet at rest via the muted token (which clears 4.5:1 on every
+   surface), never via opacity — opacity blends text below contrast. */
+.actions {
+  display: flex;
+  gap: 2px;
+  flex: none;
+  margin-left: auto;
+}
+
+.btn {
+  min-height: 32px;
+  min-width: 44px;
+  padding: 0 var(--s-2);
+  border-radius: var(--r-1);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--fg-2);
+  white-space: nowrap;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+
+.line:hover .btn,
+.line:focus-within .btn {
+  color: var(--fg-1);
+}
+
+.btn:hover {
+  background: var(--bg-2);
+  color: var(--fg-0);
+}
+
+.btnDone,
+.btnDone:hover {
+  color: var(--ok);
+}
+
+.btnRun,
+.line:hover .btnRun,
+.line:focus-within .btnRun {
+  color: var(--accent);
+}
+
+.btnRun:hover {
+  background: var(--accent-soft);
+}
+
+@media (max-width: 480px) {
+  .host,
+  .path {
+    display: none;
+  }
+}

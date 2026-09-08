@@ -1,0 +1,25 @@
+.app {
+  min-height: 100vh;
+  padding-top: var(--statusbar-h);
+  /* Room for the fixed prompt so the end of the transcript is reachable. */
+  padding-bottom: var(--prompt-h);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--s-7) var(--gutter);
+  border-top: 1px solid var(--line);
+  width: 100%;
+  font-size: var(--fs-small);
+  color: var(--fg-2);
+}
+
+.footer code {
+  color: var(--fg-1);
+}

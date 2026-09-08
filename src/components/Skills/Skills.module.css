@@ -1,0 +1,236 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.runHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  color: var(--fg-1);
+}
+
+.runDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ok);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 18%, transparent);
+}
+
+.runName {
+  color: var(--fg-0);
+  font-weight: 600;
+}
+
+.runMeta {
+  color: var(--fg-2);
+}
+
+.ok {
+  color: var(--ok);
+}
+
+.warn {
+  color: var(--warn);
+}
+
+/* ------------------------------ stages ------------------------------ */
+
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0;
+  counter-reset: stage;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: 0 var(--s-3);
+  border-left: 1px dashed var(--line-strong);
+  min-width: 0;
+  position: relative;
+}
+
+.stage:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+/* The connector between stages: a small arrowhead on the dashed line. */
+.stage:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--line-strong);
+}
+
+.stageTitle {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.jobs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.jobItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+
+.job {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  width: 100%;
+  min-height: 40px;
+  padding: 0 var(--s-3) 0 var(--s-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-1);
+  background: var(--bg-1);
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--fg-0);
+  text-align: left;
+  transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+
+button.job:hover,
+.jobOpen {
+  border-color: var(--line-strong);
+  background: var(--bg-2);
+}
+
+.jobStatic {
+  color: var(--fg-1);
+}
+
+.jobName {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.jobState {
+  font-size: 11px;
+  color: var(--warn);
+}
+
+.count {
+  font-size: 11px;
+  color: var(--fg-2);
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--bg-2);
+}
+
+.jobOpen .count {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.tick {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  background: var(--ok);
+  color: var(--bg-0);
+  font-size: 10px;
+  font-weight: 700;
+  flex: none;
+}
+
+.tickRunning {
+  background: var(--warn);
+}
+
+.usedAt {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--s-2) var(--s-3) var(--s-3);
+  border-left: 2px solid var(--accent-soft);
+  margin-left: var(--s-2);
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--fg-1);
+}
+
+.usedAt[hidden] {
+  display: none;
+}
+
+.usedLabel {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+
+.usedList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+@media (max-width: 1080px) {
+  .pipeline {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: var(--s-6);
+  }
+  .stage:nth-child(4) {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .stage:nth-child(4)::before {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .pipeline {
+    grid-template-columns: 1fr;
+    row-gap: var(--s-5);
+  }
+  .stage,
+  .stage:nth-child(4) {
+    border-left: 0;
+    padding: var(--s-4) 0 0;
+    border-top: 1px dashed var(--line-strong);
+  }
+  .stage:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .stage::before,
+  .stage:not(:first-child)::before {
+    display: none;
+  }
+}

@@ -1,0 +1,75 @@
+.log {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  line-height: var(--lh-mono);
+  border-top: 1px solid var(--line);
+  padding-top: var(--s-4);
+}
+
+.hint {
+  color: var(--fg-2);
+}
+
+.hint code {
+  color: var(--fg-1);
+  background: var(--bg-2);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+/* One command and its output form a block; a rule separates blocks. */
+.entry + .entry {
+  margin-top: var(--s-3);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--line);
+}
+
+.cmdLine {
+  display: flex;
+  gap: var(--s-2);
+}
+
+.p {
+  color: var(--accent);
+  font-weight: 600;
+  flex: none;
+}
+
+.cmd {
+  color: var(--fg-0);
+}
+
+.line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--fg-1);
+  padding-left: calc(1ch + var(--s-2));
+}
+
+.ok {
+  color: var(--ok);
+}
+
+.warn {
+  color: var(--warn);
+}
+
+.err {
+  color: var(--err);
+}
+
+.info {
+  color: var(--info);
+}
+
+.muted {
+  color: var(--fg-2);
+}

@@ -1,0 +1,68 @@
+.section {
+  scroll-margin-top: var(--statusbar-h);
+  padding: var(--s-6) 0 var(--s-7);
+}
+
+.inner {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+/* The heading reads as a comment line in the transcript. */
+.comment {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6ch;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--fg-0);
+}
+
+.hash {
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--fg-2);
+}
+
+.title:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+
+.lead {
+  max-width: var(--measure);
+  color: var(--fg-1);
+  font-size: var(--fs-small);
+  padding-left: calc(1ch + 0.6ch);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--s-6) 0 var(--s-7);
+  }
+}

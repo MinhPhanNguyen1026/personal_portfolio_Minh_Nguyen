@@ -1,0 +1,130 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.transcript {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  color: var(--fg-1);
+}
+
+.prompt {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 10ch 10ch 9ch minmax(0, 1fr);
+  gap: var(--s-4);
+  align-items: center;
+  min-height: 52px;
+  padding: 0 var(--s-2);
+  border-bottom: 1px solid var(--line);
+  color: var(--fg-1);
+  text-decoration: none;
+  transition: background var(--t-fast) var(--ease);
+}
+
+.head {
+  min-height: 36px;
+  color: var(--fg-2);
+}
+
+.item {
+  display: block;
+}
+
+a.row:hover {
+  text-decoration: none;
+  background: var(--bg-2);
+}
+
+a.row:hover .address {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.2em;
+}
+
+.app {
+  color: var(--fg-0);
+  font-weight: 500;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ok);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ok);
+}
+
+.exposed {
+  color: var(--fg-2);
+}
+
+.address {
+  color: var(--fg-0);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.glyph {
+  color: var(--accent);
+}
+
+.note {
+  max-width: var(--measure);
+  color: var(--fg-1);
+  font-size: var(--fs-body);
+}
+
+@media (max-width: 640px) {
+  .head {
+    display: none;
+  }
+  .row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "app status"
+      "address address";
+    gap: 2px var(--s-3);
+    padding: var(--s-3) var(--s-2);
+  }
+  .app {
+    grid-area: app;
+  }
+  .status {
+    grid-area: status;
+  }
+  .exposed {
+    display: none;
+  }
+  .address {
+    grid-area: address;
+    color: var(--fg-1);
+    white-space: normal;
+    word-break: break-all;
+  }
+}
